@@ -8,7 +8,7 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Slider WD is an effective tool for adding responsive sliders to your website. It uses large number of transition effects and supports various types of layers.
+Slider WD is an effective tool for adding responsive sliders to your website. It uses large number of transition effects.
 
 == Description ==
 
@@ -116,11 +116,11 @@ After downloading the ZIP file,
 
 1. Log in to the administrator panel.   
 1. Go to Plugins Add > New > Upload.     
-1. Click `Choose file` (`Browse`) and select the downloaded zip file of the slider.     
+1. Click "Choose file" ("Browse") and select the downloaded zip file of the slider.     
 *For Mac Users*     
 *Go to your Downloads folder and locate the folder with the Slider WD. Right-click on the folder and select Compress. Now you have a newly created .zip file which can be installed as described here.*     
-1. Click `Install Now` button.     
-1. Click `Activate Plugin` button for activating the Slider WD.    
+1. Click "Install Now" button.     
+1. Click "Activate Plugin" button for activating the Slider WD.    
 
 If any problem occurs, please contact us at  [info@web-dorado.com](mailto:info@web-dorado.com).
 
