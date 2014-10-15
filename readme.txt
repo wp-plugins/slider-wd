@@ -16,7 +16,7 @@ Slider WD is an effective tool for adding responsive sliders to your website. It
 [User Manual](http://web-dorado.com/wordpress-slider-wd-guide-step-1.html)  
 [Support Forum](http://web-dorado.com/forum/slider-plugin.html)  
 
-Slider WD is an effective tool for adding responsive sliders to your website. The plugin can be added both as a widget and plugin, as well as be included in the theme using PHP function. Slider WD allows adding both images and videos (currently supporting YouTube and Vimeo). The numerous transition affects and layer support enhance the functionality of the product.
+Slider WD is an effective tool for adding responsive sliders to your website. The slider plugin can be added both as a widget and plugin, as well as be included in the theme for displaying the slider within the theme using PHP function. Slider WD allows adding both images and videos (currently supporting YouTube and Vimeo to be displayed as slider slides). The numerous transition affects and layer support enhance the functionality of the product.
 
 The number of the slides for each slider is not limited. Various layers can be applied for each individual slide. There are three basic types of layers designed for the slides. Those are for sharing textual content, images and sharing buttons (Google+, Tumblr, Twitter, Pinterest and Facebook.) 
 The slides can be used for redirection to another location. Similar feature is also available with the text and image layers.
@@ -112,7 +112,7 @@ Vietnamese (vi)
 
 ### Perform a new installation  
 
-After downloading the ZIP file,  
+After downloading the ZIP file of the slider plugin,  
 
 1. Log in to the administrator panel.   
 1. Go to Plugins Add > New > Upload.     
@@ -157,19 +157,19 @@ Slides tab will open up.
 As a first step you should specify the name of the slider.  
 Slider Name. Provide a name for the slider.  
 Below you will be able to add slides.  
-2.1 Published. Choose whether to publish the newly added slide or not.  
-2.2 Link the slide. You can set a redirection link, so that the user will get to the mentioned location upon hitting the slide.  
-2.3 Add image from Media Library.  You can select images which are currently uploaded to your Media Library by clicking on those and pressing Insert button. In addition you can upload new files, navigating to Upload Files tab on the left. Then press Select Files button, choose the image and press Insert button.  
-2.4 Add Image URL. You can also add images providing the absolute link to it. Press Add Image URL, provide the link and press Add button.
-2.5 Add Video. In addition to images, you can instead use videos from YouTube and Vimeo. You should click on Add Video button, provide the link to the video and press Add button. The image associated with the YouTube/Vimeo video will be automatically displayed.  
-2.6 Remove. You can use Remove button to remove the included image or video.  
+2.1 Published. Choose whether to publish the newly added slider or not.  
+2.2 Link the slide. You can set a redirection link, so that the user will get to the mentioned location upon hitting that specific slide.  
+2.3 Add image from Media Library.  You can select images to use within the slider which are currently uploaded to your Media Library by clicking on those and pressing Insert button. In addition you can upload new files, navigating to Upload Files tab on the left. Then press Select Files button, choose the image and press Insert button. This way the image will be added to the slider. 
+2.4 Add Image URL. You can also add images providing the absolute link to it. Press Add Image URL, provide the link and press Add button.This will be useful for adding images to the slider without the need of downloading those and uploading again.
+2.5 Add Video. In addition to images, you can instead use videos  withing the slider from YouTube and Vimeo. You should click on Add Video button, provide the link to the video and press Add button. The image associated with the YouTube/Vimeo video will be automatically displayed as a slider image and then the video will be played. 
+2.6 Remove. You can use Remove button to remove the slider image or video.  
 
-For adding additional images, you should press "+" next to the Slide tab.   
+For adding additional images, you should press "+" next to the Slide tab.  The Slide tabs can be renamed to make it easier to reach the desired slide within the list, as well as they can be rearranged using drag and drop feature. 
 
 = Step 3:  Adding layers to the slide. =
 There are three types of layers that can be added to the slides: text, image and social button.  
 
-The layer buttons are located on the lower left corner of the slide.  
+The layer buttons are located on the lower left corner of each slide.  
 
 You can add more than one layer to your slide. These layers can be of different or same type.   
 
@@ -241,56 +241,56 @@ Hover color. Set the color for the social sharing button when hovered.
 = Step 4:  Changing/Modifying Slider Settings. =
 To access the settings you should go to Slider WD>Sliders>Settings tab.   
 
-4.1 Global Settings. You can change the main settings here. The changes will affect only the current slider and not previously created ones.  
+4.1 Global Settings. You can change the main settings here. The changes will affect only the current slider and not previously created sliders. That is to say the global settings are slider-based.  
 
-Dimensions. Set the maximum dimensions of the slider. The dimension is set to maximum since with smaller displays the slider will be displayed in smaller dimensions due ot the responsiveness feature. This will be the constant dimension regardless of the images.  
-Full width. Choose whether to have the overall slider stretched to the full width of the page, where it is posted or not. The length will be given corresponding to the original ratio, e.g. if you have it set to 480x300 and the width of the page is 960, then the height will be 600.
-Background fit. There are three options for inserting the image into a slide. You can choose the relevant option best for you. If you have the image identical to the Dimensions section, then all three will provide the same full covered look. As for the cases, if the image is smaller/larger than the original one, the views will be a bit different. Let's consider the cases.  
+Dimensions. Set the maximum dimensions of the slider. The dimension is set to maximum since with smaller displays the slider will be displayed in smaller dimensions due to the responsiveness feature. This will be the constant dimension of the slider regardless of the images.  
+Full width. Choose whether to have the overall slider stretched to the full width of the page, where it is posted or not. The length will be given corresponding to the original ratio of the slider, e.g. if you have it set to 480x300 and the width of the page is 960, then the height of the slider will be 600.
+Background fit. There are three options for inserting the image into a slide. You can choose the relevant option best for you. If you have the image identical to the Dimensions section, then all three will provide the same full covered look of the slider. As for the cases, if the image is smaller/larger than the original one, the views will be a bit different. Let's consider the cases.  
 Cover. The image will get cut from the middle part and will get enlarged to fit the entire background.  
 Fill. The image will get stretched or compressed to the dimensions of the slider.  
 Contain. The image will stay in its original form and the rest of the slider content area will be covered by the slider background.
 Align. Set the alignment of the image within the slider.  
-Effect. Select the effect which will be applied when shifting from one slider to another. Note, that it is different from the layer effects and does not affect the layer effects.  
+Effect. Select the slider transition effect which will be applied when shifting from one slider to another. Note, that it is different from the layer effects and does not affect the layer effects.  
 Time Interval. Set the time interval for the change of the sliders.  
 Autoplay. Choose whether to autoplay the sliders or not.  
 Shuffle. Choose whether to have the slides change in a random manner or to keep the original sequence.
 Music. Choose whether to have music/audio track playback with the slider or not.  
 Music URL. Provide the full link to the audio track, which will be used with the slider.  
-Smart Load. Choose whether to have the smart load feature, which will help to have faster load for the first few images and will process the rest meanwhile.   
+Smart Load. Choose whether to have the smart load feature, which will help to have faster load for the first few images of the slider and will process the rest meanwhile.   
 Background color. Select a background color for the slider, as well as its transparency level.
-Border.  Set the border width, type, as well as the color.  
+Border. Set the border width, type, as well as the color for the slider.  
 Border radius. Set the border radius using CSS type values.   
 Margin. Set a margin for the slider in pixels.   
 Shadow. Set a slider shadow using CSS type values.   
-Right click protection. Choose whether to have right click protection for avoiding the image download or not.    
-Layer out on next. Choose whether to have the layer effect out regardless of the timing between the hit to the next slider or skip the effect out and get to the next image.   
+Right click protection. Choose whether to have right click protection for avoiding the slider image download of or not.    
+Layer out on next. Choose whether to have the layer effect out regardless of the timing between the hit to the next slide or skip the effect out and get to the next slider image.   
 Published. Choose whether to publish the mentioned slider or not.  
 
-4.2 Navigation. You can change the style, colors and dimensions for the navigation buttons or completely remove the navigation buttons.   
+4.2 Navigation. You can change the style, colors and dimensions for the navigation buttons or completely remove the navigation buttons from the slider.   
 
-Next/ Previous buttons. Choose whether to display Previous and Next buttons or not.  
-Next/ Previous buttons. Choose whether to display Play and Pause buttons or not.   
+Next/ Previous buttons. Choose whether to display Previous and Next buttons within the slider or not.  
+Next/ Previous buttons. Choose whether to display Play and Pause buttons within the slider or not.   
 Show Navigation buttons. Select between the option of always displaying the navigation buttons or only when hovered.   
-Next/ Previous buttons style. Choose the style of the button you prefer to have as navigation buttons.   
-Next/ Previous buttons size. Set the dimensions for the right/left buttons.  
-Play / Pause button size. Set the dimensions for the play/pause buttons.  
+Next/ Previous buttons style. Choose the style of the button you prefer to have as navigation buttons for the slider.   
+Next/ Previous buttons size. Set the dimensions for the right/left buttons of the slider.  
+Play / Pause button size. Set the dimensions for the play/pause buttons of the slider.  
 Buttons color. Select a color for the navigation buttons.  
 Hover color. Select a hover color for the navigation buttons.  
 Border . Select the type, size, as well as the color of border for the navigation buttons.   
 Border radius. Set border radius for the navigation buttons using CSS type values.  
-Background color. Select the background color for the navigation buttons using the color picker. In addition you can set the transparency level of the background.   
+Background color. Select the background color for the navigation buttons using the color picker. In addition you can set the transparency level of the background for the slider.   
 
-4.3 Bullets. In addition to navigation buttons, you can also use bullets. Upon hitting the bullet the image in the corresponding position will be displayed.  
+4.3 Bullets. In addition to navigation buttons, you can also use bullets for the navigation within the slider images. Upon hitting the bullet the slider image in the corresponding position will be displayed.  
 
-Enable bullets. Choose whether to have navigation bullets or not.  
-Position. Select the position for the navigation bullets.  
-Bullet style. Choose the style for the bullets from provided 5 options.  
+Enable bullets. Choose whether to have slider naviagation bullets or not.  
+Position. Select the position for the slider navigation bullets.  
+Bullet style. Choose the style for the slider bullets from provided 5 options.  
 Size. Define the size of the navigation bullets.  
 Color. Select the color for the navigation bullets.  
-Active color. Select the color for the bullet, which is currently displaying a corresponding image.   
+Active color. Select the color for the bullet, which is currently displaying a corresponding slider image.   
 Margin. Set the margin for the navigation bullets in pixels.   
 
-4.4 Filmstrip. You can add a filmstrip for the slider images.   
+4.4 Filmstrip. You can add a filmstrip for the slider images.This way the entire list of the slider images will be displayed and the user can navigate immidiately to the desired slider image.   
 
 Enable filmstrip. Choose whether to have thumbnails of the slides displayed as a filmstrip or not.   
 Position. Set the position of the filmstrip between 4 possible options.    
@@ -302,16 +302,16 @@ Deactive transparency. You can set a transparency level for the inactive filmstr
 
 4.5 Timer Bar. You can add a bar displaying the timing left to switching to the next slide. This is commonly used when using autoplay for the slider.   
 
-Enable timer bar. Choose whether to display a timer bar over the images or not.   
+Enable timer bar. Choose whether to display a timer bar over the slider images or not.   
 Type. Choose the type of the timer bar to be used within the slider.   
 Size.  Define the size of the timer bar in pixels.   
 Color. Select the color and the transparency level of the timer bar.   
 
 4.6 Watermark. You can add watermark over the slider images both in the forms of text and images.   
 
-Please note that the Fill and Contain options will work fine with Watermark option regardless of the image dimensions, whereas for the Cover option you should have the image identical to the size set in the Dimensions setting. If you have uploaded the image with another dimension, you will need to resize the image and upload it again.   
+Please note that the Fill and Contain options of the slider will work fine with Watermark option regardless of the slider image dimensions, whereas for the Cover option you should have the slider image identical to the size set in the Dimensions setting. If you have uploaded the image with another dimension, you will need to resize the image and upload it again.   
 
-Watermark Type.  Choose what kind of watermark you want to use from provided 2 options (text, image) or not to use watermarks over your slides.   
+Watermark Type.  Choose what kind of watermark you want to use with the slider from provided 2 options (text, image) or not to use watermarks over your slides.   
 Text
 *   Watermark text. Provide the text which will be displayed over the slides.   
 *   Watermark font size. Specify the font size of the watermark in pixels.  
@@ -323,14 +323,14 @@ Image
 *   Watermark image size. Define the size (in percentage for the responsive look) of the image used for the watermark.    
 *   Watermark position. Choose the positioning of the watermark from the available 9 options.    
 
-4.7 CSS. You can add custom CSS in the box below to apply custom changes to the slider. The changes will override the original styles.   
+4.7 CSS. You can add custom CSS in the box below to apply custom changes to the slider. The changes will override the original styles coming as default with the slider.   
 
 Step 5: Publishing the created Slider.   
 To insert the Slider into a Page or a Post:   
 
-You can insert the created Slider into a page or post. Go to the Post or Page. Here you will see "Insert Slider" button with a Slider icon. Press the button, Select the slider and press Insert.   
+You can insert the created Slider into a page or post. Go to the mentioned Post or Page. Here you will see "Insert Slider" button with a Slider icon. Press the button, Select the slider and press Insert.   
 
-In addition, you can insert the shortcode manually. The corresponding shortcode is displayed next to the created slider in Slider WD>Sliders section under Shortcode column.  
+In addition, you can insert the shortcode of the slider manually. The corresponding shortcode is displayed next to the created slider in Slider WD>Sliders section under Shortcode column.  
 
 To insert the Slider within the Theme.   
 
