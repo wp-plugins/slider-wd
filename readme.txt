@@ -144,11 +144,11 @@ If any problem occurs, please contact us at  [info@web-dorado.com](mailto:info@w
 
 1. Log in to your WordPress Administrator panel.  
 2. Go to Plugins page, click Add > New > Upload.  
-3. Click “Choose file” (“Browse”) and select the Sliders zip file.  
+3. Click "Choose file" ("Browse") and select the Sliders zip file.  
 For Mac Users     
 Go to your Downloads folder and locate the folder with the plugin. Right-click on the folder and select Compress. Now you have a newly created .zip file which can be installed as described here.   
-4. Click “Upload&Install” button.   
-5. Click “Activate Plugin” button for activating the plugin.    
+4. Click "Upload&Install" button.   
+5. Click "Activate Plugin" button for activating the plugin.    
 If installation does any problem occurs, please contact us info@web-dorado.com.    
 
 = Step 2:  Adding images to Sliders. =
@@ -164,7 +164,7 @@ Below you will be able to add slides.
 2.5 Add Video. In addition to images, you can instead use videos from YouTube and Vimeo. You should click on Add Video button, provide the link to the video and press Add button. The image associated with the YouTube/Vimeo video will be automatically displayed.  
 2.6 Remove. You can use Remove button to remove the included image or video.  
 
-For adding additional images, you should press “+” next to the Slide tab.   
+For adding additional images, you should press "+" next to the Slide tab.   
 
 = Step 3:  Adding layers to the slide. =
 There are three types of layers that can be added to the slides: text, image and social button.  
@@ -328,7 +328,7 @@ Image
 Step 5: Publishing the created Slider.   
 To insert the Slider into a Page or a Post:   
 
-You can insert the created Slider into a page or post. Go to the Post or Page. Here you will see “Insert Slider” button with a Slider icon. Press the button, Select the slider and press Insert.   
+You can insert the created Slider into a page or post. Go to the Post or Page. Here you will see "Insert Slider" button with a Slider icon. Press the button, Select the slider and press Insert.   
 
 In addition, you can insert the shortcode manually. The corresponding shortcode is displayed next to the created slider in Slider WD>Sliders section under Shortcode column.  
 
