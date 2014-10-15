@@ -245,7 +245,7 @@ To access the settings you should go to Slider WD>Sliders>Settings tab.
 
 Dimensions. Set the maximum dimensions of the slider. The dimension is set to maximum since with smaller displays the slider will be displayed in smaller dimensions due ot the responsiveness feature. This will be the constant dimension regardless of the images.  
 Full width. Choose whether to have the overall slider stretched to the full width of the page, where it is posted or not. The length will be given corresponding to the original ratio, e.g. if you have it set to 480x300 and the width of the page is 960, then the height will be 600.
-Background fit. There are three options for inserting the image into a slide. You can choose the relevant option best for you. If you have the image identical to the Dimensions section, then all three will provide the same full covered look. As for the cases, if the image is smaller/larger than the original one, the views will be a bit different. Let’s consider the cases.  
+Background fit. There are three options for inserting the image into a slide. You can choose the relevant option best for you. If you have the image identical to the Dimensions section, then all three will provide the same full covered look. As for the cases, if the image is smaller/larger than the original one, the views will be a bit different. Let's consider the cases.  
 Cover. The image will get cut from the middle part and will get enlarged to fit the entire background.  
 Fill. The image will get stretched or compressed to the dimensions of the slider.  
 Contain. The image will stay in its original form and the rest of the slider content area will be covered by the slider background.
