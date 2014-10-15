@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Slider WD
  * Plugin URI: http://web-dorado.com/products/wordpress-slider-plugin.html
- * Description: Slider WD is an effective tool for adding responsive sliders to your website. It uses large number of transition effects.
+ * Description: Slider WD is a great tool for creating responsive sliders. It uses various transition effects and layers (text and image).
  * Version: 1.0.1
  * Author: WebDorado
  * Author URI: http://web-dorado.com/

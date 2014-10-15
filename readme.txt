@@ -8,7 +8,7 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Slider WD is an effective tool for adding responsive sliders to your website. It uses large number of transition effects.
+Slider WD is a great tool for creating responsive sliders. It uses various transition effects and layers (text and image).
 
 == Description ==
 
