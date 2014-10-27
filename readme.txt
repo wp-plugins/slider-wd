@@ -126,7 +126,7 @@ If any problem occurs, please contact us at  [info@web-dorado.com](mailto:info@w
 
 
 == Changelog ==
-= 1.0.0 =
+= 1.0.1 =
 *  User manual links added.
 
 = 1.0.0 =
