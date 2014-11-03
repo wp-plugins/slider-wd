@@ -48,6 +48,7 @@ Upgrade to [WordPress Slider Pro](http://web-dorado.com/products/wordpress-slide
 *   3 types of Layers (text, image, social sharing)   
 *   Slider Share feature for sliders (Google+, Tumblr, Twitter, Pinterest and Facebook)   
 *   Slider Filmstrip possibility    
+*   Support for Vimeo and YouTube videos   
 
 ### Supported languages 
 
