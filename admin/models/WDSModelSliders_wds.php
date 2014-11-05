@@ -32,7 +32,7 @@ class WDSModelSliders_wds {
       $rows = array();
       $rows[0] = new stdClass();
       $rows[0]->id = 'pr1';
-      $rows[0]->title = 'Slide';
+      $rows[0]->title = 'Slide 1';
       $rows[0]->type = 'image';
       $rows[0]->image_url = '';
       $rows[0]->thumb_url = '';
@@ -60,7 +60,7 @@ class WDSModelSliders_wds {
     global $wpdb;
     $where = ((isset($_POST['search_value'])) ? 'WHERE name LIKE "%' . esc_html(stripslashes($_POST['search_value'])) . '%"' : '');
     $asc_or_desc = ((isset($_POST['asc_or_desc'])) ? esc_html(stripslashes($_POST['asc_or_desc'])) : 'asc');
-    $order_by = ' ORDER BY `' . ((isset($_POST['order_by']) && esc_html(stripslashes($_POST['order_by'])) != '') ? esc_html(stripslashes($_POST['order_by'])) : 'id') . '` ' . $asc_or_desc;
+    $order_by = ' ORDER BY `' . ((isset($_POST['order_by']) && esc_html(stripslashes($_POST['order_by'])) != '' && esc_html(stripslashes($_POST['order_by'])) != 'order') ? esc_html(stripslashes($_POST['order_by'])) : 'id') . '` ' . $asc_or_desc;
     if (isset($_POST['page_number']) && $_POST['page_number']) {
       $limit = ((int) $_POST['page_number'] - 1) * 20;
     }
@@ -85,15 +85,17 @@ class WDSModelSliders_wds {
     else {
       $row = new stdClass();
       if ($reset && $id) {
-        $row = $wpdb->get_row($wpdb->prepare('SELECT name,width,height FROM ' . $wpdb->prefix . 'wdsslider WHERE id="%d"', $id));
+        $row = $wpdb->get_row($wpdb->prepare('SELECT name FROM ' . $wpdb->prefix . 'wdsslider WHERE id="%d"', $id));
       }
       else {
         $row->name = '';
-        $row->width = 800;
-        $row->height = 300;
+        
       }
       $row->id = $id;
+      $row->width = 800;
+      $row->height = 300;
       $row->full_width = 0;
+      $row->spider_uploader = 1;	  
       $row->bg_fit = 'cover';
       $row->align = 'center';
       $row->effect = 'fade';
@@ -108,7 +110,7 @@ class WDSModelSliders_wds {
       $row->background_transparent = 100;
       $row->glb_border_width = 0;
       $row->glb_border_style = 'none';
-      $row->glb_border_color = 'FFFFFF';
+      $row->glb_border_color = '000000';
       $row->glb_border_radius = '';
       $row->glb_margin = 0;
       $row->glb_box_shadow = '';

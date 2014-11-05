@@ -1,3 +1,304 @@
+function spider_ajax_save(form_id, event) {
+  /* Loading.*/
+  jQuery(".spider_load").show();
+
+  var post_data = {};
+  post_data["task"] = "apply";
+  /* Global.*/
+  post_data["current_id"] = jQuery("#current_id").val();
+  post_data["slide_ids_string"] = jQuery("#slide_ids_string").val();
+  post_data["del_slide_ids_string"] = jQuery("#del_slide_ids_string").val();
+  post_data["nav_tab"] = jQuery("#nav_tab").val();
+  post_data["tab"] = jQuery("#tab").val();
+  post_data["sub_tab"] = jQuery("#sub_tab").val();
+  post_data["name"] = jQuery("#name").val();
+  post_data["width"] = jQuery("#width").val();
+  post_data["height"] = jQuery("#height").val();
+  post_data["full_width"] = jQuery("input[name=full_width]:checked").val();
+  post_data["bg_fit"] = jQuery("input[name=bg_fit]:checked").val();
+  post_data["align"] = jQuery("#align").val();
+  post_data["effect"] = jQuery("#effect").val();
+  post_data["time_intervval"] = jQuery("#time_intervval").val();
+  post_data["autoplay"] = jQuery("input[name=autoplay]:checked").val();
+  post_data["shuffle"] = jQuery("input[name=shuffle]:checked").val();
+  post_data["music"] = jQuery("input[name=music]:checked").val();
+  post_data["music_url"] = jQuery("#music_url").val();
+  post_data["preload_images"] = jQuery("input[name=preload_images]:checked").val();
+  post_data["background_color"] = jQuery("#background_color").val();
+  post_data["background_transparent"] = jQuery("#background_transparent").val();
+  post_data["glb_border_width"] = jQuery("#glb_border_width").val();
+  post_data["glb_border_style"] = jQuery("#glb_border_style").val();
+  post_data["glb_border_color"] = jQuery("#glb_border_color").val();
+  post_data["glb_border_radius"] = jQuery("#glb_border_radius").val();
+  post_data["glb_margin"] = jQuery("#glb_margin").val();
+  post_data["glb_box_shadow"] = jQuery("#glb_box_shadow").val();
+  post_data["image_right_click"] = jQuery("input[name=image_right_click]:checked").val();
+  post_data["layer_out_next"] = jQuery("input[name=layer_out_next]:checked").val();
+  post_data["published"] = jQuery("input[name=published]:checked").val();
+
+  /* Navigation.*/
+  post_data["prev_next_butt"] = jQuery("input[name=prev_next_butt]:checked").val();
+  post_data["play_paus_butt"] = jQuery("input[name=play_paus_butt]:checked").val();
+  post_data["navigation"] = jQuery("input[name=navigation]:checked").val();
+  post_data["rl_butt_style"] = jQuery("#rl_butt_style").val();
+  post_data["rl_butt_size"] = jQuery("#rl_butt_size").val();
+  post_data["pp_butt_size"] = jQuery("#pp_butt_size").val();
+  post_data["butts_color"] = jQuery("#butts_color").val();
+  post_data["hover_color"] = jQuery("#hover_color").val();
+  post_data["nav_border_width"] = jQuery("#nav_border_width").val();
+  post_data["nav_border_style"] = jQuery("#nav_border_style").val();
+  post_data["nav_border_color"] = jQuery("#nav_border_color").val();
+  post_data["nav_border_radius"] = jQuery("#nav_border_radius").val();
+  post_data["nav_bg_color"] = jQuery("#nav_bg_color").val();
+  post_data["butts_transparent"] = jQuery("#butts_transparent").val();
+
+  /* Bullets.*/
+  post_data["enable_bullets"] = jQuery("input[name=enable_bullets]:checked").val();
+  post_data["bull_position"] = jQuery("#bull_position").val();
+  post_data["bull_style"] = jQuery("#bull_style").val();
+  post_data["bull_size"] = jQuery("#bull_size").val();
+  post_data["bull_color"] = jQuery("#bull_color").val();
+  post_data["bull_act_color"] = jQuery("#bull_act_color").val();
+  post_data["bull_margin"] = jQuery("#bull_margin").val();
+
+  /* Filmstrip.*/
+  post_data["enable_filmstrip"] = jQuery("input[name=enable_filmstrip]:checked").val();
+  post_data["film_pos"] = jQuery("#film_pos").val();
+  post_data["film_thumb_width"] = jQuery("#film_thumb_width").val();
+  post_data["film_thumb_height"] = jQuery("#film_thumb_height").val();
+  post_data["film_bg_color"] = jQuery("#film_bg_color").val();
+  post_data["film_tmb_margin"] = jQuery("#film_tmb_margin").val();
+  post_data["film_act_border_width"] = jQuery("#film_act_border_width").val();
+  post_data["film_act_border_style"] = jQuery("#film_act_border_style").val();
+  post_data["film_act_border_color"] = jQuery("#film_act_border_color").val();
+  post_data["film_dac_transparent"] = jQuery("#film_dac_transparent").val();
+
+  /* Timer bar.*/
+  post_data["enable_time_bar"] = jQuery("input[name=enable_time_bar]:checked").val();
+  post_data["timer_bar_type"] = jQuery("#timer_bar_type").val();
+  post_data["timer_bar_size"] = jQuery("#timer_bar_size").val();
+  post_data["timer_bar_color"] = jQuery("#timer_bar_color").val();
+  post_data["timer_bar_transparent"] = jQuery("#timer_bar_transparent").val();
+
+  /* Watermark.*/
+  post_data["built_in_watermark_type"] = jQuery("input[name=built_in_watermark_type]:checked").val();
+  post_data["built_in_watermark_text"] = jQuery("#built_in_watermark_text").val();
+  post_data["built_in_watermark_font_size"] = jQuery("#built_in_watermark_font_size").val();
+  post_data["built_in_watermark_font"] = jQuery("#built_in_watermark_font").val();
+  post_data["built_in_watermark_color"] = jQuery("#built_in_watermark_color").val();
+  post_data["built_in_watermark_opacity"] = jQuery("#built_in_watermark_opacity").val();
+  post_data["built_in_watermark_position"] = jQuery("input[name=built_in_watermark_position]:checked").val();
+  post_data["built_in_watermark_url"] = jQuery("#built_in_watermark_url").val();
+  post_data["built_in_watermark_size"] = jQuery("#built_in_watermark_size").val();
+
+  post_data["spider_uploader"] = jQuery("input[name=spider_uploader]:checked").val();
+
+  /* Css.*/
+  post_data["css"] = jQuery("#css").val();
+
+  var wds_slide_ids = jQuery("#slide_ids_string").val();
+  var slide_ids_array = wds_slide_ids.split(",");
+  for (var i in slide_ids_array) {
+    if (slide_ids_array.hasOwnProperty(i) && slide_ids_array[i] && slide_ids_array[i] != ",") {
+      var slide_id = slide_ids_array[i];
+      post_data["title" + slide_id] = jQuery("#title" + slide_id).val();
+      post_data["order" + slide_id] = jQuery("#order" + slide_id).val();
+      post_data["published" + slide_id] = jQuery("input[name=published" + slide_id + "]:checked").val();
+      post_data["link" + slide_id] = jQuery("#link" + slide_id).val();
+      post_data["type" + slide_id] = jQuery("#type" + slide_id).val();
+      post_data["image_url" + slide_id] = jQuery("#image_url" + slide_id).val();
+      post_data["thumb_url" + slide_id] = jQuery("#thumb_url" + slide_id).val();
+      var layer_ids_string = jQuery("#slide" + slide_id + "_layer_ids_string").val();
+      post_data["slide" + slide_id + "_layer_ids_string"] = layer_ids_string;
+      post_data["slide" + slide_id + "_del_layer_ids_string"] = jQuery("#slide" + slide_id + "_del_layer_ids_string").val();
+      if (layer_ids_string) {
+        var layer_ids_array = layer_ids_string.split(",");
+        for (var i in layer_ids_array) {
+          if (layer_ids_array.hasOwnProperty(i) && layer_ids_array[i] && layer_ids_array[i] != ",") {
+            var json_data = {};
+            var layer_id = layer_ids_array[i];
+            var prefix = "slide" + slide_id + "_layer" + layer_id;
+            var type = jQuery("#" + prefix + "_type").val();
+            json_data["type"] = type;
+            json_data["title"] = jQuery("#" + prefix + "_title").val();
+            json_data["depth"] = jQuery("#" + prefix + "_depth").val();
+            switch (type) {
+              case "text": {
+                json_data["text"] = jQuery("#" + prefix + "_text").val();
+                json_data["image_width"] = jQuery("#" + prefix + "_image_width").val();
+                json_data["image_height"] = jQuery("#" + prefix + "_image_height").val();
+                json_data["image_scale"] = jQuery("input[name=slide" + slide_id + "_layer" + layer_id + "_image_scale]:checked").val();
+                json_data["size"] = jQuery("#" + prefix + "_size").val();
+                json_data["color"] = jQuery("#" + prefix + "_color").val();
+                json_data["ffamily"] = jQuery("#" + prefix + "_ffamily").val();
+                json_data["fweight"] = jQuery("#" + prefix + "_fweight").val();
+                json_data["link"] = jQuery("#" + prefix + "_link").val();
+                json_data["padding"] = jQuery("#" + prefix + "_padding").val();
+                json_data["fbgcolor"] = jQuery("#" + prefix + "_fbgcolor").val();
+                json_data["transparent"] = jQuery("#" + prefix + "_transparent").val();
+                json_data["border_width"] = jQuery("#" + prefix + "_border_width").val();
+                json_data["border_style"] = jQuery("#" + prefix + "_border_style").val();
+                json_data["border_color"] = jQuery("#" + prefix + "_border_color").val();
+                json_data["border_radius"] = jQuery("#" + prefix + "_border_radius").val();
+                json_data["shadow"] = jQuery("#" + prefix + "_shadow").val();
+                break;
+              }
+              case "image": {
+                json_data["image_url"] = jQuery("#" + prefix + "_image_url").val();
+                json_data["image_width"] = jQuery("#" + prefix + "_image_width").val();
+                json_data["image_height"] = jQuery("#" + prefix + "_image_height").val();
+                json_data["image_scale"] = jQuery("input[name=slide" + slide_id + "_layer" + layer_id + "_image_scale]:checked").val();
+                json_data["alt"] = jQuery("#" + prefix + "_alt").val();
+                json_data["link"] = jQuery("#" + prefix + "_link").val();
+                json_data["imgtransparent"] = jQuery("#" + prefix + "_imgtransparent").val();
+                json_data["border_width"] = jQuery("#" + prefix + "_border_width").val();
+                json_data["border_style"] = jQuery("#" + prefix + "_border_style").val();
+                json_data["border_color"] = jQuery("#" + prefix + "_border_color").val();
+                json_data["border_radius"] = jQuery("#" + prefix + "_border_radius").val();
+                json_data["shadow"] = jQuery("#" + prefix + "_shadow").val();
+                break;
+              }
+              case "social": {
+                json_data["social_button"] = jQuery("#" + prefix + "_social_button").val();
+                json_data["size"] = jQuery("#" + prefix + "_size").val();
+                json_data["transparent"] = jQuery("#" + prefix + "_transparent").val();
+                json_data["color"] = jQuery("#" + prefix + "_color").val();
+                json_data["hover_color"] = jQuery("#" + prefix + "_hover_color").val();
+                break;
+              }
+              default:
+                break;
+            }
+            json_data["left"] = jQuery("#" + prefix + "_left").val();
+            json_data["top"] = jQuery("#" + prefix + "_top").val();
+            json_data["published"] = jQuery("input[name=slide" + slide_id + "_layer" + layer_id + "_published]:checked").val();
+            json_data["start"] = jQuery("#" + prefix + "_start").val();
+            json_data["layer_effect_in"] = jQuery("#" + prefix + "_layer_effect_in").val();
+            json_data["duration_eff_in"] = jQuery("#" + prefix + "_duration_eff_in").val();
+            json_data["end"] = jQuery("#" + prefix + "_end").val();
+            json_data["layer_effect_out"] = jQuery("#" + prefix + "_layer_effect_out").val();
+            json_data["duration_eff_out"] = jQuery("#" + prefix + "_duration_eff_out").val();
+            post_data[prefix + "_json"] = JSON.stringify(json_data);
+            json_data = null;
+          }
+        }
+      }
+    }
+  }
+
+  jQuery.post(
+    jQuery('#' + form_id).action,
+    post_data,
+    function (data) {
+      var content = jQuery(data).find(".wds_nav_global_box").parent();
+      var str = content.html();
+      jQuery(".wds_nav_global_box").parent().html(str);
+      var str = jQuery(data).find(".wds_task_cont").html();
+      jQuery(".wds_task_cont").html(str);
+      var str = jQuery(data).find(".wds_buttons").html();
+      jQuery(".wds_buttons").html(str);
+      var content = jQuery(data).find(".wds_slides_box");
+      var str = content.html();
+      jQuery(".wds_slides_box").html(str);
+    }
+  ).success(function (data, textStatus, errorThrown) {
+    wds_success(form_id, 0);
+  });
+  if (event.preventDefault) {
+    event.preventDefault();
+  }
+  else {
+    event.returnValue = false;
+  }
+}
+
+function wds_action_after_save(form_id) {
+  var post_data = {};
+  post_data["task"] = jQuery("#task").val();
+  post_data["current_id"] = jQuery("#current_id").val();
+  jQuery.post(
+    jQuery("#" + form_id).attr("action"),
+    post_data,
+    function (data) {
+      jQuery(".wds_preview").find("div[class^='wds_preview_image']").each(function() {
+        var image = jQuery(this).css("background-image");
+        jQuery(this).css({backgroundImage: image.replace('")', Math.floor((Math.random() * 100) + 1) + '")')});
+      });
+    }
+  ).success(function (data, textStatus, errorThrown) {
+    wds_success(form_id, 1);
+  });
+}
+
+function wds_success(form_id, end) {
+  jQuery("#" + form_id).parent().find(".spider_message").remove();
+  var task = jQuery("#task").val();
+  var message;
+  switch (task) {
+    case "save": {
+      jQuery("#" + form_id).submit();
+      break;
+    }
+    case "set_watermark": {
+      if (end) {
+        if (jQuery("input[name=built_in_watermark_type]:checked").val() == 'none') {
+          message = "<div class='error'><strong><p>You must set watermark type.</p></strong></div>";
+        }
+        else {
+          message = "<div class='updated'><strong><p>Watermark Succesfully Set.</p></strong></div>";
+        }
+      }
+      else {
+        wds_action_after_save(form_id);
+      }
+      break;
+    }
+    case "reset_watermark": {
+      if (end) {
+        message = "<div class='updated'><strong><p>Watermark Succesfully Reset.</p></strong></div>";
+      }
+      else {
+        wds_action_after_save(form_id);
+      }
+      break;
+    }
+    case "reset": {
+      jQuery("#" + form_id).submit();
+      break;
+    }
+    default: {
+      message = "<div class='updated'><strong><p>Items Succesfully Saved.</p></strong></div>";
+      break;
+    }
+  }
+  /* Loading.*/
+  jQuery(".spider_load").hide();
+  if (message) {
+    jQuery(".spider_message_cont").html(message);
+    jQuery(".spider_message_cont").show();
+  }
+  wds_onload();
+  jscolor.bind();
+}
+
+
+function wds_onload() {
+  jQuery(".wds_tabs").show();
+  var nav_tab = jQuery("#nav_tab").val();
+  wds_change_nav(jQuery(".wds_nav_tabs li[tab_type='" + nav_tab + "']"), 'wds_nav_' + nav_tab + '_box');
+  var tab = jQuery("#tab").val();
+  wds_change_tab(jQuery(".wds_tab_label[tab_type='" + tab + "']"), 'wds_' + tab + '_box');
+  bwg_built_in_watermark("watermark_type_" + jQuery("input[name=built_in_watermark_type]:checked").val());
+  preview_built_in_watermark();
+  wds_slide_weights();
+  if (jQuery("#music1").is(":checked")) {
+    bwg_enable_disable('', 'tr_music_url', 'music1');
+  }
+  else {
+    bwg_enable_disable('none', 'tr_music_url', 'music0');
+  }
+}
+
 function spider_select_value(obj) {
   obj.focus();
   obj.select();
@@ -100,8 +401,6 @@ function wds_check_required(id, name) {
   if (jQuery('#' + id).val() == '') {
     alert(name + '* field is required.');
     wds_change_tab(jQuery(".wds_tab_label[tab_type='slides']"), 'wds_slides_box');
-    /*wds_change_tab(jQuery(".wds_tab_label[tab_type='settings']"), 'wds_settings_box');
-    wds_change_nav(jQuery(".wds_nav_tabs li[tab_type='global']"), 'wds_nav_global_box');*/
     jQuery('#' + id).attr('style', 'border-color: #FF0000;');
     jQuery('#' + id).focus();
     jQuery('html, body').animate({
@@ -557,6 +856,52 @@ function spider_media_uploader(id, e) {
   custom_uploader.open();
 }
 
+function wds_add_image(files, image_for, slide_id) {	
+  switch (image_for) {
+    case 'add_slides': {
+      /* Add one or more slides.*/
+      for (var i in files) { 
+      wds_add_slide();
+      var slides_count = jQuery(".wbs_subtab a[id^='wbs_subtab']").length;
+      var new_slide_id = "pr_" + slides_count;
+      jQuery("#image_url" + new_slide_id).val(files[i]['url']);
+      jQuery("#thumb_url" + new_slide_id).val(files[i]['thumb_url']);
+      jQuery("#wds_preview_image" + new_slide_id).css("background-image", 'url("' + files[i]['url'] + '")');
+      jQuery("#delete_image_url" + new_slide_id).css("display", "inline-block");
+      jQuery("#wds_preview_image" + new_slide_id).css("display", "inline-block");
+      jQuery("#type" + new_slide_id).val("image");
+      jQuery("#trlink" + new_slide_id).show();
+    }
+    break;
+    }
+    case 'add_layer': {
+      /* Add image layer to current slide.*/
+      wds_add_layer('image', slide_id, '', '', '', files);
+      break;
+    }
+    case 'add_update_slide': {
+      /* Add or update current slide.*/
+      var file_resolution = [];						                                 							
+      jQuery("#image_url" + slide_id).val(files[0]['url']);
+      jQuery("#thumb_url" + slide_id).val(files[0]['thumb_url']);
+      jQuery("#wds_preview_image" + slide_id).css("background-image", 'url("' + files[0]['url'] + '")');
+      jQuery("#delete_image_url" + slide_id).css("display", "inline-block");
+      jQuery("#wds_preview_image" + slide_id).css("display", "inline-block");
+      jQuery("#type" + slide_id).val("image");
+      jQuery("#trlink" + slide_id).show();
+    }
+    case 'watermark': {
+      /* Add image for watermark.*/
+      document.getElementById("built_in_watermark_url").value = files[0]['url']; 
+      preview_built_in_watermark();							
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+}
+
 function wds_change_sub_tab(that, box) {
   jQuery("#sub_tab").val(jQuery(that).attr("tab_type"));
   jQuery(".wds_tabs a").removeClass("wds_sub_active");
@@ -694,13 +1039,14 @@ function wds_duplicate_layer(type, id, layerID) {
              "left: 0; top: 0; display: inline-block;" +
              "color: #" + jQuery("#" + prefix + "_color").val() + "; " +
              "font-size: " + jQuery("#" + prefix + "_size").val() + "px; " +
-             "line-height: " + jQuery("#" + prefix + "_size").val() + "px; " +
+             "line-height: 1.25em; " +
              "font-family: " + jQuery("#" + prefix + "_ffamily").val() + "; " +
              "font-weight: " + jQuery("#" + prefix + "_fweight").val() + "; " +
              "padding: " + jQuery("#" + prefix + "_padding").val() + "; " +
              "background-color: " + wds_hex_rgba(jQuery("#" + prefix+ "_fbgcolor").val(), (100 - jQuery("#" + prefix+ "_transparent").val())) + "; " +
              "border: " + jQuery("#" + prefix + "_border_width").val() + "px " + jQuery("#" + prefix+ "_border_style").val() + " #" + jQuery("#" + prefix+ "_border_color").val() + "; " +
-             "border-radius: " + jQuery("#" + prefix + "_border_radius").val() + ";"
+             "border-radius: " + jQuery("#" + prefix + "_border_radius").val() + ";" +
+             "position: absolute;"
     });
     wds_text_width("#" + new_prefix + "_image_width", new_prefix);
     wds_text_height("#" + new_prefix + "_image_height", new_prefix);
@@ -710,7 +1056,7 @@ function wds_duplicate_layer(type, id, layerID) {
     jQuery("#wds_preview_image" + id).append(jQuery("<img />").attr({
       id: new_prefix,
       src: jQuery("#" + prefix).attr("src"),
-      class: "wds_draggable_" + id + " wds_draggable",
+      "class": "wds_draggable_" + id + " wds_draggable",
       onclick: "wds_showhide_layer('" + new_prefix + "_tbody', 1)",
       style: "z-index: " + jQuery("#" + new_prefix + "_depth").val() + "; " +
              "left: 0; top: 0; " +
@@ -727,7 +1073,7 @@ function wds_duplicate_layer(type, id, layerID) {
 }
 
 var wds_layerID = 0;
-function wds_add_layer(type, id, layerID, event, duplicate) {
+function wds_add_layer(type, id, layerID, event, duplicate, files) {
   var layers_count = jQuery(".wds_slide" + id + " tbody").length;
   wds_layerID = layers_count;
   if (typeof layerID == "undefined" || layerID == "") {
@@ -870,7 +1216,7 @@ function wds_add_layer(type, id, layerID, event, duplicate) {
   var tbody = '<tr class="wds_layer_head_tr">' +
                 '<td colspan="4" class="wds_layer_head">' +
                   '<div class="handle connectedSortable" title="Drag to re-order"></div>' +
-                  '<span class="wds_layer_label" onclick="wds_showhide_layer(\'' + tbodyID + '\', 0)"><input id="' + prefix + '_title" name="' + prefix + '_title" type="text" class="wds_layer_title" style="width: 80px;" value="Layer ' + wds_layerID + '" /></span>' +
+                  '<span class="wds_layer_label" onclick="wds_showhide_layer(\'' + tbodyID + '\', 0)"><input id="' + prefix + '_title" name="' + prefix + '_title" type="text" class="wds_layer_title" style="width: 80px;" value="Layer ' + wds_layerID + '" title="Layer title" /></span>' +
                   '<span class="wds_layer_remove" title="Delete layer" onclick="wds_delete_layer(\'' + id + '\', \'' + layerID + '\')"></span>' +
                   '<span class="wds_layer_dublicate" title="Duplicate layer" onclick="wds_add_layer(\'' + type + '\', \'' + id + '\', \'\', event, 1); wds_duplicate_layer(\'' + type + '\', \'' + id + '\', \'' + layerID + '\');"></span>' +
                   '<input type="text" name="' + prefix + '_depth" id="' + prefix + '_depth" prefix="' + prefix + '" value="' + wds_layerID + '" class="wds_layer_depth spider_int_input" onkeypress="return spider_check_isnum(event)" onchange="jQuery(\'#' + prefix + '\').css({zIndex: jQuery(this).val()})" title="z-index" /></td>' +
@@ -881,15 +1227,17 @@ function wds_add_layer(type, id, layerID, event, duplicate) {
                         '<td>' +
                           '<input id="' + prefix + '_image_width" class="spider_int_input" type="text" onchange="wds_text_width(this,\'' + prefix + '\')" value="" name="' + prefix + '_image_width" /> x ' +
                           '<input id="' + prefix + '_image_height" class="spider_int_input" type="text" onchange="wds_text_height(this,\'' + prefix + '\')" value="" name="' + prefix + '_image_height" /> % ' +
-                          '<input id="' + prefix + '_image_scale" type="checkbox" onchange="wds_break_word(this, \'' + prefix + '\')" name="' + prefix + '_image_scale" checked="checked"/> Break-word' +
-                          '<div class="spider_description">Leave blank to keep the initial dimensions.</div></td>';
+                          '<input id="' + prefix + '_image_scale" type="checkbox" onchange="wds_break_word(this, \'' + prefix + '\')" name="' + prefix + '_image_scale" checked="checked"/><label for="' + prefix + '_image_scale">Break-word</label>' +
+                          '<div class="spider_description">Leave blank to keep the initial width and height.</div></td>';
   var alt = '<td class="spider_label"><label for="' + prefix + '_alt">Alt: </label></td>' +
-             '<td><input type="text" id="' + prefix + '_alt" name="' + prefix + '_alt" value="" size="39" /><div class="spider_description"></div></td>';
+             '<td><input type="text" id="' + prefix + '_alt" name="' + prefix + '_alt" value="" size="39" />' +
+                 '<div class="spider_description">Set the HTML attribute specified in the IMG tag.</div></td>';
   var link = '<td class="spider_label"><label for="' + prefix + '_link">Link: </label></td>' +
              '<td><input type="text" id="' + prefix + '_link" name="' + prefix + '_link" value="" size="39" /><div class="spider_description">Use http:// and https:// for external links.</div></td>';
   var position = '<td class="spider_label"><label>Position: </label></td>' +
                  '<td> X <input type="text" name="' + prefix + '_left" id="' + prefix + '_left" value="0" class="spider_int_input" onkeypress="return spider_check_isnum(event)" onchange="jQuery(\'#' + prefix + '\').css({left: jQuery(this).val() + \'px\'})" />' +
-                     ' Y <input type="text" name="' + prefix + '_top" id="' + prefix + '_top" value="0" class="spider_int_input" onkeypress="return spider_check_isnum(event)" onchange="jQuery(\'#' + prefix + '\').css({top: jQuery(this).val() + \'px\'})" /><div class="spider_description"></div></td>';
+                     ' Y <input type="text" name="' + prefix + '_top" id="' + prefix + '_top" value="0" class="spider_int_input" onkeypress="return spider_check_isnum(event)" onchange="jQuery(\'#' + prefix + '\').css({top: jQuery(this).val() + \'px\'})" />' +
+                     '<div class="spider_description">In addition you can drag and drop the layer to a desired position.</div></td>';
   var published = '<td class="spider_label"><label>Published: </label></td>' +
                   '<td><input type="radio" id="' + prefix + '_published1" name="' + prefix + '_published" checked="checked" value="1" ><label for="' + prefix + '_published1">Yes</label>' +
                       '<input type="radio" id="' + prefix + '_published0" name="' + prefix + '_published" value="0" /><label for="' + prefix + '_published0">No</label><div class="spider_description"></div></td>';
@@ -922,8 +1270,8 @@ function wds_add_layer(type, id, layerID, event, duplicate) {
                      '<input type="hidden" name="' + prefix + '_image_url" id="' + prefix + '_image_url" />' +
                      '<input type="text" name="' + prefix + '_image_width" id="' + prefix + '_image_width" value="" class="spider_int_input" onkeyup="wds_scale(\'#' + prefix + '_image_scale\', \'' + prefix + '\')" /> x ' +
                      '<input type="text" name="' + prefix + '_image_height" id="' + prefix + '_image_height" value="" class="spider_int_input" onkeyup="wds_scale(\'#' + prefix + '_image_scale\', \'' + prefix + '\')" /> px ' +
-                     '<input type="checkbox" name="' + prefix + '_image_scale" id="' + prefix + '_image_scale" onchange="wds_scale(this, \'' + prefix + '\')" />Scale' +
-                     '<div class="spider_description"></div></td>';
+                     '<input type="checkbox" name="' + prefix + '_image_scale" id="' + prefix + '_image_scale" onchange="wds_scale(this, \'' + prefix + '\')" /><label for="' + prefix + '_image_scale">Scale</label>' +
+                     '<div class="spider_description">Set width and height of the image.</div></td>';
   var social_button = '<td class="spider_label"><label for="' + prefix + '_social_button">Social button: </label></td>' +
                       '<td><select name="' + prefix + '_social_button" id="' + prefix + '_social_button" onchange="jQuery(\'#' + prefix + '\').attr(\'class\', \'wds_draggable fa fa-\' + jQuery(this).val())">' + social_button_option + '</select><div class="spider_description"></div></td>';
   var transparent = '<td class="spider_label"><label for="' + prefix + '_transparent">Transparent: </label></td>' +
@@ -968,15 +1316,16 @@ function wds_add_layer(type, id, layerID, event, duplicate) {
     case 'text': {
       jQuery("#wds_preview_image" + id).append(jQuery("<span />").attr({
         id: prefix,
-        class: "wds_draggable_" + id + " wds_draggable",
+        "class": "wds_draggable_" + id + " wds_draggable",
         onclick: "wds_showhide_layer('" + tbodyID + "', 1)",
         style: "z-index: " + layerID.replace("pr_", "") + "; " +
                "word-break: keep-all;" +
                "display: inline-block; " +
+               "position: absolute;" +
                "left: 0; top: 0; " +
                "color: #FFFFFF; " +
                "font-size: 18px; " +
-               "line-height: 18px; " +
+               "line-height: 1.25em; " +
                "font-family: Arial; " +
                "font-weight: normal; " +
                "padding: 5px; " +
@@ -1035,7 +1384,12 @@ function wds_add_layer(type, id, layerID, event, duplicate) {
         published +
       '</tr>' + layer_type;
       if (!duplicate) {
-        image_escape = wds_add_image_layer(prefix, event, tbodyID, id, layerID, tbody_html);
+	    if(spider_uploader) { // Add image layer by spider uploader
+		  wds_add_image_layer_by_spider_uploader(prefix, files, tbodyID, id, layerID, tbody_html);
+		}
+		else { // Add image layer by media uploader
+		  image_escape = wds_add_image_layer(prefix, event, tbodyID, id, layerID, tbody_html);
+		}		
       }
       else {
         jQuery("#" + tbodyID).append(tbody_html);
@@ -1054,11 +1408,23 @@ function wds_add_layer(type, id, layerID, event, duplicate) {
 }
 
 function wds_scale(that, prefix) {
-  if (jQuery(that).is(':checked')) {
-    jQuery("#" + prefix).css({width: "", maxWidth: jQuery("#" + prefix + "_image_width").val() + "px", height: "", maxHeight: jQuery("#" + prefix + "_image_height").val() + "px"});
+  var wds_theImage = new Image();
+  wds_theImage.src = jQuery("#" + prefix).attr("src");
+  var wds_origWidth = wds_theImage.width;
+  var wds_origHeight = wds_theImage.height;
+  var width = jQuery("#" + prefix + "_image_width").val();
+  var height = jQuery("#" + prefix + "_image_height").val();
+  jQuery("#" + prefix).css({maxWidth: width + "px", maxHeight: height + "px", width: "", height: ""});
+  if (!jQuery(that).is(':checked')) {
+    jQuery("#" + prefix).css({width: width + "px", height: height + "px"});
   }
-  else {
-    jQuery("#" + prefix).css({maxWidth: "none", width: jQuery("#" + prefix + "_image_width").val() + "px", maxHeight: "none", height: jQuery("#" + prefix + "_image_height").val() + "px"});
+  else if (wds_origWidth <= width || wds_origHeight <= height) {
+    if (wds_origWidth / width > wds_origHeight / height) {
+      jQuery("#" + prefix).css({width: width + "px"});
+    }
+    else {
+      jQuery("#" + prefix).css({height: height + "px"});
+    }
   }
 }
 
@@ -1135,7 +1501,7 @@ function wds_add_image_layer(prefix, e, tbodyID, id, layerID, tbody_html) {
     attachment = custom_uploader.state().get('selection').first().toJSON();
     jQuery("#wds_preview_image" + id).append(jQuery("<img />").attr({
       id: prefix,
-      class: "wds_draggable_" + id + " wds_draggable",
+      "class": "wds_draggable_" + id + " wds_draggable",
       onclick: "wds_showhide_layer('" + tbodyID + "', 1)",
       src: attachment.url,
       style: "z-index: " + layerID.replace("pr_", "") + "; " +
@@ -1143,7 +1509,7 @@ function wds_add_image_layer(prefix, e, tbodyID, id, layerID, tbody_html) {
              "border: 2px none #FFFFFF; " +
              "border-radius: 2px; " +
              "opacity: 1; filter: Alpha(opacity=100); " +
-             "/*position: absolute;*/"
+             "position: absolute;"
     }));
 
     var att_width = attachment.width ? attachment.width : jQuery("#" + prefix).width();
@@ -1164,6 +1530,37 @@ function wds_add_image_layer(prefix, e, tbodyID, id, layerID, tbody_html) {
   custom_uploader.open();
 }
 
+function wds_add_image_layer_by_spider_uploader(prefix, files, tbodyID, id, layerID, tbody_html) {
+  var file_resolution = [];
+  jQuery("#" + tbodyID).append(tbody_html);	
+    jQuery("#wds_preview_image" + id).append(jQuery("<img />").attr({
+      id: prefix,
+      class: "wds_draggable_" + id + " wds_draggable",
+      onclick: "wds_showhide_layer('" + tbodyID + "', 1)",
+      src: files[0]['url'],
+      style: "z-index: " + layerID.replace("pr_", "") + "; " +
+             "left: 0; top: 0; " +
+             "border: 2px none #FFFFFF; " +
+             "border-radius: 2px; " +
+             "opacity: 1; filter: Alpha(opacity=100); " +
+             "position: absolute;"
+    }));
+	
+    file_resolution = files[0]['resolution'].split('x');	
+    var file_width = parseInt(file_resolution[0]) ? parseInt(file_resolution[0]) : jQuery("#" + prefix).width();
+    var file_height = parseInt(file_resolution[1]) ? parseInt(file_resolution[1]) : jQuery("#" + prefix).height();
+    var width = Math.min(file_width, jQuery("#wds_preview_image" + id).width());
+    var height = Math.min(file_height, jQuery("#wds_preview_image" + id).height());
+
+    jQuery("#" + prefix + "_image_url").val(files[0]['url']);
+    jQuery("#" + prefix + "_image_width").val(width);
+    jQuery("#" + prefix + "_image_height").val(height);
+    jQuery("#" + prefix + "_image_scale").attr("checked", "checked");
+    wds_scale("#" + prefix + "_image_scale", prefix);
+    wds_drag_layer(id);
+    jscolor.bind();  
+}
+
 function wds_hex_rgba(color, transparent) {
   color = "#" + color;
   var redHex = color.substring(1, 3);
@@ -1180,30 +1577,50 @@ function wds_hex_rgba(color, transparent) {
 
 function wds_add_slide() {
   var slides_count = jQuery(".wbs_subtab a[id^='wbs_subtab']").length;
-  var slideID = "pr_" + ++slides_count;
+  var tmp_arr = [];
+  var tmp_i = 0;
+  jQuery(".wbs_subtab a[id^='wbs_subtab']").each(function() {
+    var tmp_id = jQuery(this).attr("id");
+    if (tmp_id.indexOf("pr_") !== -1) {
+      tmp_arr[tmp_i++] = tmp_id.replace("wbs_subtabpr_", "");
+    }
+  });
+  if (typeof tmp_arr !== 'undefined' && tmp_arr.length > 0) {
+    var slideID = "pr_" + (Math.max.apply(Math, tmp_arr) + 1);
+    ++slides_count;
+  }
+  else {
+    var slideID = "pr_" + ++slides_count;
+  }
+  
+  var uploader_href_for_add_slide = uploader_href.replace('slideID', slideID);
+  var uploader_href_for_add_layer = uploader_href_for_add_slide.replace('add_update_slide', 'add_layer'); 
+  if (spider_uploader) {
+    slide_upload_by = ' <a href="' + uploader_href_for_add_slide + '" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Image" onclick="return false;">Add Image</a>';
+    img_layer_upload_by = ' <a href="' + (!fv ? uploader_href_for_add_layer : "") + '" class="button-' + (!fv ? "primary thickbox thickbox-preview" : "secondary wds_free_button") + ' button button-small" id="content-add_media" title="Add Image Layer" onclick="' + (!fv ? "" : "alert('This functionality is disabled in free version.')") + '; return false;">Add Image Layer</a>';
+  }
+  else {
+    slide_upload_by = ' <input id="button_image_url' + slideID + '" class="button-primary" type="button" value="Add Image from Media Library" onclick="spider_media_uploader(\'' + slideID + '\', event); return false;" />';
+    img_layer_upload_by = ' <input class="button-' + (!fv ? "primary" : "secondary wds_free_button") + ' button button-small" type="button" value="Add Image Layer" onclick="' + (!fv ? "wds_add_layer(\'image\', \'' + slideID + '\', \'\', event)" : "alert('This functionality is disabled in free version.')") + '; return false;" />';
+  }
   jQuery("#slide_ids_string").val(jQuery("#slide_ids_string").val() + slideID + ',');
   jQuery(".wds_slides_box *").removeClass("wds_sub_active");
   jQuery(
     '<a id="wbs_subtab' + slideID + '" class="connectedSortable wds_sub_active" href="#">' +
-      ' <input type="text" id="title' + slideID + '" name="title' + slideID + '" value="Slide" class="wds_tab_title" tab_type="slide' + slideID + '" onclick="wds_change_sub_tab(this, \'wds_slide' + slideID + '\')" />' +
+      '<div class="handle" title="Drag to re-order"></div>' +
+      ' <input type="text" id="title' + slideID + '" name="title' + slideID + '" value="Slide ' + slides_count + '" class="wds_tab_title" tab_type="slide' + slideID + '" onclick="wds_change_sub_tab(this, \'wds_slide' + slideID + '\')" />' +
       ' <span class="wds_tab_remove" title="Delete slide" onclick="wds_remove_slide(\'' + slideID + '\')"></span>' +
       ' <input type="hidden" name="order' + slideID + '" id="order' + slideID + '" value="' + slides_count + '" /></a>').insertBefore(".wds_add_layer");
+  wds_change_sub_tab(jQuery('#title' + slideID), 'wds_slide' + slideID);
   jQuery(".wbs_subtab").after(
     '<div class="wds_box wds_sub_active wds_slide' + slideID + '">' +
       '<table class="ui-sortable' + slideID + '">' +
         '<thead><tr><td colspan="4"> </td></tr></thead>' +
         '<tbody>' +
           '<input type="hidden" name="type' + slideID + '" id="type' + slideID + '" value="image" />' +
-          '<tr><td class="spider_label"><label>Published: </label></td>' +
-              '<td><input id="published' + slideID + '1" type="radio" value="1" checked="checked" name="published' + slideID + '">' +
-                  '<label for="published' + slideID + '1">Yes</label>' +
-                  '<input id="published' + slideID + '0" type="radio" value="0" name="published' + slideID + '">' +
-                  '<label for="published' + slideID + '0">No</label></td>' +
-          '</tr><tr id="trlink' + slideID + '"><td class="spider_label"><label for="link' + slideID + '">Link the slide: </label></td>' +
-                   '<td><input id="link' + slideID + '" type="text" size="39" value="" name="link' + slideID + '" /></td>' +
-          '</tr><tr><td colspan="4">' +
-            ' <input id="button_image_url' + slideID + '" class="button-primary" type="button" value="Add Image from Media Library" onclick="spider_media_uploader(\'' + slideID + '\', event); return false;">' +
-            ' <input class="button-primary" type="button" value="Add Image URL" onclick="wds_add_image_url(\'' + slideID + '\')">' +
+          '<tr><td colspan="4">' +
+            slide_upload_by +
+            ' <input class="button-primary" type="button" value="Add Image by URL" onclick="wds_add_image_url(\'' + slideID + '\')">' +
             ' <input class="button-secondary wds_free_button" type="button" value="Add Video" onclick="alert(\'This functionality is disabled in free version.\')">' +
             ' <input id="delete_image_url' + slideID + '" class="button-secondary" type="button" value="Remove" onclick="spider_remove_url(\'button_image_url' + slideID + '\', \'image_url' + slideID + '\', \'delete_image_url' + slideID + '\', \'wds_preview_image' + slideID + '\')">' +
             ' <input id="image_url' + slideID + '" type="hidden" style="display: inline-block;" value="" name="image_url' + slideID + '">' +
@@ -1223,9 +1640,17 @@ function wds_add_slide() {
                         'border-radius: ' + jQuery('#glb_border_radius').val() + '; ' +
                         'box-shadow: ' + jQuery('#glb_box_shadow').val() + '; ' +
                         'width: inherit; height: inherit;"> </div></div></div></td>' +
+          '</tr><tr><td class="spider_label"><label>Published: </label></td>' +
+              '<td><input id="published' + slideID + '1" type="radio" value="1" checked="checked" name="published' + slideID + '">' +
+                  '<label for="published' + slideID + '1">Yes</label>' +
+                  '<input id="published' + slideID + '0" type="radio" value="0" name="published' + slideID + '">' +
+                  '<label for="published' + slideID + '0">No</label></td>' +
+          '</tr><tr id="trlink' + slideID + '"><td class="spider_label"><label for="link' + slideID + '">Link the slide to: </label></td>' +
+                   '<td><input id="link' + slideID + '" type="text" size="39" value="" name="link' + slideID + '" />' +
+                       '<div class="spider_description">You can set a redirection link, so that the user will get to the mentioned location upon hitting the slide.<br />Use http:// and https:// for external links.</div></td>' +
           '</tr><tr><td colspan="4">' +
-            ' <input class="button-primary button button-small" type="button" value="Add Text Layer" onclick="wds_add_layer(\'text\', \'' + slideID + '\'); return false;">' +
-            ' <input class="button-primary button button-small" type="button" value="Add Image Layer" onclick="wds_add_layer(\'image\', \'' + slideID + '\', \'\', event); return false;">' +
+            ' <input class="button-' + (!fv ? "primary" : "secondary wds_free_button") + ' button button-small" type="button" value="Add Text Layer" onclick="' + (!fv ? "wds_add_layer(\'text\', \'' + slideID + '\')" : "alert('This functionality is disabled in free version.')") + '; return false;">' +
+            img_layer_upload_by +
             ' <input class="button-secondary button button-small wds_free_button" type="button" value="Add Social Buttons Layer" onclick="alert(\'This functionality is disabled in free version.\'); return false;"></td>' +
           '</tr></tbody></table>' +
           '<input id="slide' + slideID + '_layer_ids_string" name="slide' + slideID + '_layer_ids_string" type="hidden" value="" />' +
@@ -1255,11 +1680,13 @@ function wds_remove_slide(slideID) {
 
     var slides = jQuery(".wbs_subtab a[id^='wbs_subtab']");
     for (var i in slides) {
-      firstSlideID = slides[i].id.replace("wbs_subtab", "");
+      if (slides[i]) {
+        firstSlideID = slides[i].id.replace("wbs_subtab", "");
+        jQuery("#wbs_subtab" + firstSlideID).addClass("wds_sub_active");
+        jQuery(".wds_slide" + firstSlideID).addClass("wds_sub_active");
+      }
       break;
     }
-    jQuery("#wbs_subtab" + firstSlideID).addClass("wds_sub_active");
-    jQuery(".wds_slide" + firstSlideID).addClass("wds_sub_active");
   }
 }
 
@@ -1267,7 +1694,6 @@ function wds_trans_end(id, effect) {
   var transitionEvent = wds_whichTransitionEvent();
   var e = document.getElementById(id);
   transitionEvent && e.addEventListener(transitionEvent, function() {
-    console.log("aaa");
     jQuery("#" + id).removeClass("animated").removeClass(effect);
   });
 }
@@ -1376,4 +1802,30 @@ function wds_text_height(that, prefix) {
     jQuery("#" + prefix).css({height: ""});
     jQuery(that).val("");
   }
+}
+
+function wds_whr(forfield) {
+  var width = jQuery("#width").val();
+  var height = jQuery("#height").val();
+  var ratio = jQuery("#ratio").val();
+  if (forfield == 'width') {
+    if (width && height) {
+      jQuery("#ratio").val(Math.round((width / height) * 100) / 100);
+    }
+    else if (width && ratio) {
+      jQuery("#height").val(Math.round((width / ratio) * 100) / 100);
+    }
+  }
+  else if (forfield == 'height') {
+    if (width && height) {
+      jQuery("#ratio").val(Math.round((width / height) * 100) / 100);
+    }
+  }
+  else {
+    if (width && ratio) {
+      jQuery("#height").val(Math.round((width / ratio) * 100) / 100);
+    }
+  }
+  jQuery('.wds_preview_wrapper').width(jQuery("#width").val());
+  jQuery('.wds_preview_wrapper').height(jQuery("#height").val());
 }

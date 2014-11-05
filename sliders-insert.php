@@ -71,6 +71,7 @@ function wds_insert() {
     `timer_bar_size` int(4) NOT NULL,
     `timer_bar_color` varchar(8) NOT NULL,
     `timer_bar_transparent` int(4) NOT NULL,
+    `spider_uploader` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdsslider);

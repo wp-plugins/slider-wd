@@ -13,6 +13,7 @@
 #main_featured_plugins_page #featured-plugins-list  li.player  .product {background: url("images/player.jpg") left center no-repeat;}
 #main_featured_plugins_page #featured-plugins-list  li.spider-calendar  .product {background: url("images/spider-calendar.jpg") left center no-repeat;}
 #main_featured_plugins_page #featured-plugins-list  li.zoom .product {background: url("images/zoom.jpg") left center no-repeat;}
+#main_featured_plugins_page #featured-plugins-list  li.fm-import .product {background: url("images/fm.import.jpg") left center no-repeat;}
 
 #main_featured_plugins_page * {
   color: #444;

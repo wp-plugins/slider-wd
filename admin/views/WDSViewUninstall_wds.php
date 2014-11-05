@@ -92,7 +92,7 @@ class WDSViewUninstall_wds {
       <p>The following Database Tables successfully deleted:</p>
       <p><?php echo $prefix; ?>wdsslider,</p>
       <p><?php echo $prefix; ?>wdsslide,</p>
-      <p><?php echo $prefix; ?>wdslayer,</p>
+      <p><?php echo $prefix; ?>wdslayer.</p>
     </div>
     <?php
     if (isset($_POST['bwg_delete_files'])) {

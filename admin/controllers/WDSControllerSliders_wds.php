@@ -55,36 +55,43 @@ class WDSControllerSliders_wds {
 
     require_once WD_S_DIR . "/admin/views/WDSViewSliders_wds.php";
     $view = new WDSViewSliders_wds($model);
-    $id = WDW_S_Library::get('current_id', 0);
+    $id = ((isset($_POST['current_id']) && esc_html(stripslashes($_POST['current_id'])) != '') ? esc_html(stripslashes($_POST['current_id'])) : 0);
     $view->edit($id);
   }
 
   public function save() {
-    $message = $this->save_slider_db();
-    $this->save_slide_db();
     $page = WDW_S_Library::get('page');
-    WDW_S_Library::spider_redirect(add_query_arg(array('page' => $page, 'task' => 'display', 'message' => $message), admin_url('admin.php')));
+    WDW_S_Library::spider_redirect(add_query_arg(array('page' => $page, 'task' => 'display', 'message' => 1), admin_url('admin.php')));
   }
 
   public function apply() {
-    $message = $this->save_slider_db();
+    $this->save_slider_db();
     $this->save_slide_db();
-    global $wpdb;
-    $id = (int) $wpdb->get_var('SELECT MAX(`id`) FROM ' . $wpdb->prefix . 'wdsslider');
-    $current_id = WDW_S_Library::get('current_id', $id);
-    $nav_tab = WDW_S_Library::get('nav_tab', 'global');
-    $tab = WDW_S_Library::get('tab', 'settings');
-    $sub_tab = WDW_S_Library::get('sub_tab', '');
-    $page = WDW_S_Library::get('page');
-    WDW_S_Library::spider_redirect(add_query_arg(array('page' => $page, 'task' => 'edit', 'current_id' => $current_id, 'nav_tab' => $nav_tab, 'tab' => $tab, 'sub_tab' => $sub_tab, 'message' => $message), admin_url('admin.php')));
+    $this->edit();
   }
+
+  // public function save_slide() {
+    // $this->save_slide_db();
+    // $this->edit();
+  // }
   
   public function save_slider_db() {
     global $wpdb;
+    $del_slide_ids_string = (isset($_POST['del_slide_ids_string']) ? substr(esc_html(stripslashes($_POST['del_slide_ids_string'])), 0, -1) : '');
+    if ($del_slide_ids_string) {
+      $wpdb->query('DELETE FROM ' . $wpdb->prefix . 'wdsslide WHERE id IN (' . $del_slide_ids_string . ')');
+    }
+    if (get_option("wds_theme_version")) {
+      $allow = FALSE;
+    }
+    else {
+      $allow = TRUE;
+    }
     $slider_id = (isset($_POST['current_id']) ? (int) $_POST['current_id'] : 0);
     $name = ((isset($_POST['name'])) ? esc_html(stripslashes($_POST['name'])) : '');
     $published = ((isset($_POST['published'])) ? (int) esc_html(stripslashes($_POST['published'])) : 1);
     $full_width = ((isset($_POST['full_width'])) ? (int) esc_html(stripslashes($_POST['full_width'])) : 0);
+    $spider_uploader = ((isset($_POST['spider_uploader'])) ? (int) esc_html(stripslashes($_POST['spider_uploader'])) : 1);
     $width = ((isset($_POST['width'])) ? (int) esc_html(stripslashes($_POST['width'])) : 800);
     $height = ((isset($_POST['height'])) ? (int) esc_html((stripslashes($_POST['height']))) : 300);
     $bg_fit = ((isset($_POST['bg_fit'])) ? esc_html(stripslashes($_POST['bg_fit'])) : 'cover');
@@ -100,7 +107,7 @@ class WDSControllerSliders_wds {
     $background_transparent = ((isset($_POST['background_transparent'])) ? esc_html(stripslashes($_POST['background_transparent'])) : 100);
     $glb_border_width = ((isset($_POST['glb_border_width'])) ? (int) esc_html(stripslashes($_POST['glb_border_width'])) : 0);
     $glb_border_style = ((isset($_POST['glb_border_style'])) ? esc_html(stripslashes($_POST['glb_border_style'])) : 'none');	
-    $glb_border_color = ((isset($_POST['glb_border_color'])) ? esc_html(stripslashes($_POST['glb_border_color'])) : 'FFFFFF');
+    $glb_border_color = ((isset($_POST['glb_border_color'])) ? esc_html(stripslashes($_POST['glb_border_color'])) : '000000');
     $glb_border_radius = ((isset($_POST['glb_border_radius'])) ? esc_html(stripslashes($_POST['glb_border_radius'])) : '');
     $glb_margin = ((isset($_POST['glb_margin'])) ? (int) esc_html(stripslashes($_POST['glb_margin'])) : 0);
     $glb_box_shadow = ((isset($_POST['glb_box_shadow'])) ? esc_html(stripslashes($_POST['glb_box_shadow'])) : '');
@@ -109,26 +116,26 @@ class WDSControllerSliders_wds {
     $prev_next_butt = ((isset($_POST['prev_next_butt'])) ? (int) esc_html(stripslashes($_POST['prev_next_butt'])) : 1);	
     $play_paus_butt = ((isset($_POST['play_paus_butt'])) ? (int) esc_html(stripslashes($_POST['play_paus_butt'])) : 0);
     $navigation = ((isset($_POST['navigation'])) ? esc_html(stripslashes($_POST['navigation'])) : 'hover');
-    $rl_butt_style = ((isset($_POST['rl_butt_style'])) ? esc_html(stripslashes($_POST['rl_butt_style'])) : 'fa-angle-double');
-    $rl_butt_size = ((isset($_POST['rl_butt_size'])) ? (int) esc_html(stripslashes($_POST['rl_butt_size'])) : 40);
-    $pp_butt_size = ((isset($_POST['pp_butt_size'])) ? (int) esc_html(stripslashes($_POST['pp_butt_size'])) : 40);	
-    $butts_color = ((isset($_POST['butts_color'])) ? esc_html(stripslashes($_POST['butts_color'])) : '000000');
-    $butts_transparent = ((isset($_POST['butts_transparent'])) ? (int) esc_html(stripslashes($_POST['butts_transparent'])) : 50);
-    $hover_color = ((isset($_POST['hover_color'])) ? esc_html(stripslashes($_POST['hover_color'])) : '000000');
-    $nav_border_width = ((isset($_POST['nav_border_width'])) ? (int) esc_html(stripslashes($_POST['nav_border_width'])) : 0);
-    $nav_border_style = ((isset($_POST['nav_border_style'])) ? esc_html(stripslashes($_POST['nav_border_style'])) : 'none');
+    $rl_butt_style = ((isset($_POST['rl_butt_style']) && $allow) ? esc_html(stripslashes($_POST['rl_butt_style'])) : 'fa-angle-double');
+    $rl_butt_size = ((isset($_POST['rl_butt_size']) && $allow) ? (int) esc_html(stripslashes($_POST['rl_butt_size'])) : 40);
+    $pp_butt_size = ((isset($_POST['pp_butt_size']) && $allow) ? (int) esc_html(stripslashes($_POST['pp_butt_size'])) : 40);	
+    $butts_color = ((isset($_POST['butts_color']) && $allow) ? esc_html(stripslashes($_POST['butts_color'])) : '000000');
+    $butts_transparent = ((isset($_POST['butts_transparent']) && $allow) ? (int) esc_html(stripslashes($_POST['butts_transparent'])) : 50);
+    $hover_color = ((isset($_POST['hover_color']) && $allow) ? esc_html(stripslashes($_POST['hover_color'])) : '000000');
+    $nav_border_width = ((isset($_POST['nav_border_width']) && $allow) ? (int) esc_html(stripslashes($_POST['nav_border_width'])) : 0);
+    $nav_border_style = ((isset($_POST['nav_border_style']) && $allow) ? esc_html(stripslashes($_POST['nav_border_style'])) : 'none');
     $nav_border_color = ((isset($_POST['nav_border_color'])) ? esc_html(stripslashes($_POST['nav_border_color'])) : 'FFFFFF');	
-    $nav_border_radius = ((isset($_POST['nav_border_radius'])) ? esc_html(stripslashes($_POST['nav_border_radius'])) : '20px');
-    $nav_bg_color = ((isset($_POST['nav_bg_color'])) ? esc_html(stripslashes($_POST['nav_bg_color'])) : 'FFFFFF');
+    $nav_border_radius = ((isset($_POST['nav_border_radius']) && $allow) ? esc_html(stripslashes($_POST['nav_border_radius'])) : '20px');
+    $nav_bg_color = ((isset($_POST['nav_bg_color']) && $allow) ? esc_html(stripslashes($_POST['nav_bg_color'])) : 'FFFFFF');
     $bull_position = ((isset($_POST['bull_position'])) ? esc_html(stripslashes($_POST['bull_position'])) : 'bottom');
     if (isset($_POST['enable_bullets']) && (esc_html(stripslashes($_POST['enable_bullets'])) == 0)) {
       $bull_position = 'none';
     }
-    $bull_style = ((isset($_POST['bull_style'])) ? esc_html(stripslashes($_POST['bull_style'])) : 'fa-circle-o');
-    $bull_size = ((isset($_POST['bull_size'])) ? (int) esc_html(stripslashes($_POST['bull_size'])) : 25);
-    $bull_color = ((isset($_POST['bull_color'])) ? esc_html(stripslashes($_POST['bull_color'])) : 'FFFFFF');	
-    $bull_act_color = ((isset($_POST['bull_act_color'])) ? esc_html(stripslashes($_POST['bull_act_color'])) : 'FFFFFF');
-    $bull_margin = ((isset($_POST['bull_margin'])) ? (int) esc_html(stripslashes($_POST['bull_margin'])) : 3);
+    $bull_style = ((isset($_POST['bull_style']) && $allow) ? esc_html(stripslashes($_POST['bull_style'])) : 'fa-circle-o');
+    $bull_size = ((isset($_POST['bull_size']) && $allow) ? (int) esc_html(stripslashes($_POST['bull_size'])) : 25);
+    $bull_color = ((isset($_POST['bull_color']) && $allow) ? esc_html(stripslashes($_POST['bull_color'])) : 'FFFFFF');	
+    $bull_act_color = ((isset($_POST['bull_act_color']) && $allow) ? esc_html(stripslashes($_POST['bull_act_color'])) : 'FFFFFF');
+    $bull_margin = ((isset($_POST['bull_margin']) && $allow) ? (int) esc_html(stripslashes($_POST['bull_margin'])) : 3);
     $film_pos = ((isset($_POST['film_pos'])) ? esc_html(stripslashes($_POST['film_pos'])) : 'none');
     if (isset($_POST['enable_filmstrip']) && (esc_html(stripslashes($_POST['enable_filmstrip'])) == 0)) {
       $film_pos = 'none';
@@ -227,6 +234,7 @@ class WDSControllerSliders_wds {
         'timer_bar_color' => $timer_bar_color,
         'timer_bar_transparent' => $timer_bar_transparent,
         'layer_out_next' => $layer_out_next,
+        'spider_uploader' => $spider_uploader,
       ), array(
         '%s',
         '%d',
@@ -295,7 +303,9 @@ class WDSControllerSliders_wds {
         '%s',
         '%d',
         '%d',
+        '%d',
       ));
+      $_POST['current_id'] = (int) $wpdb->get_var('SELECT MAX(`id`) FROM ' . $wpdb->prefix . 'wdsslider');
     }
     else {
       $save = $wpdb->update($wpdb->prefix . 'wdsslider', array(
@@ -366,6 +376,7 @@ class WDSControllerSliders_wds {
         'timer_bar_color' => $timer_bar_color,
         'timer_bar_transparent' => $timer_bar_transparent,
         'layer_out_next' => $layer_out_next,
+        'spider_uploader' => $spider_uploader,
         ), array('id' => $slider_id));
     }
     if ($save !== FALSE) {
@@ -382,17 +393,20 @@ class WDSControllerSliders_wds {
     if (!$slider_id) {
       $slider_id = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . 'wdsslider');
     }
-    $del_slide_ids_string = (isset($_POST['del_slide_ids_string']) ? esc_html(stripslashes($_POST['del_slide_ids_string'])) : '');
-    $del_slide_id_array = explode(',', $del_slide_ids_string);
-    foreach ($del_slide_id_array as $del_slide_id) {
-      if ($del_slide_id) {
-        $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'wdsslide WHERE id="%d"', $del_slide_id));
-      }
-    }
     $slide_ids_string = (isset($_POST['slide_ids_string']) ? esc_html(stripslashes($_POST['slide_ids_string'])) : '');
     $slide_id_array = explode(',', $slide_ids_string);
+    if (get_option("wds_theme_version")) {
+      $allow = FALSE;
+    }
+    else {
+      $allow = TRUE;
+    }
     foreach ($slide_id_array as $slide_id) {
       if ($slide_id) {
+        $del_layer_ids_string = (isset($_POST['slide' . $slide_id . '_del_layer_ids_string']) ? substr(esc_html(stripslashes($_POST['slide' . $slide_id . '_del_layer_ids_string'])), 0, -1) : '');
+        if ($del_layer_ids_string) {
+          $wpdb->query('DELETE FROM ' . $wpdb->prefix . 'wdslayer WHERE id IN (' . $del_layer_ids_string . ')');
+        }
         $title = ((isset($_POST['title' . $slide_id])) ? esc_html(stripslashes($_POST['title' . $slide_id])) : '');
         $type = ((isset($_POST['type' . $slide_id])) ? esc_html(stripslashes($_POST['type' . $slide_id])) : '');
         $order = ((isset($_POST['order' . $slide_id])) ? esc_html(stripslashes($_POST['order' . $slide_id])) : '');
@@ -420,8 +434,10 @@ class WDSControllerSliders_wds {
             '%s',
             '%s',
           ));
-          $slide_id_pr = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . 'wdsslide');
-          $this->save_layer_db($slide_id, $slide_id_pr);
+          if ($allow) {
+            $slide_id_pr = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . 'wdsslide');
+            $this->save_layer_db($slide_id, $slide_id_pr);
+          }
         }
         else {
           $save = $wpdb->update($wpdb->prefix . 'wdsslide', array(
@@ -434,7 +450,9 @@ class WDSControllerSliders_wds {
             'image_url' => $image_url,
             'thumb_url' => $thumb_url,
           ), array('id' => $slide_id));
-          $this->save_layer_db($slide_id, $slide_id);
+          if ($allow) {
+            $this->save_layer_db($slide_id, $slide_id);
+          }
         }
       }
     }
@@ -442,54 +460,47 @@ class WDSControllerSliders_wds {
 
   public function save_layer_db($slide_id, $slide_id_pr) {
     global $wpdb;
-    $del_layer_ids_string = (isset($_POST['slide' . $slide_id . '_del_layer_ids_string']) ? esc_html(stripslashes($_POST['slide' . $slide_id . '_del_layer_ids_string'])) : '');
-    $del_layer_id_array = explode(',', $del_layer_ids_string);
-    foreach ($del_layer_id_array as $del_layer_id) {
-      if ($del_layer_id) {
-        $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'wdslayer WHERE id="%d"', $del_layer_id));
-      }
-    }
     $layer_ids_string = (isset($_POST['slide' . $slide_id . '_layer_ids_string']) ? esc_html(stripslashes($_POST['slide' . $slide_id . '_layer_ids_string'])) : '');
     $layer_id_array = explode(',', $layer_ids_string);
     foreach ($layer_id_array as $layer_id) {
       if ($layer_id) {
         $prefix = 'slide' . $slide_id . '_layer' . $layer_id;
-        $title = ((isset($_POST[$prefix . '_title'])) ? esc_html(stripslashes($_POST[$prefix . '_title'])) : '');
-        $type = ((isset($_POST[$prefix . '_type'])) ? esc_html(stripslashes($_POST[$prefix . '_type'])) : '');
-        $depth = ((isset($_POST[$prefix . '_depth'])) ? esc_html(stripslashes($_POST[$prefix . '_depth'])) : '');
-        $text = ((isset($_POST[$prefix . '_text'])) ? stripslashes($_POST[$prefix . '_text']) : '');
-        $link = ((isset($_POST[$prefix . '_link'])) ? esc_html(stripslashes($_POST[$prefix . '_link'])) : '');
-        $width = ((isset($_POST['width'])) ? (int) esc_html(stripslashes($_POST['width'])) : 0);
-        $height = ((isset($_POST['height'])) ? (int) esc_html((stripslashes($_POST['height']))) : 0);
-        $left = ((isset($_POST[$prefix . '_left'])) ? esc_html(stripslashes($_POST[$prefix . '_left'])) : '');
-        $top = ((isset($_POST[$prefix . '_top'])) ? esc_html(stripslashes($_POST[$prefix . '_top'])) : '');
-        $start = ((isset($_POST[$prefix . '_start'])) ? esc_html(stripslashes($_POST[$prefix . '_start'])) : '');
-        $end = ((isset($_POST[$prefix . '_end'])) ? esc_html(stripslashes($_POST[$prefix . '_end'])) : '');
-        $published = ((isset($_POST[$prefix . '_published'])) ? esc_html(stripslashes($_POST[$prefix . '_published'])) : '');
-        $color = ((isset($_POST[$prefix . '_color'])) ? esc_html(stripslashes($_POST[$prefix . '_color'])) : '');
-        $size = ((isset($_POST[$prefix . '_size'])) ? esc_html(stripslashes($_POST[$prefix . '_size'])) : '');
-        $ffamily = ((isset($_POST[$prefix . '_ffamily'])) ? esc_html(stripslashes($_POST[$prefix . '_ffamily'])) : '');
-        $fweight = ((isset($_POST[$prefix . '_fweight'])) ? esc_html(stripslashes($_POST[$prefix . '_fweight'])) : '');
-        $padding = ((isset($_POST[$prefix . '_padding'])) ? esc_html(stripslashes($_POST[$prefix . '_padding'])) : '');
-        $fbgcolor = ((isset($_POST[$prefix . '_fbgcolor'])) ? esc_html(stripslashes($_POST[$prefix . '_fbgcolor'])) : '');
-        $transparent = ((isset($_POST[$prefix . '_transparent'])) ? esc_html(stripslashes($_POST[$prefix . '_transparent'])) : '');
-        $border_width = ((isset($_POST[$prefix . '_border_width'])) ? esc_html(stripslashes($_POST[$prefix . '_border_width'])) : '');
-        $border_style = ((isset($_POST[$prefix . '_border_style'])) ? esc_html(stripslashes($_POST[$prefix . '_border_style'])) : '');
-        $border_color = ((isset($_POST[$prefix . '_border_color'])) ? esc_html(stripslashes($_POST[$prefix . '_border_color'])) : '');
-        $border_radius = ((isset($_POST[$prefix . '_border_radius'])) ? esc_html(stripslashes($_POST[$prefix . '_border_radius'])) : '');
-        $shadow = ((isset($_POST[$prefix . '_shadow'])) ? esc_html(stripslashes($_POST[$prefix . '_shadow'])) : '');
-        $image_url = ((isset($_POST[$prefix . '_image_url'])) ? esc_html(stripslashes($_POST[$prefix . '_image_url'])) : '');
-        $image_width = ((isset($_POST[$prefix . '_image_width'])) ? esc_html(stripslashes($_POST[$prefix . '_image_width'])) : '');
-        $image_height = ((isset($_POST[$prefix . '_image_height'])) ? esc_html(stripslashes($_POST[$prefix . '_image_height'])) : '');
-        $image_scale = ((isset($_POST[$prefix . '_image_scale'])) ? esc_html(stripslashes($_POST[$prefix . '_image_scale'])) : '');
-        $alt = ((isset($_POST[$prefix . '_alt'])) ? esc_html(stripslashes($_POST[$prefix . '_alt'])) : '');
-        $imgtransparent = ((isset($_POST[$prefix . '_imgtransparent'])) ? esc_html(stripslashes($_POST[$prefix . '_imgtransparent'])) : '');
-        $social_button = ((isset($_POST[$prefix . '_social_button'])) ? esc_html(stripslashes($_POST[$prefix . '_social_button'])) : '');
-        $hover_color = ((isset($_POST[$prefix . '_hover_color'])) ? esc_html(stripslashes($_POST[$prefix . '_hover_color'])) : '');
-        $layer_effect_in = ((isset($_POST[$prefix . '_layer_effect_in'])) ? esc_html(stripslashes($_POST[$prefix . '_layer_effect_in'])) : ''); 
-        $layer_effect_out = ((isset($_POST[$prefix . '_layer_effect_out'])) ? esc_html(stripslashes($_POST[$prefix . '_layer_effect_out'])) : '');
-        $duration_eff_in = ((isset($_POST[$prefix . '_duration_eff_in'])) ? esc_html(stripslashes($_POST[$prefix . '_duration_eff_in'])) : 3);
-        $duration_eff_out = ((isset($_POST[$prefix . '_duration_eff_out'])) ? esc_html(stripslashes($_POST[$prefix . '_duration_eff_out'])) : 3);
+        $json_string = (isset($_POST[$prefix . '_json']) ? stripslashes($_POST[$prefix . '_json']) : '');
+        $params_array = json_decode($json_string, TRUE);
+        $title = ((isset($params_array['title'])) ? esc_html(stripslashes($params_array['title'])) : '');
+        $type = ((isset($params_array['type'])) ? esc_html(stripslashes($params_array['type'])) : '');
+        $depth = ((isset($params_array['depth'])) ? esc_html(stripslashes($params_array['depth'])) : '');
+        $text = ((isset($params_array['text'])) ? stripslashes($params_array['text']) : '');
+        $link = ((isset($params_array['link'])) ? esc_html(stripslashes($params_array['link'])) : '');
+        $left = ((isset($params_array['left'])) ? esc_html(stripslashes($params_array['left'])) : '');
+        $top = ((isset($params_array['top'])) ? esc_html(stripslashes($params_array['top'])) : '');
+        $start = ((isset($params_array['start'])) ? esc_html(stripslashes($params_array['start'])) : '');
+        $end = ((isset($params_array['end'])) ? esc_html(stripslashes($params_array['end'])) : '');
+        $published = ((isset($params_array['published'])) ? esc_html(stripslashes($params_array['published'])) : '');
+        $color = ((isset($params_array['color'])) ? esc_html(stripslashes($params_array['color'])) : '');
+        $size = ((isset($params_array['size'])) ? esc_html(stripslashes($params_array['size'])) : '');
+        $ffamily = ((isset($params_array['ffamily'])) ? esc_html(stripslashes($params_array['ffamily'])) : '');
+        $fweight = ((isset($params_array['fweight'])) ? esc_html(stripslashes($params_array['fweight'])) : '');
+        $padding = ((isset($params_array['padding'])) ? esc_html(stripslashes($params_array['padding'])) : '');
+        $fbgcolor = ((isset($params_array['fbgcolor'])) ? esc_html(stripslashes($params_array['fbgcolor'])) : '');
+        $transparent = ((isset($params_array['transparent'])) ? esc_html(stripslashes($params_array['transparent'])) : '');
+        $border_width = ((isset($params_array['border_width'])) ? esc_html(stripslashes($params_array['border_width'])) : '');
+        $border_style = ((isset($params_array['border_style'])) ? esc_html(stripslashes($params_array['border_style'])) : '');
+        $border_color = ((isset($params_array['border_color'])) ? esc_html(stripslashes($params_array['border_color'])) : '');
+        $border_radius = ((isset($params_array['border_radius'])) ? esc_html(stripslashes($params_array['border_radius'])) : '');
+        $shadow = ((isset($params_array['shadow'])) ? esc_html(stripslashes($params_array['shadow'])) : '');
+        $image_url = ((isset($params_array['image_url'])) ? esc_html(stripslashes($params_array['image_url'])) : '');
+        $image_width = ((isset($params_array['image_width'])) ? esc_html(stripslashes($params_array['image_width'])) : '');
+        $image_height = ((isset($params_array['image_height'])) ? esc_html(stripslashes($params_array['image_height'])) : '');
+        $image_scale = ((isset($params_array['image_scale'])) ? esc_html(stripslashes($params_array['image_scale'])) : '');
+        $alt = ((isset($params_array['alt'])) ? esc_html(stripslashes($params_array['alt'])) : '');
+        $imgtransparent = ((isset($params_array['imgtransparent'])) ? esc_html(stripslashes($params_array['imgtransparent'])) : '');
+        $social_button = ((isset($params_array['social_button'])) ? esc_html(stripslashes($params_array['social_button'])) : '');
+        $hover_color = ((isset($params_array['hover_color'])) ? esc_html(stripslashes($params_array['hover_color'])) : '');
+        $layer_effect_in = ((isset($params_array['layer_effect_in'])) ? esc_html(stripslashes($params_array['layer_effect_in'])) : ''); 
+        $layer_effect_out = ((isset($params_array['layer_effect_out'])) ? esc_html(stripslashes($params_array['layer_effect_out'])) : '');
+        $duration_eff_in = ((isset($params_array['duration_eff_in'])) ? esc_html(stripslashes($params_array['duration_eff_in'])) : 3);
+        $duration_eff_out = ((isset($params_array['duration_eff_out'])) ? esc_html(stripslashes($params_array['duration_eff_out'])) : 3);
         if ($title) {
           if (strpos($layer_id, 'pr_') !== FALSE) {
             $save = $wpdb->insert($wpdb->prefix . 'wdslayer', array(
@@ -611,8 +622,6 @@ class WDSControllerSliders_wds {
   }
 
   public function set_watermark() {
-    $message = $this->save_slider_db();
-    $this->save_slide_db();
     global $wpdb;
     $slider_id = WDW_S_Library::get('current_id', 0);
     if (!$slider_id) {
@@ -623,14 +632,17 @@ class WDSControllerSliders_wds {
     $slider = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'wdsslider WHERE `id`="%d"', $slider_id));
 
     switch ($slider->built_in_watermark_type) {
-      case 'text':
+      case 'text': {
         foreach ($slider_images as $slider_image) {
           if ($slider_image) {
             $slider_image_dir = str_replace(site_url() . '/', ABSPATH, $slider_image);
-            $last_dot_pos = strrpos($slider_image_dir, '.');
-            $base_name = substr($slider_image_dir, 0, $last_dot_pos);
-            $ext = substr($slider_image_dir, strlen($base_name));
-            $new_image = $base_name . '-original' . $ext;
+            $last_slash_pos = strrpos($slider_image_dir, '/') + 1;
+            $dest_dir = substr($slider_image_dir, 0, $last_slash_pos);
+            $image_name = substr($slider_image_dir, $last_slash_pos);
+            $new_image = $dest_dir . '.original/' . $image_name;
+            if (!is_dir($dest_dir . '.original')) {
+              mkdir($dest_dir . '.original', 0777);
+            }
             if (!file_exists($new_image)) {
               copy($slider_image_dir, $new_image);
             }
@@ -638,14 +650,18 @@ class WDSControllerSliders_wds {
           }
         }
         break;
-      case 'image':
+      }
+      case 'image': {
         foreach ($slider_images as $slider_image) {
           if ($slider_image) {
             $slider_image_dir = str_replace(site_url() . '/', ABSPATH, $slider_image);
-            $last_dot_pos = strrpos($slider_image_dir, '.');
-            $base_name = substr($slider_image_dir, 0, $last_dot_pos);
-            $ext = substr($slider_image_dir, strlen($base_name));
-            $new_image = $base_name . '-original' . $ext;
+            $last_slash_pos = strrpos($slider_image_dir, '/') + 1;
+            $dest_dir = substr($slider_image_dir, 0, $last_slash_pos);
+            $image_name = substr($slider_image_dir, $last_slash_pos);
+            $new_image = $dest_dir . '.original/' . $image_name;
+            if (!is_dir($dest_dir . '.original')) {
+              mkdir($dest_dir . '.original', 0777);
+            }
             if (!file_exists($new_image)) {
               copy($slider_image_dir, $new_image);
             }
@@ -654,50 +670,45 @@ class WDSControllerSliders_wds {
           }
         }
         break;
+      }
+      default: {
+        break;
+      }
     }
-
-    $nav_tab = WDW_S_Library::get('nav_tab', 'global');
-    $tab = WDW_S_Library::get('tab', 'settings');
-    $sub_tab = WDW_S_Library::get('sub_tab', '');
-    $page = WDW_S_Library::get('page');
-    WDW_S_Library::spider_redirect(add_query_arg(array('page' => $page, 'task' => 'edit', 'current_id' => $slider_id, 'nav_tab' => $nav_tab, 'tab' => $tab, 'sub_tab' => $sub_tab, 'message' => $message), admin_url('admin.php')));
   }
 
   public function reset_watermark() {
-    $this->save_slider_db();
-    $this->save_slide_db();
     global $wpdb;
     $slider_id = WDW_S_Library::get('current_id', 0);
     if (!$slider_id) {
       $slider_id = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . 'wdsslider');
     }
-
     $slider_images = $wpdb->get_col($wpdb->prepare('SELECT image_url FROM ' . $wpdb->prefix . 'wdsslide WHERE `slider_id`="%d"', $slider_id));
     foreach ($slider_images as $slider_image) {
       if ($slider_image) {
         $slider_image_dir = str_replace(site_url() . '/', ABSPATH, $slider_image);
-        $last_dot_pos = strrpos($slider_image_dir, '.');
-        $base_name = substr($slider_image_dir, 0, $last_dot_pos);
-        $ext = substr($slider_image_dir, strlen($base_name));
-        $new_image = $base_name . '-original' . $ext;
+        $last_slash_pos = strrpos($slider_image_dir, '/') + 1;
+        $dest_dir = substr($slider_image_dir, 0, $last_slash_pos);
+        $image_name = substr($slider_image_dir, $last_slash_pos);
+        $new_image = $dest_dir . '.original/' . $image_name;
         if (file_exists($new_image)) {
           copy($new_image, $slider_image_dir);
         }
+        else {
+          // For 1.0.1 version.
+          $last_dot_pos = strrpos($slider_image_dir, '.');
+          $base_name = substr($slider_image_dir, 0, $last_dot_pos);
+          $ext = substr($slider_image_dir, strlen($base_name));
+          $new_image = $base_name . '-original' . $ext;
+          if (file_exists($new_image)) {
+            copy($new_image, $slider_image_dir);
+          }
+        }
       }
     }
-
-    require_once WD_S_DIR . "/admin/models/WDSModelSliders_wds.php";
-    $model = new WDSModelSliders_wds();
-
-    require_once WD_S_DIR . "/admin/views/WDSViewSliders_wds.php";
-    $view = new WDSViewSliders_wds($model);
-    echo WDW_S_Library::message('Watermark Succesfully Removed.', 'updated');
-    $view->edit($slider_id);
   }
 
   public function reset() {
-    $this->save_slider_db();
-    $this->save_slide_db();
     global $wpdb;
     $slider_id = WDW_S_Library::get('current_id', 0);
     if (!$slider_id) {

@@ -25,6 +25,7 @@ class WDSModelUninstall_wds {
     $wpdb->query("DROP TABLE " . $wpdb->prefix . "wdslayer");
 
     delete_option("wds_version");
+    delete_option("wds_theme_version");
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   // Getters & Setters                                                                  //

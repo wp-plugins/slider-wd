@@ -4,11 +4,11 @@ Donate link: http://web-dorado.com/products/wordpress-slider-plugin.html
 Tags: best slider plugin, carousel, carousel slider, coin slider, content slider, content slideshow, custom video slider, flex slider, free video slider, free video slideshow, Horizontal slider, Image Rotator, image slider, image slideshow, javascript slider, javascript slideshow, jquery slider, jquery slideshow, Photo Slider, posts slider, responsive slider, responsive slideshow, sidebar, slide, slide show, slider, slider plugin, slider widget, slides, slideshow,slideshow manager, slideshow plugin, vertical slider, video slider, video slideshow,vimeo slideshow, vimeo slider, widget slider, widget slideshow, wordpress slider, wordpress slideshow, wp slider, youtube slider, youtube slideshow, post slider, fullscreen Slider, css3 slider, responsive image slider, banner slider, social slider, cycle slider, text slider, revolution slider, thumbnail slider, touch slider, sliders, parallax slider
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Slider WD is a great tool for creating responsive sliders. It uses various transition effects and layers (text and image).
+Slider WD is a great tool for creating responsive sliders. It uses various transition effects.
 
 == Description ==
 
@@ -16,27 +16,26 @@ Slider WD is a great tool for creating responsive sliders. It uses various trans
 [User Manual](http://web-dorado.com/wordpress-slider-wd-guide-step-1.html)  
 [Support Forum](http://web-dorado.com/forum/slider-plugin.html)  
 
-Slider WD is an effective tool for adding responsive sliders to your website. The slider plugin can be added both as a widget and plugin, as well as be included in the theme for displaying the slider within the theme using PHP function. Slider WD allows adding both images and videos (currently supporting YouTube and Vimeo to be displayed as slider slides). The numerous transition affects and layer support enhance the functionality of the product.
+Slider WD is an effective tool for adding responsive sliders to your website. The slider plugin can be added both as a widget and plugin, as well as be included in the theme for displaying the slider within the theme using PHP function. Slider WD allows adding both images and videos (currently supporting YouTube and Vimeo to be displayed as slider slides). The numerous transition affects and layer support enhance the functionality of the product.  
 
-The number of the slides for each slider is not limited. Various layers can be applied for each individual slide. There are three basic types of layers designed for the slides. Those are for sharing textual content, images and sharing buttons (Google+, Tumblr, Twitter, Pinterest and Facebook.) 
-The slides can be used for redirection to another location. Similar feature is also available with the text and image layers.
+The number of the slides for each slider is not limited. Various layers can be applied for each individual slide. There are three basic types of layers designed for the slides. Those are for sharing textual content, images and sharing buttons (Google+, Tumblr, Twitter, Pinterest and Facebook.) The slides can be used for redirection to another location. Similar feature is also available with the text and image layers.  
+
 
 *   Responsiveness
 *   Possibility of adding unlimited sliders and unlimited images/videos for each slider
-*   Two options for adding images (from Media Library for using image URL)
+*   Three options for adding images (from Media Library, by Slider WD Media Upload option or by using image URL)  
 *   Full-width slider support
 *   5 transition effects 
-*   5 layer effects
-*   2 types of Layers (text, image)
 *   Autoplay
 *   Shuffle
 *   Shortcode for easy insert of the slider into post/pages 
-*   Possibility of changing the slide and layer orders (using drag and drop feature)
+*   Possibility of changing the slide orders (using drag and drop feature) 
+*   Possibility to provide titles for the slides  
 *   Support for music playback
 *   Time setting feature for the effect changes
 *   Right-click protection
 *   Image changing possibility using bullets
-*   Possibility to change design for the bullets, navigation buttons
+*   Possibility to change design for the bullets, navigation buttons  
 *   Timer bar 
 *   Support for watermarks 
 *   Design customization for almost all features
@@ -48,7 +47,8 @@ Upgrade to [WordPress Slider Pro](http://web-dorado.com/products/wordpress-slide
 *   3 types of Layers (text, image, social sharing)   
 *   Slider Share feature for sliders (Google+, Tumblr, Twitter, Pinterest and Facebook)   
 *   Slider Filmstrip possibility    
-*   Support for Vimeo and YouTube videos  
+*   Navigation button/bullet styles   
+*   Support for Vimeo and YouTube videos   
 
 ### Supported languages 
 
@@ -127,6 +127,15 @@ If any problem occurs, please contact us at  [info@web-dorado.com](mailto:info@w
 
 
 == Changelog ==
+= 1.0.2 =
+
+*  Turn SliderWD Media Upload
+*  Ajax save
+*  Images Bulk Add
+*  Timer bar bug fixed
+*  change shortcode button
+*  fullwidth slider margin bug fixed
+
 = 1.0.1 =
 *  User manual links added.
 

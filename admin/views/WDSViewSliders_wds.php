@@ -360,7 +360,26 @@ class WDSViewSliders_wds {
         $built_in_watermark_fonts[] = $filename;
       }
     }
+    if (get_option("wds_theme_version")) {
+      $fv = TRUE;
+      $fv_class = 'spider_free_version_label';
+      $fv_disabled = 'disabled="disabled"';
+      $fv_message = '<tr><td colspan="2"><div class="error" style="padding: 5px; font-size: 14px; color: #000000 !important;">Some options are disabled in free version.</div></td></tr>';
+      $fv_title = ' title="This option is disabled in free version."';
+    }
+    else {
+      $fv = FALSE;
+      $fv_class = '';
+      $fv_disabled = '';
+      $fv_message = '';
+      $fv_title = '';
+    }
     ?>
+    <div class="spider_message_cont"></div>
+    <div class="spider_load">
+      <div class="spider_load_cont"></div>
+      <div class="spider_load_icon"><img class="spider_ajax_loading" src="<?php echo WD_S_URL . '/images/ajax_loader.png'; ?>"></div>
+    </div>
     <div style="clear: both; float: left; width: 99%;">
       <div style="float: left; font-size: 14px; font-weight: bold;">
         This section allows you to add/edit slider.
@@ -375,17 +394,31 @@ class WDSViewSliders_wds {
     <form class="wrap" method="post" id="sliders_form" action="admin.php?page=sliders_wds" style="float: left; width: 99%;">
       <span class="slider-icon"></span>
       <h2><?php echo $page_title; ?></h2>
-      <div style="float: right; position: absolute; right: 11px; z-index: 50;">
-        <input class="button-secondary" type="submit" onclick="if (wds_check_required('name', 'Name')) {return false;};
-                                                                   spider_set_input_value('task', 'save')" value="Save" />
-        <input class="button-secondary" type="submit" onclick="if (wds_check_required('name', 'Name')) {return false;};
-                                                                   spider_set_input_value('task', 'apply')" value="Apply" />
-        <input class="button-primary" type="submit" onclick="if (wds_check_required('name', 'Name')) {return false;};
-                                                               spider_set_input_value('task', 'set_watermark');" value="Set Watermark" />
-        <input class="button-secondary" type="submit" onclick="if (wds_check_required('name', 'Name')) {return false;};
-                                                               spider_set_input_value('task', 'reset_watermark');" value="Reset Watermark" />
-        <input class="button-secondary" type="submit" onclick="if (wds_check_required('name', 'Name')) {return false;};
-                                                               spider_set_input_value('task', 'reset');" value="Reset Settings" />
+      <div class="wds_buttons" style="float: right; position: absolute; right: 11px; z-index: 50;">
+        <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                                   spider_set_input_value('task', 'save');
+                                                                   spider_ajax_save('sliders_form', event);" value="Save" />
+        <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                                   spider_set_input_value('task', 'apply');
+                                                                   spider_ajax_save('sliders_form', event);" value="Apply" />
+        <?php
+        if ($row->spider_uploader) {
+          ?>
+        <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_slides', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Images" onclick="return false;">
+          Add Images
+        </a>
+          <?php
+        }
+        ?>
+        <input class="button-primary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                               spider_set_input_value('task', 'set_watermark');
+                                                               spider_ajax_save('sliders_form', event);" value="Set Watermark" />
+        <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                               spider_set_input_value('task', 'reset_watermark');
+                                                               spider_ajax_save('sliders_form', event);" value="Reset Watermark" />
+        <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                               spider_set_input_value('task', 'reset');
+                                                               spider_ajax_save('sliders_form', event);" value="Reset Settings" />
         <input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'cancel')" value="Cancel" />
       </div>
       <div class="wds_tabs">
@@ -428,9 +461,9 @@ class WDSViewSliders_wds {
                   <tr>
                     <td class="spider_label"><label>Dimensions: </label></td>
                     <td>
-                      <input type="text" name="width" id="width" value="<?php echo $row->width; ?>" class="spider_int_input" onchange="jQuery('.wds_preview_wrapper').width(jQuery(this).val())" onkeypress="return spider_check_isnum(event)" /> x 
-                      <input type="text" name="height" id="height" value="<?php echo $row->height; ?>" class="spider_int_input" onchange="jQuery('.wds_preview_wrapper').height(jQuery(this).val())" onkeypress="return spider_check_isnum(event)" /> px
-                      <div class="spider_description">Maximum values for slider.</div>
+                      <input type="text" name="width" id="width" value="<?php echo $row->width; ?>" class="spider_int_input" onchange="wds_whr('width')" onkeypress="return spider_check_isnum(event)" /> x 
+                      <input type="text" name="height" id="height" value="<?php echo $row->height; ?>" class="spider_int_input" onchange="wds_whr('height')" onkeypress="return spider_check_isnum(event)" /> px
+                      <div class="spider_description">Maximum width and height for slider.</div>
                     </td>
                   </tr>
                   <tr>
@@ -438,6 +471,8 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" id="full_width1" name="full_width" <?php echo (($row->full_width) ? 'checked="checked"' : ''); ?> value="1" /><label for="full_width1">Yes</label>
                       <input type="radio" id="full_width0" name="full_width" <?php echo (($row->full_width) ? '' : 'checked="checked"'); ?> value="0" /><label for="full_width0">No</label>
+                      <input type="text" name="ratio" id="ratio" value="" class="spider_int_input" onchange="wds_whr('ratio')" onkeypress="return spider_check_isnum(event)" /><label for="ratio">Ratio</label>
+                      <div class="spider_description">The image will stretch to the page width, taking the height based on dimensions ratio.</div>
                     </td>
                   </tr>
                   <tr>
@@ -460,6 +495,7 @@ class WDSViewSliders_wds {
                         }
                         ?>
                       </select>
+                      <div class="spider_description">Set the alignment of the slider.</div>
                     </td>
                   </tr>
                   <tr>
@@ -481,13 +517,17 @@ class WDSViewSliders_wds {
                   </tr>
                   <tr>
                     <td class="spider_label"><label for="time_intervval">Time Interval: </label></td>
-                    <td><input type="text" id="time_intervval" name="time_intervval" value="<?php echo $row->time_intervval; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" /> sec</td>
+                    <td>
+                      <input type="text" id="time_intervval" name="time_intervval" value="<?php echo $row->time_intervval; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" /> sec.
+                      <div class="spider_description">Set the time interval for the change of the sliders when autoplay is on.</div>
+                    </td>
                   </tr>
                   <tr>
                     <td class="spider_label"><label>Autoplay: </label></td>
                     <td>
                       <input type="radio" id="autoplay1" name="autoplay" <?php echo (($row->autoplay) ? 'checked="checked"' : ''); ?> value="1" /><label for="autoplay1">Yes</label>
                       <input type="radio" id="autoplay0" name="autoplay" <?php echo (($row->autoplay) ? '' : 'checked="checked"'); ?> value="0" /><label for="autoplay0">No</label>
+                      <div class="spider_description">Choose whether to autoplay the sliders or not.</div>
                     </td>
                   </tr>
                   <tr>
@@ -495,6 +535,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" id="shuffle1" name="shuffle" <?php echo (($row->shuffle) ? 'checked="checked"' : ''); ?> value="1" /><label for="shuffle1">Yes</label>
                       <input type="radio" id="shuffle0" name="shuffle" <?php echo (($row->shuffle) ? '' : 'checked="checked"'); ?> value="0" /><label for="shuffle0">No</label>
+                      <div class="spider_description">Choose whether to have the slides change in a random manner or to keep the original sequence.</div>
                     </td>
                   </tr>
                   <tr>
@@ -502,6 +543,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" id="music1" name="music" <?php echo (($row->music) ? 'checked="checked"' : ''); ?> value="1" onClick="bwg_enable_disable('', 'tr_music_url', 'music1')" /><label for="music1">Yes</label>
                       <input type="radio" id="music0" name="music" <?php echo (($row->music) ? '' : 'checked="checked"'); ?> value="0" onClick="bwg_enable_disable('none', 'tr_music_url', 'music0')" /><label for="music0">No</label>
+                      <div class="spider_description">Choose whether to have music/audio track playback with the slider or not.</div>
                     </td>
                   </tr>
                   <tr id="tr_music_url">
@@ -519,6 +561,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" id="preload_images1" name="preload_images" <?php echo (($row->preload_images) ? 'checked="checked"' : ''); ?> value="1" /><label for="preload_images1">Yes</label>
                       <input type="radio" id="preload_images0" name="preload_images" <?php echo (($row->preload_images) ? '' : 'checked="checked"'); ?> value="0" /><label for="preload_images0">No</label>
+                      <div class="spider_description">Choose to have faster load for the first few images and process the rest meanwhile.</div>
                     </td>
                   </tr>
                   <tr>
@@ -543,6 +586,7 @@ class WDSViewSliders_wds {
                         ?>
                       </select>
                       <input type="text" name="glb_border_color" id="glb_border_color" value="<?php echo $row->glb_border_color; ?>" class="color" />
+                      <div class="spider_description">Set the border width, type and the color.</div>
                     </td>
                   </tr>
                   <tr>
@@ -556,6 +600,7 @@ class WDSViewSliders_wds {
                     <td class="spider_label"><label for="glb_margin">Margin: </label></td>
                     <td>
                       <input type="text" name="glb_margin" id="glb_margin" value="<?php echo $row->glb_margin; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" /> px
+                      <div class="spider_description">Set a margin for the slider.</div>
                     </td>
                   </tr>
                   <tr>
@@ -582,7 +627,15 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" name="layer_out_next" id="layer_out_next_1" value="1" <?php if ($row->layer_out_next) echo 'checked="checked"'; ?> /><label for="layer_out_next_1">Yes</label>
                       <input type="radio" name="layer_out_next" id="layer_out_next_0" value="0" <?php if (!$row->layer_out_next) echo 'checked="checked"'; ?> /><label for="layer_out_next_0">No</label>
-                      <div class="spider_description"></div>
+                      <div class="spider_description">Choose whether to have the layer effect out regardless of the timing between the hit to the next slider or skip the effect out and get to the next image.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="spider_label"><label>Turn SliderWD Media Upload: </label></td>
+                    <td>
+                      <input type="radio" id="spider_uploader1" name="spider_uploader" <?php echo (($row->spider_uploader) ? 'checked="checked"' : ''); ?> value="1" /><label for="spider_uploader1">Yes</label>
+                      <input type="radio" id="spider_uploader0" name="spider_uploader" <?php echo (($row->spider_uploader) ? '' : 'checked="checked"'); ?> value="0" /><label for="spider_uploader0">No</label>
+                      <div class="spider_description">Choose the option to use the custom media upload instead of the WordPress default for adding images.</div>
                     </td>
                   </tr>
                   <tr>
@@ -590,6 +643,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" id="published1" name="published" <?php echo (($row->published) ? 'checked="checked"' : ''); ?> value="1" /><label for="published1">Yes</label>
                       <input type="radio" id="published0" name="published" <?php echo (($row->published) ? '' : 'checked="checked"'); ?> value="0" /><label for="published0">No</label>
+                      <div class="spider_description">Choose whether to publish the mentioned slider or not.</div>
                     </td>
                   </tr>
                 </tbody>
@@ -605,7 +659,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" name="prev_next_butt" id="prev_next_butt_1" value="1" <?php if ($row->prev_next_butt) echo 'checked="checked"'; ?> /><label for="prev_next_butt_1">Yes</label>
                       <input type="radio" name="prev_next_butt" id="prev_next_butt_0" value="0" <?php if (!$row->prev_next_butt) echo 'checked="checked"'; ?> /><label for="prev_next_butt_0">No</label>
-                      <div class="spider_description"></div>
+                      <div class="spider_description">Choose whether to display Previous and Next buttons or not.</div>
                     </td>
                   </tr> 
                   <tr>
@@ -615,7 +669,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" name="play_paus_butt" id="play_paus_butt_1" value="1" <?php if ($row->play_paus_butt) echo 'checked="checked"'; ?> /><label for="play_paus_butt_1">Yes</label>
                       <input type="radio" name="play_paus_butt" id="play_paus_butt_0" value="0" <?php if (!$row->play_paus_butt) echo 'checked="checked"'; ?> /><label for="play_paus_butt_0">No</label>
-                      <div class="spider_description"></div>
+                      <div class="spider_description">Choose whether to display Play and Pause buttons or not.</div>
                     </td>
                   </tr>
                   <tr>
@@ -625,13 +679,16 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" name="navigation" id="navigation_1" value="hover" <?php if ($row->navigation == 'hover') echo 'checked="checked"'; ?> /><label for="navigation_1">On hover</label>
                       <input type="radio" name="navigation" id="navigation_0" value="always" <?php if ($row->navigation == 'always' ) echo 'checked="checked"'; ?> /><label for="navigation_0">Always</label>
-                      <div class="spider_description"></div>
+                      <div class="spider_description">Select between the option of always displaying the navigation buttons or only when hovered.</div>
                     </td>
                   </tr>
+                </tbody>
+                <tbody class="<?php echo $fv_class; ?>"<?php echo $fv_title; ?>>
+                  <?php echo $fv_message; ?>
                   <tr id="right_left_butt_style">
-                    <td class="spider_label"><label for="rl_butt_style">Next / Previous buttons style: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="rl_butt_style">Next / Previous buttons style: </label></td>
                     <td>
-                      <select name="rl_butt_style" id="rl_butt_style">
+                      <select name="rl_butt_style" id="rl_butt_style" <?php echo $fv_disabled; ?>>
                       <?php
                       foreach ($button_styles as $key => $button_style) {
                         ?>
@@ -640,37 +697,42 @@ class WDSViewSliders_wds {
                       }
                       ?>
                       </select>
+                      <div class="spider_description">Choose the style of the button you prefer to have as navigation buttons.</div>
                     </td>
                   </tr>
                   <tr id="right_left_butt_size">
-                    <td class="spider_label"><label for="rl_butt_size">Next / Previous buttons size: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="rl_butt_size">Next / Previous buttons size: </label></td>
                     <td>
-                      <input type="text" name="rl_butt_size" id="rl_butt_size" value="<?php echo $row->rl_butt_size; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)"/> px
+                      <input type="text" name="rl_butt_size" id="rl_butt_size" value="<?php echo $row->rl_butt_size; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" <?php echo $fv_disabled; ?> /> px
+                      <div class="spider_description">Set the size for the next / previous buttons.</div>
                     </td>
                   </tr>
                   <tr id="play_pause_butt_size">
-                    <td class="spider_label"><label for="pp_butt_size">Play / Pause button size: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="pp_butt_size">Play / Pause button size: </label></td>
                     <td>
-                      <input type="text" name="pp_butt_size" id="pp_butt_size" value="<?php echo $row->pp_butt_size; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)"/> px
+                      <input type="text" name="pp_butt_size" id="pp_butt_size" value="<?php echo $row->pp_butt_size; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" <?php echo $fv_disabled; ?> /> px
+                      <div class="spider_description">Set the size for the play / pause buttons.</div>
                     </td>
                   </tr>
                   <tr id="buttons_color">
-                    <td class="spider_label"><label for="butts_color">Buttons color: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="butts_color">Buttons color: </label></td>
                     <td>
-                      <input type="text" name="butts_color" id="butts_color" value="<?php echo $row->butts_color; ?>" class="color"/>
+                      <input type="text" name="butts_color" id="butts_color" value="<?php echo $row->butts_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <div class="spider_description">Select a color for the navigation buttons.</div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="spider_label"><label for="hover_color">Hover color: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="hover_color">Hover color: </label></td>
                     <td>
-                      <input type="text" name="hover_color" id="hover_color" value="<?php echo $row->hover_color; ?>" class="color"/>
+                      <input type="text" name="hover_color" id="hover_color" value="<?php echo $row->hover_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <div class="spider_description">Select a hover color for the navigation buttons.</div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="spider_label"><label for="nav_border_width">Border: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="nav_border_width">Border: </label></td>
                     <td>
-                      <input type="text" name="nav_border_width" id="nav_border_width" value="<?php echo $row->nav_border_width; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)"/> px
-                      <select name="nav_border_style" id="nav_border_style">
+                      <input type="text" name="nav_border_width" id="nav_border_width" value="<?php echo $row->nav_border_width; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" <?php echo $fv_disabled; ?> /> px
+                      <select name="nav_border_style" id="nav_border_style" <?php echo $fv_disabled; ?>>
                         <?php
                         foreach ($border_styles as $key => $border_style) {
                           ?>
@@ -679,20 +741,21 @@ class WDSViewSliders_wds {
                         }
                         ?>
                       </select>
-                      <input type="text" name="nav_border_color" id="nav_border_color" value="<?php echo $row->nav_border_color; ?>" class="color"/>
+                      <input type="text" name="nav_border_color" id="nav_border_color" value="<?php echo $row->nav_border_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <div class="spider_description">Select the type, size and the color of border for the navigation buttons.</div>
                     </td>
                   </tr>
-                    <td class="spider_label"><label for="nav_border_radius">Border radius: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="nav_border_radius">Border radius: </label></td>
                     <td>
-                      <input type="text" name="nav_border_radius" id="nav_border_radius" value="<?php echo $row->nav_border_radius; ?>" class="spider_char_input" />
+                      <input type="text" name="nav_border_radius" id="nav_border_radius" value="<?php echo $row->nav_border_radius; ?>" class="spider_char_input" <?php echo $fv_disabled; ?> />
                       <div class="spider_description">Use CSS type values.</div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="spider_label"><label for="nav_bg_color">Background color: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="nav_bg_color">Background color: </label></td>
                     <td>
-                      <input type="text" name="nav_bg_color" id="nav_bg_color" value="<?php echo $row->nav_bg_color; ?>" class="color" />
-                      <input type="text" name="butts_transparent" id="butts_transparent" value="<?php echo $row->butts_transparent; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)"/> %
+                      <input type="text" name="nav_bg_color" id="nav_bg_color" value="<?php echo $row->nav_bg_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <input type="text" name="butts_transparent" id="butts_transparent" value="<?php echo $row->butts_transparent; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" <?php echo $fv_disabled; ?> /> %
                       <div class="spider_description">Transparency value must be between 0 to 100.</div>
                     </td>
                   </tr>
@@ -707,6 +770,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" id="enable_bullets1" name="enable_bullets" <?php echo (($row->enable_bullets) ? 'checked="checked"' : ''); ?> value="1" /><label for="enable_bullets1">Yes</label>
                       <input type="radio" id="enable_bullets0" name="enable_bullets" <?php echo (($row->enable_bullets) ? '' : 'checked="checked"'); ?> value="0" /><label for="enable_bullets0">No</label>
+                      <div class="spider_description">Choose whether to have navigation bullets or not.</div>
                     </td>
                   </tr>
                   <tr>
@@ -716,12 +780,16 @@ class WDSViewSliders_wds {
                         <option value="top" <?php echo (($row->bull_position == "top") ? 'selected="selected"' : ''); ?>>Top</option>
                         <option value="bottom" <?php echo (($row->bull_position == "bottom") ? 'selected="selected"' : ''); ?>>Bottom</option>
                       </select>
+                      <div class="spider_description">Select the position for the navigation bullets.</div>
                     </td>
                   </tr>
+                </tbody>
+                <tbody class="<?php echo $fv_class; ?>"<?php echo $fv_title; ?>>
+                  <?php echo $fv_message; ?>
                   <tr>
-                    <td class="spider_label"><label for="bull_style">Bullet style: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="bull_style">Bullet style: </label></td>
                     <td>
-                      <select name="bull_style" id="bull_style">
+                      <select name="bull_style" id="bull_style" <?php echo $fv_disabled; ?>>
                         <?php
                         foreach ($bull_styles as $key => $bull_style) {
                           ?>
@@ -730,30 +798,35 @@ class WDSViewSliders_wds {
                         }
                         ?>
                       </select>
+                      <div class="spider_description">Choose the style for the bullets.</div>
                     </td>
                   </tr>
                   <tr id="bullet_size">
-                    <td class="spider_label"><label for="bull_size">Size: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="bull_size">Size: </label></td>
                     <td>
-                      <input type="text" name="bull_size" id="bull_size" value="<?php echo $row->bull_size; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)"/> px
+                      <input type="text" name="bull_size" id="bull_size" value="<?php echo $row->bull_size; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" <?php echo $fv_disabled; ?> /> px
+                      <div class="spider_description">Define the size of the navigation bullets.</div>
                     </td>
                   </tr>
                   <tr id="bullets_color">
-                    <td class="spider_label"><label for="bull_color">Color: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="bull_color">Color: </label></td>
                     <td>
-                      <input type="text" name="bull_color" id="bull_color" value="<?php echo $row->bull_color; ?>" class="color"/>
+                      <input type="text" name="bull_color" id="bull_color" value="<?php echo $row->bull_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <div class="spider_description">Select the color for the navigation bullets.</div>
                     </td>
                   </tr> 
                   <tr id="bullets_act_color">
-                    <td class="spider_label"><label for="bull_act_color">Active color: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="bull_act_color">Active color: </label></td>
                     <td>
-                      <input type="text" name="bull_act_color" id="bull_act_color" value="<?php echo $row->bull_act_color; ?>" class="color"/>
+                      <input type="text" name="bull_act_color" id="bull_act_color" value="<?php echo $row->bull_act_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <div class="spider_description">Select the color for the bullet, which is currently displaying a corresponding image.</div>
                     </td>
                   </tr>
                   <tr id="bullet_margin">
-                    <td class="spider_label"><label for="bull_margin">Margin: </label></td>
+                    <td class="spider_label <?php echo $fv_class; ?>"><label for="bull_margin">Margin: </label></td>
                     <td>
-                      <input type="text" name="bull_margin" id="bull_margin" value="<?php echo $row->bull_margin; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)"/> px
+                      <input type="text" name="bull_margin" id="bull_margin" value="<?php echo $row->bull_margin; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" <?php echo $fv_disabled; ?> /> px
+                      <div class="spider_description">Set the margin for the navigation bullets in pixels.</div>
                     </td>
                   </tr>
                 </tbody>
@@ -772,6 +845,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input disabled="disabled" type="radio" id="enable_filmstrip1" name="enable_filmstrip" <?php echo (($row->enable_filmstrip) ? 'checked="checked"' : ''); ?> value="1" /><label for="filmstrip1">Yes</label>
                       <input disabled="disabled" type="radio" id="enable_filmstrip0" name="enable_filmstrip" <?php echo (($row->enable_filmstrip) ? '' : 'checked="checked"'); ?> value="0" /><label for="filmstrip0">No</label>
+                      <div class="spider_description">Choose whether to have thumbnails of the slides displayed as a filmstrip or not.</div>
                     </td>
                   </tr>
                   <tr id="filmstrip_position">
@@ -783,6 +857,7 @@ class WDSViewSliders_wds {
                         <option value="bottom" <?php echo (($row->film_pos == "bottom") ? 'selected="selected"' : ''); ?>>Bottom</option>
                         <option value="left" <?php echo (($row->film_pos == "left") ? 'selected="selected"' : ''); ?>>Left</option>
                       </select>
+                      <div class="spider_description">Set the position of the filmstrip.</div>
                     </td>
                   </tr>
                   <tr id="filmstrip_size">
@@ -790,18 +865,21 @@ class WDSViewSliders_wds {
                     <td>
                       <input disabled="disabled" type="text" name="film_thumb_width" id="film_thumb_width" value="<?php echo $row->film_thumb_width; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" /> x 
                       <input disabled="disabled" type="text" name="film_thumb_height" id="film_thumb_height" value="<?php echo $row->film_thumb_height; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" /> px
+                      <div class="spider_description">Define the maximum width and heigth of the filmstrip thumbnails.</div>
                     </td>
                   </tr>
                   <tr>
                     <td class="spider_label"><label for="film_bg_color">Background color: </label></td>
                     <td>
                       <input disabled="disabled" type="text" name="film_bg_color" id="film_bg_color" value="<?php echo $row->film_bg_color; ?>" class="color" />
+                      <div class="spider_description">Select the background color for the filmstrip.</div>
                     </td>
                   </tr>
                   <tr id="filmstrip_thumb_margin">
                     <td class="spider_label"><label for="film_tmb_margin">Thumbnail margin: </label></td>
                     <td>
                       <input disabled="disabled" type="text" name="film_tmb_margin" id="film_tmb_margin" value="<?php echo $row->film_tmb_margin; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)"/> px
+                      <div class="spider_description">Set the margin for the thumbnails.</div>
                     </td>
                   </tr>
                   <tr>
@@ -818,12 +896,14 @@ class WDSViewSliders_wds {
                         ?>
                       </select>
                       <input disabled="disabled" type="text" name="film_act_border_color" id="film_act_border_color" value="<?php echo $row->film_act_border_color; ?>" class="color"/>
+                      <div class="spider_description">The thumbnail for the currently displayed image will have a border. You can set its size, type and color.</div>
                     </td>
                   </tr>
                   <tr>
                     <td class="spider_label"><label for="film_dac_transparent">Deactive transparency: </label></td>
                     <td>
                       <input disabled="disabled" type="text" name="film_dac_transparent" id="film_dac_transparent" value="<?php echo $row->film_dac_transparent; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)"/> %
+                      <div class="spider_description">You can set a transparency level for the inactive filmstrip items which must be between 0 to 100..</div>
                     </td>
                   </tr>
                 </tbody>
@@ -837,6 +917,7 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="radio" id="enable_time_bar1" name="enable_time_bar" <?php echo (($row->enable_time_bar) ? 'checked="checked"' : ''); ?> value="1" /><label for="time_bar1">Yes</label>
                       <input type="radio" id="enable_time_bar0" name="enable_time_bar" <?php echo (($row->enable_time_bar) ? '' : 'checked="checked"'); ?> value="0" /><label for="time_bar0">No</label>
+                      <div class="spider_description">You can add a bar displaying the timing left to switching to the next slide on autoplay.</div>
                     </td>
                   </tr>
                   <tr>
@@ -846,12 +927,14 @@ class WDSViewSliders_wds {
                         <option value="top" <?php echo (($row->timer_bar_type == "top") ? 'selected="selected"' : ''); ?>>Line top</option>
                         <option value="bottom" <?php echo (($row->timer_bar_type == "bottom") ? 'selected="selected"' : ''); ?>>Line Bottom</option>
                       </select>
+                      <div class="spider_description">Choose the type of the timer bar to be used within the slider.</div>
                     </td>
                   </tr>
                   <tr>
                     <td class="spider_label"><label for="timer_bar_size">Size: </label></td>
                     <td>
                       <input type="text" name="timer_bar_size" id="timer_bar_size" value="<?php echo $row->timer_bar_size; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" /> px
+                      <div class="spider_description">Define the height of the timer bar.</div>
                     </td>
                   </tr>
                   <tr>
@@ -890,7 +973,7 @@ class WDSViewSliders_wds {
                               <label for="built_in_watermark_type_text">Text</label>
                               <input type="radio" name="built_in_watermark_type" id="built_in_watermark_type_image" value="image" <?php if ($row->built_in_watermark_type == 'image') echo 'checked="checked"'; ?> onClick="bwg_built_in_watermark('watermark_type_image')" onchange="preview_built_in_watermark()" />
                               <label for="built_in_watermark_type_image">Image</label>
-                              <div class="spider_description"></div>
+                              <div class="spider_description">Choose what kind of watermark you want to use.</div>
                             </td>
                           </tr>
                           <tr id="tr_built_in_watermark_url">
@@ -899,7 +982,20 @@ class WDSViewSliders_wds {
                             </td>
                             <td>
                               <input type="text" id="built_in_watermark_url" name="built_in_watermark_url" style="width: 68%;" value="<?php echo $row->built_in_watermark_url; ?>" style="display:inline-block;" onchange="preview_built_in_watermark()" />
+                              <?php
+                              if (!$row->spider_uploader) {
+                                ?>
                               <input id="wat_img_add_butt" class="button-primary" type="button" onclick="spider_media_uploader('watermark', event); return false;" value="Add Image" />
+                                <?php
+                              }
+                              else {
+                                ?>
+                              <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'watermark', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Image" onclick="return false;">
+                                Add Image
+                              </a>
+                                <?php
+                              }
+                              ?>
                               <div class="spider_description">Only .png format is supported.</div>
                             </td>
                           </tr>                    
@@ -909,7 +1005,7 @@ class WDSViewSliders_wds {
                             </td>
                             <td>
                               <input type="text" name="built_in_watermark_text" id="built_in_watermark_text" style="width: 100%;" value="<?php echo $row->built_in_watermark_text; ?>" onchange="preview_built_in_watermark()" onkeypress="preview_built_in_watermark()" />
-                              <div class="spider_description"></div>
+                              <div class="spider_description">Provide the text which will be displayed over the slides.</div>
                             </td>
                           </tr>
                           <tr id="tr_built_in_watermark_size">
@@ -927,7 +1023,7 @@ class WDSViewSliders_wds {
                             </td>
                             <td>
                               <input type="text" name="built_in_watermark_font_size" id="built_in_watermark_font_size" value="<?php echo $row->built_in_watermark_font_size; ?>" class="spider_int_input" onchange="preview_built_in_watermark()" onkeypress="return spider_check_isnum(event)" /> px
-                              <div class="spider_description"></div>
+                              <div class="spider_description">Specify the font size of the watermark.</div>
                             </td>
                           </tr>
                             <tr id="tr_built_in_watermark_font">
@@ -956,7 +1052,7 @@ class WDSViewSliders_wds {
                               <?php
                               }
                             ?>
-                            <div class="spider_description"></div>
+                            <div class="spider_description">Specify the font family for the watermark text.</div>
                             </td>
                           </tr>
                           <tr id="tr_built_in_watermark_color">
@@ -993,14 +1089,14 @@ class WDSViewSliders_wds {
                                   </tr>
                                 </tbody>
                               </table>
-                              <div class="spider_description"></div>
+                              <div class="spider_description">Choose the positioning of the watermark.</div>
                             </td>
                           </tr>
                         </tbody>
                       </table>
                     </td>
                     <td style="width: 50%; vertical-align: top;height: 100%; display: table-cell;">
-                      <span id="preview_built_in_watermark" style="display:table-cell; background-image:url('<?php echo WD_S_URL . '/images/watermark_preview.jpg'?>');background-size:100% 100%;width:400px;height:400px;padding-top: 4px; position:relative;"></span>
+                      <span id="preview_built_in_watermark" style='display:table-cell; background-image:url("<?php echo WD_S_URL . '/images/watermark_preview.jpg'?>"); background-size:100% 100%;width:400px;height:400px;padding-top: 4px; position:relative;'></span>
                     </td>
                   </tr>
                 </tbody>
@@ -1013,7 +1109,10 @@ class WDSViewSliders_wds {
                     <td class="spider_label"><label for="css">Css: </label></td> 
                   </tr> 
                   <tr>
-                    <td style="width: 90%;"><textarea id="css" name="css" rows="30" style="width: 100%;"><?php echo htmlspecialchars($row->css); ?></textarea></td>
+                    <td style="width: 90%;">
+                      <div class="spider_description">Add custom CSS to apply custom changes to the slider.</div>
+                      <textarea id="css" name="css" rows="30" style="width: 100%;"><?php echo htmlspecialchars($row->css); ?></textarea>
+                    </td>
                   </tr>   
                 </tbody>
               </table>
@@ -1035,7 +1134,8 @@ class WDSViewSliders_wds {
                     <?php
                     foreach ($slides_row as $key => $slide_row) {
                       ?>
-                    <a id="wbs_subtab<?php echo $slide_row->id; ?>" class="connectedSortable <?php echo ((($id == 0 || !$sub_tab_type) && $key == 0) || ('slide' . $slide_row->id == $sub_tab_type)) ? 'wds_sub_active' : ''; ?>" href="#">
+                    <a id="wbs_subtab<?php echo $slide_row->id; ?>" class="connectedSortable <?php echo (((($id == 0 || !$sub_tab_type) || (strpos($sub_tab_type, 'pr') !== FALSE)) && $key == 0) || ('slide' . $slide_row->id == $sub_tab_type)) ? 'wds_sub_active' : ''; ?>" href="#">
+                      <div class="handle" title="Drag to re-order"></div>
                       <input type="text" id="title<?php echo $slide_row->id; ?>" name="title<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->title; ?>" class="wds_tab_title" tab_type="slide<?php echo $slide_row->id; ?>" onclick="wds_change_sub_tab(this, 'wds_slide<?php echo $slide_row->id; ?>')"/>
                       <span class="wds_tab_remove" title="Delete slide" onclick="wds_remove_slide('<?php echo $slide_row->id; ?>')"></span>
                       <input type="hidden" name="order<?php echo $slide_row->id; ?>" id="order<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->order; ?>" />
@@ -1049,31 +1149,28 @@ class WDSViewSliders_wds {
                   <?php
                   foreach ($slides_row as $key => $slide_row) {
                     ?>
-                  <div class="wds_box <?php echo ((($id == 0 || !$sub_tab_type) && $key == 0) || ('slide' . $slide_row->id == $sub_tab_type)) ? 'wds_sub_active' : ''; ?> wds_slide<?php echo $slide_row->id; ?>">
+                  <div class="wds_box <?php echo (((($id == 0 || !$sub_tab_type) || (strpos($sub_tab_type, 'pr') !== FALSE)) && $key == 0) || ('slide' . $slide_row->id == $sub_tab_type)) ? 'wds_sub_active' : ''; ?> wds_slide<?php echo $slide_row->id; ?>">
                     <table class="ui-sortable<?php echo $slide_row->id; ?>">
                       <thead><tr><td colspan="4">&nbsp;</td></tr></thead>
                       <tbody>
                         <input type="hidden" name="type<?php echo $slide_row->id; ?>" id="type<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->type; ?>" />
                         <tr>
-                          <td class="spider_label"><label>Published: </label></td>
-                          <td>
-                            <input type="radio" id="published<?php echo $slide_row->id; ?>1" name="published<?php echo $slide_row->id; ?>" <?php echo (($slide_row->published) ? 'checked="checked"' : ''); ?> value="1" /><label for="published<?php echo $slide_row->id; ?>1">Yes</label>
-                            <input type="radio" id="published<?php echo $slide_row->id; ?>0" name="published<?php echo $slide_row->id; ?>" <?php echo (($slide_row->published) ? '' : 'checked="checked"'); ?> value="0" /><label for="published<?php echo $slide_row->id; ?>0">No</label>
-                          </td>
-                        </tr>
-                        <tr id="trlink<?php echo $slide_row->id; ?>" <?php echo $slide_row->type == 'image' ? '' : 'style="display: none;"'; ?>>
-                          <td class="spider_label">
-                            <label for="link<?php echo $slide_row->id; ?>">Link the slide: </label>
-                          </td>
-                          <td>
-                            <input id="link<?php echo $slide_row->id; ?>" type="text" size="39" value="<?php echo $slide_row->link; ?>" name="link<?php echo $slide_row->id; ?>" />
-                            <div class="spider_description">Use http:// and https:// for external links.</div>
-                          </td>
-                        </tr>
-                        <tr>
                           <td colspan="4">
+                            <?php
+                            if (!$row->spider_uploader) {
+                              ?>
                             <input type="button" class="button-primary" id="button_image_url<?php echo $slide_row->id; ?>" onclick="spider_media_uploader('<?php echo $slide_row->id; ?>', event); return false;" value="Add Image from Media Library" />
-                            <input type="button" class="button-primary" onclick="wds_add_image_url('<?php echo $slide_row->id; ?>')" value="Add Image URL" />
+                              <?php
+                            }
+                            else {
+                              ?>
+                            <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_update_slide', 'slide_id' => $slide_row->id, 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Image" onclick="return false;">
+                              Add Image
+                            </a>
+                              <?php
+                            }
+                            ?>
+                            <input type="button" class="button-primary" onclick="wds_add_image_url('<?php echo $slide_row->id; ?>')" value="Add Image by URL" />
                             <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Add Video" />
                             <input type="button" class="button-secondary" id="delete_image_url<?php echo $slide_row->id; ?>" onclick="spider_remove_url('button_image_url<?php echo $slide_row->id; ?>', 'image_url<?php echo $slide_row->id; ?>', 'delete_image_url<?php echo $slide_row->id; ?>', 'wds_preview_image<?php echo $slide_row->id; ?>')" value="Remove" />
                             <input type="hidden" id="image_url<?php echo $slide_row->id; ?>" name="image_url<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->image_url; ?>" style="display: inline-block;" />
@@ -1085,14 +1182,14 @@ class WDSViewSliders_wds {
                             <div id="wds_preview_wrapper_<?php echo $slide_row->id; ?>" class="wds_preview_wrapper" style="width: <?php echo $row->width; ?>px; height: <?php echo $row->height; ?>px;">
                               <div class="wds_preview" style="overflow: hidden; position: absolute; width: inherit; height: inherit; background-color: transparent; background-image: none; display: block;">
                                 <div id="wds_preview_image<?php echo $slide_row->id; ?>" class="wds_preview_image<?php echo $slide_row->id; ?>"
-                                     style="background-color: <?php echo WDW_S_Library::spider_hex2rgba($row->background_color, (100 - $row->background_transparent) / 100); ?>;
-                                            background-image: url('<?php echo $slide_row->type != 'image'  ? $slide_row->thumb_url : $slide_row->image_url . '?date=' . date('Y-m-d H:i:s'); ?>');
+                                     style='background-color: <?php echo WDW_S_Library::spider_hex2rgba($row->background_color, (100 - $row->background_transparent) / 100); ?>;
+                                            background-image: url("<?php echo $slide_row->type != 'image'  ? $slide_row->thumb_url : $slide_row->image_url . '?date=' . date('Y-m-d H:i:s'); ?>");
                                             background-position: center center;
                                             background-repeat: no-repeat;
                                             background-size: <?php echo $row->bg_fit; ?>;
                                             width: inherit;
                                             height: inherit;
-                                            /*position: relative;*/">
+                                            /*position: relative;*/'>
                                 <?php
                                 $layers_row = $this->model->get_layers_row_data($slide_row->id);
                                 if ($layers_row) {
@@ -1102,14 +1199,14 @@ class WDSViewSliders_wds {
                                       case 'text': {
                                         ?>
                                         <span id="<?php echo $prefix; ?>" class="wds_draggable_<?php echo $slide_row->id; ?> wds_draggable ui-draggable" onclick="wds_showhide_layer('<?php echo $prefix; ?>_tbody', 1)"
-                                              style="<?php echo $layer->image_width ? 'width: ' . $layer->image_width . '%; ' : ''; ?><?php echo $layer->image_height ? 'height: ' . $layer->image_height . '%; ' : ''; ?>word-break: <?php echo ($layer->image_scale ? 'keep-all' : 'break-all'); ?>; display: inline-block; position: absolute; left: <?php echo $layer->left; ?>px; top: <?php echo $layer->top; ?>px; z-index: <?php echo $layer->depth; ?>; color: #<?php echo $layer->color; ?>; font-size: <?php echo $layer->size; ?>px; line-height: <?php echo $layer->size; ?>px; font-family: <?php echo $layer->ffamily; ?>; font-weight: <?php echo $layer->fweight; ?>; padding: <?php echo $layer->padding; ?>; background-color: <?php echo WDW_S_Library::spider_hex2rgba($layer->fbgcolor, (100 - $layer->transparent) / 100); ?>; border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>; border-radius: <?php echo $layer->border_radius; ?>; box-shadow: <?php echo $layer->shadow; ?>"><?php echo str_replace(array("\r\n", "\r", "\n"), "<br>", $layer->text); ?></span>
+                                              style="<?php echo $layer->image_width ? 'width: ' . $layer->image_width . '%; ' : ''; ?><?php echo $layer->image_height ? 'height: ' . $layer->image_height . '%; ' : ''; ?>word-break: <?php echo ($layer->image_scale ? 'keep-all' : 'break-all'); ?>; display: inline-block; position: absolute; left: <?php echo $layer->left; ?>px; top: <?php echo $layer->top; ?>px; z-index: <?php echo $layer->depth; ?>; color: #<?php echo $layer->color; ?>; font-size: <?php echo $layer->size; ?>px; line-height: 1.25em; font-family: <?php echo $layer->ffamily; ?>; font-weight: <?php echo $layer->fweight; ?>; padding: <?php echo $layer->padding; ?>; background-color: <?php echo WDW_S_Library::spider_hex2rgba($layer->fbgcolor, (100 - $layer->transparent) / 100); ?>; border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>; border-radius: <?php echo $layer->border_radius; ?>; box-shadow: <?php echo $layer->shadow; ?>"><?php echo str_replace(array("\r\n", "\r", "\n"), "<br>", $layer->text); ?></span>
                                         <?php
                                         break;
                                       }
                                       case 'image': {
                                         ?>
                                         <img id="<?php echo $prefix; ?>" class="wds_draggable_<?php echo $slide_row->id; ?> wds_draggable ui-draggable" onclick="wds_showhide_layer('<?php echo $prefix; ?>_tbody', 1)" src="<?php echo $layer->image_url; ?>"
-                                             style="opacity: <?php echo (100 - $layer->imgtransparent) / 100; ?>; filter: Alpha(opacity=<?php echo 100 - $layer->imgtransparent; ?>); position: absolute; left: <?php echo $layer->left; ?>px; top: <?php echo $layer->top; ?>px; z-index: <?php echo $layer->depth; ?>; border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>; border-radius: <?php echo $layer->border_radius; ?>; box-shadow: <?php echo $layer->shadow; ?>; max-width: <?php echo $layer->image_width; ?>px; max-height: <?php echo $layer->image_height; ?>px; <?php echo ($layer->image_scale != 'on') ? 'width: ' . $layer->image_width . 'px; height: ' . $layer->image_height . 'px;' : ''; ?>" />
+                                             style="opacity: <?php echo (100 - $layer->imgtransparent) / 100; ?>; filter: Alpha(opacity=<?php echo 100 - $layer->imgtransparent; ?>); position: absolute; left: <?php echo $layer->left; ?>px; top: <?php echo $layer->top; ?>px; z-index: <?php echo $layer->depth; ?>; border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>; border-radius: <?php echo $layer->border_radius; ?>; box-shadow: <?php echo $layer->shadow; ?>; " />
                                         <?php
                                         break;
                                       }
@@ -1133,9 +1230,38 @@ class WDSViewSliders_wds {
                           </td>
                         </tr>
                         <tr>
+                          <td class="spider_label"><label>Published: </label></td>
+                          <td>
+                            <input type="radio" id="published<?php echo $slide_row->id; ?>1" name="published<?php echo $slide_row->id; ?>" <?php echo (($slide_row->published) ? 'checked="checked"' : ''); ?> value="1" /><label for="published<?php echo $slide_row->id; ?>1">Yes</label>
+                            <input type="radio" id="published<?php echo $slide_row->id; ?>0" name="published<?php echo $slide_row->id; ?>" <?php echo (($slide_row->published) ? '' : 'checked="checked"'); ?> value="0" /><label for="published<?php echo $slide_row->id; ?>0">No</label>
+                          </td>
+                        </tr>
+                        <tr id="trlink<?php echo $slide_row->id; ?>" <?php echo $slide_row->type == 'image' ? '' : 'style="display: none;"'; ?>>
+                          <td class="spider_label">
+                            <label for="link<?php echo $slide_row->id; ?>">Link the slide to: </label>
+                          </td>
+                          <td>
+                            <input id="link<?php echo $slide_row->id; ?>" type="text" size="39" value="<?php echo $slide_row->link; ?>" name="link<?php echo $slide_row->id; ?>" />
+                            <div class="spider_description">You can set a redirection link, so that the user will get to the mentioned location upon hitting the slide.<br />Use http:// and https:// for external links.</div>
+                          </td>
+                        </tr>
+                        <tr>
                           <td colspan="4">
-                            <input type="button" class="button-primary button button-small" onclick="wds_add_layer('text', '<?php echo $slide_row->id; ?>'); return false;" value="Add Text Layer" />
-                            <input type="button" class="button-primary button button-small" onclick="wds_add_layer('image', '<?php echo $slide_row->id; ?>', '', event); return false;" value="Add Image Layer" />
+                            <input type="button" class="button-<?php echo !$fv ? "primary" : "secondary wds_free_button"; ?> button button-small" onclick="<?php echo !$fv ? "wds_add_layer('text', '" . $slide_row->id . "')" : "alert('This functionality is disabled in free version.')"; ?>; return false;" value="Add Text Layer" />
+                            <?php
+                            if (!$row->spider_uploader) {
+                              ?>
+                            <input type="button" class="button-<?php echo !$fv ? "primary" : "secondary wds_free_button"; ?> button button-small" onclick="<?php echo !$fv ? "wds_add_layer('image', '" . $slide_row->id . "', '', event)" : "alert('This functionality is disabled in free version.')"; ?>; return false;" value="Add Image Layer" />
+                              <?php
+                            }
+                            else {
+                              ?>
+                            <a href="<?php echo !$fv ? add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_layer', 'slide_id' => $slide_row->id, 'TB_iframe' => '1'), admin_url('admin-ajax.php')) : ''; ?>" onclick="<?php echo !$fv ? '' : "alert('This functionality is disabled in free version.')"; ?>; return false;" class="button-<?php echo !$fv ? "primary thickbox thickbox-preview" : "secondary wds_free_button"; ?> button button-small" id="content-add_media" title="Add Image Layer">
+                              Add Image layer
+                            </a>
+                              <?php
+                            }
+                            ?>
                             <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Social Button Layer" />
                           </td>
                         </tr>
@@ -1150,7 +1276,7 @@ class WDSViewSliders_wds {
                             <tr class="wds_layer_head_tr">
                               <td class="wds_layer_head" colspan="4">
                                 <div class="handle connectedSortable" title="Drag to re-order"></div>
-                                <span class="wds_layer_label" onclick="wds_showhide_layer('<?php echo $prefix; ?>_tbody', 0)"><input id="<?php echo $prefix; ?>_title" name="<?php echo $prefix; ?>_title" type="text" class="wds_layer_title" style="width: 80px;" value="<?php echo $layer->title; ?>" /></span>
+                                <span class="wds_layer_label" onclick="wds_showhide_layer('<?php echo $prefix; ?>_tbody', 0)"><input id="<?php echo $prefix; ?>_title" name="<?php echo $prefix; ?>_title" type="text" class="wds_layer_title" style="width: 80px;" value="<?php echo $layer->title; ?>" title="Layer title" /></span>
                                 <span class="wds_layer_remove" onclick="wds_delete_layer('<?php echo $slide_row->id; ?>', '<?php echo $layer->id; ?>')" title="Delete layer"></span>
                                 <span class="wds_layer_dublicate" onclick="wds_add_layer('<?php echo $layer->type; ?>', '<?php echo $slide_row->id; ?>', '', event, 1); wds_duplicate_layer('<?php echo $layer->type; ?>', '<?php echo $slide_row->id; ?>', '<?php echo $layer->id; ?>');" title="Duplicate layer"></span>
                                 <input id="<?php echo $prefix; ?>_depth" class="wds_layer_depth spider_int_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({zIndex: jQuery(this).val()})" onkeypress="return spider_check_isnum(event)" value="<?php echo $layer->depth; ?>" prefix="<?php echo $prefix; ?>" name="<?php echo $prefix; ?>_depth" title="z-index" />
@@ -1198,13 +1324,13 @@ class WDSViewSliders_wds {
                             </tr>							
                             <tr class="wds_layer_tr" style="display: none;">
                               <td class="spider_label">
-                                <label for="<?php echo $prefix; ?>_link">Link: </label>
+                                <label for="<?php echo $prefix; ?>_image_width">Dimensions: </label>
                               </td>
                               <td>
                                 <input id="<?php echo $prefix; ?>_image_width" class="spider_int_input" type="text" onchange="wds_text_width(this,'<?php echo $prefix; ?>')" value="<?php echo $layer->image_width; ?>" name="<?php echo $prefix; ?>_image_width" /> x 
                                 <input id="<?php echo $prefix; ?>_image_height" class="spider_int_input" type="text" onchange="wds_text_height(this,'<?php echo $prefix; ?>')" value="<?php echo $layer->image_height; ?>" name="<?php echo $prefix; ?>_image_height" /> % 
-                                <input id="<?php echo $prefix; ?>_image_scale" type="checkbox" onchange="wds_break_word(this, '<?php echo $prefix; ?>')" name="<?php echo $prefix; ?>_image_scale" <?php echo (($layer->image_scale) ? 'checked="checked"' : ''); ?> /> Break-word
-                                <div class="spider_description">Leave blank to keep the initial dimensions.</div>
+                                <input id="<?php echo $prefix; ?>_image_scale" type="checkbox" onchange="wds_break_word(this, '<?php echo $prefix; ?>')" name="<?php echo $prefix; ?>_image_scale" <?php echo (($layer->image_scale) ? 'checked="checked"' : ''); ?> /><label for="<?php echo $prefix; ?>_image_scale">Break-word</label>
+                                <div class="spider_description">Leave blank to keep the initial width and height.</div>
                               </td>
                               <td class="spider_label">
                                 <label for="<?php echo $prefix; ?>_layer_effect_out">Effect Out:</label>
@@ -1240,7 +1366,7 @@ class WDSViewSliders_wds {
                               <td>
                                 X <input id="<?php echo $prefix; ?>_left" class="spider_int_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({left: jQuery(this).val() + 'px'})" onkeypress="return spider_check_isnum(event)" value="<?php echo $layer->left; ?>" name="<?php echo $prefix; ?>_left" />
                                 Y <input id="<?php echo $prefix; ?>_top" class="spider_int_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({top: jQuery(this).val() + 'px'})" onkeypress="return spider_check_isnum(event)" value="<?php echo $layer->top; ?>" name="<?php echo $prefix; ?>_top" />
-                                <div class="spider_description"></div>
+                                <div class="spider_description">In addition you can drag and drop the layer to a desired position.</div>
                               </td> 
                               <td class="spider_label">
                                 <label for="<?php echo $prefix; ?>_padding">Padding: </label>
@@ -1382,8 +1508,8 @@ class WDSViewSliders_wds {
                                 <input type="hidden" name="<?php echo $prefix; ?>_image_url" id="<?php echo $prefix; ?>_image_url" value="<?php echo $layer->image_url; ?>" />
                                 <input id="<?php echo $prefix; ?>_image_width" class="spider_int_input" type="text" onkeyup="wds_scale('#<?php echo $prefix; ?>_image_scale', '<?php echo $prefix; ?>')" value="<?php echo $layer->image_width; ?>" name="<?php echo $prefix; ?>_image_width" /> x 
                                 <input id="<?php echo $prefix; ?>_image_height" class="spider_int_input" type="text" onkeyup="wds_scale('#<?php echo $prefix; ?>_image_scale', '<?php echo $prefix; ?>')" value="<?php echo $layer->image_height; ?>" name="<?php echo $prefix; ?>_image_height" /> px 
-                                <input id="<?php echo $prefix; ?>_image_scale" type="checkbox" onchange="wds_scale(this, '<?php echo $prefix; ?>')" name="<?php echo $prefix; ?>_image_scale" <?php echo (($layer->image_scale) ? 'checked="checked"' : ''); ?> /> Scale
-                                <div class="spider_description"></div>
+                                <input id="<?php echo $prefix; ?>_image_scale" type="checkbox" onchange="wds_scale(this, '<?php echo $prefix; ?>')" name="<?php echo $prefix; ?>_image_scale" <?php echo (($layer->image_scale) ? 'checked="checked"' : ''); ?> /><label for="<?php echo $prefix; ?>_image_scale">Scale</label>
+                                <div class="spider_description">Set width and height of the image.</div>
                               </td>
                               <td class="spider_label">
                                 <label for="<?php echo $prefix; ?>_layer_effect_in">Effect In:</label>
@@ -1418,7 +1544,7 @@ class WDSViewSliders_wds {
                               </td>
                               <td>
                                 <input id="<?php echo $prefix; ?>_alt" type="text" size="39" value="<?php echo $layer->alt; ?>" name="<?php echo $prefix; ?>_alt" />
-                                <div class="spider_description"></div>
+                                <div class="spider_description">Set the HTML attribute specified in the IMG tag.</div>
                               </td>
                               <td class="spider_label">
                                 <label for="<?php echo $prefix; ?>_layer_effect_out">Effect Out:</label>
@@ -1480,7 +1606,7 @@ class WDSViewSliders_wds {
                               <td>
                                 X <input id="<?php echo $prefix; ?>_left" class="spider_int_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({left: jQuery(this).val() + 'px'})" onkeypress="return spider_check_isnum(event)" value="<?php echo $layer->left; ?>" name="<?php echo $prefix; ?>_left" />
                                 Y <input id="<?php echo $prefix; ?>_top" class="spider_int_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({top: jQuery(this).val() + 'px'})" onkeypress="return spider_check_isnum(event)" value="<?php echo $layer->top; ?>" name="<?php echo $prefix; ?>_top" />
-                                <div class="spider_description"></div>
+                                <div class="spider_description">In addition you can drag and drop the layer to a desired position.</div>
                               </td>
                               <td class="spider_label">
                                 <label for="<?php echo $prefix; ?>_border_radius">Radius: </label>
@@ -1531,7 +1657,7 @@ class WDSViewSliders_wds {
                               <td>
                                 X <input id="<?php echo $prefix; ?>_left" class="spider_int_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({left: jQuery(this).val() + 'px'})" onkeypress="return spider_check_isnum(event)" value="<?php echo $layer->left; ?>" name="<?php echo $prefix; ?>_left" />
                                 Y <input id="<?php echo $prefix; ?>_top" class="spider_int_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({top: jQuery(this).val() + 'px'})" onkeypress="return spider_check_isnum(event)" value="<?php echo $layer->top; ?>" name="<?php echo $prefix; ?>_top" />
-                                <div class="spider_description"></div>
+                                <div class="spider_description">In addition you can drag and drop the layer to a desired position.</div>
                               </td>
                               <td class="spider_label">
                                 <label for="<?php echo $prefix; ?>_layer_effect_in">Effect In:</label>
@@ -1666,9 +1792,22 @@ class WDSViewSliders_wds {
                     <input id="slide<?php echo $slide_row->id; ?>_del_layer_ids_string" name="slide<?php echo $slide_row->id; ?>_del_layer_ids_string" type="hidden" value="" />
                   </div>
                     <script>
-                      jQuery(window).load(function() {
+                      jQuery(document).ready(function() {
+                        wds_whr('width');
                         wds_drag_layer('<?php echo $slide_row->id; ?>');
                         wds_layer_weights('<?php echo $slide_row->id; ?>');
+                        <?php
+                        if ($layers_row) {
+                          foreach ($layers_row as $key => $layer) {
+                            if ($layer->type == 'image') {
+                              $prefix = 'slide' . $slide_row->id . '_layer' . $layer->id;
+                              ?>
+                          wds_scale('#<?php echo $prefix; ?>_image_scale', '<?php echo $prefix; ?>');
+                              <?php
+                            }
+                          }
+                        }
+                        ?>
                       });
                     </script>
                     <?php
@@ -1681,29 +1820,23 @@ class WDSViewSliders_wds {
           </table>
         </div>
       </div>
+      <div class="wds_task_cont">
+        <input id="current_id" name="current_id" type="hidden" value="<?php echo $row->id; ?>" />
+        <input id="slide_ids_string" name="slide_ids_string" type="hidden" value="<?php echo $slide_ids_string; ?>" />
+        <input id="del_slide_ids_string" name="del_slide_ids_string" type="hidden" value="" />
+        <input id="nav_tab" name="nav_tab" type="hidden" value="<?php echo WDW_S_Library::get('nav_tab', 'global'); ?>" />
+        <input id="tab" name="tab" type="hidden" value="<?php echo WDW_S_Library::get('tab', 'slides'); ?>" />
+        <input id="sub_tab" name="sub_tab" type="hidden" value="<?php echo $sub_tab_type; ?>" />
+        <script>
+          var spider_uploader = <?php echo $row->spider_uploader; ?>;
+        </script>
+      </div>
       <input id="task" name="task" type="hidden" value="" />
-      <input id="current_id" name="current_id" type="hidden" value="<?php echo $row->id; ?>" />
-      <input id="slide_ids_string" name="slide_ids_string" type="hidden" value="<?php echo $slide_ids_string; ?>" />
-      <input id="del_slide_ids_string" name="del_slide_ids_string" type="hidden" value="" />
-      <input id="nav_tab" name="nav_tab" type="hidden" value="<?php echo WDW_S_Library::get('nav_tab', 'global'); ?>" />
-      <input id="tab" name="tab" type="hidden" value="<?php echo WDW_S_Library::get('tab', 'slides'); ?>" />
-      <input id="sub_tab" name="sub_tab" type="hidden" value="<?php echo $sub_tab_type; ?>" />
       <script>
+        var uploader_href = '<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_update_slide', 'slide_id' => 'slideID', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>';		
+        var fv = '<?php echo $fv; ?>';
         jQuery(window).load(function() {
-          jQuery(".wds_tabs").show();
-          var nav_tab = jQuery("#nav_tab").val();
-          wds_change_nav(jQuery(".wds_nav_tabs li[tab_type='" + nav_tab + "']"), 'wds_nav_' + nav_tab + '_box');
-          var tab = jQuery("#tab").val();
-          wds_change_tab(jQuery(".wds_tab_label[tab_type='" + tab + "']"), 'wds_' + tab + '_box');
-          bwg_built_in_watermark('watermark_type_<?php echo $row->built_in_watermark_type ?>');
-          preview_built_in_watermark();
-          wds_slide_weights();
-          if (jQuery("#music1").is(":checked")) {
-            bwg_enable_disable('', 'tr_music_url', 'music1');
-          }
-          else {
-            bwg_enable_disable('none', 'tr_music_url', 'music0');
-          }
+          wds_onload();
         });
       </script>
       <div class="opacity_add_image_url opacity_add_video wds_opacity_video" onclick="jQuery('.opacity_add_video').hide();jQuery('.opacity_add_image_url').hide();"></div>

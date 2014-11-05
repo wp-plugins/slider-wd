@@ -31,6 +31,12 @@ function spider_featured($current_plugin = '') {
       'content'  => 'WordPress Contact Form Maker is an advanced and easy-to-use tool for creating forms.',
       'href'     => 'http://web-dorado.com/products/wordpress-contact-form-maker-plugin.html'
     ),
+    "fm-import" => array(
+      'title'    => 'Form Maker Export/Import',
+      'text'     => 'WordPress Form Maker export/import plugin',
+      'content'  => 'Form Maker Export/Import is a Form Maker capacity enhancing plugin.',
+      'href'     => 'http://web-dorado.com/products/wordpress-form/export-import.html'
+    ),
     "spider-calendar" => array(
       'title'    => 'Spider Calendar',
       'text'     => 'WordPress event calendar plugin',
