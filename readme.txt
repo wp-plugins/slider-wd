@@ -39,7 +39,8 @@ The number of the slides for each slider is not limited. Various layers can be a
 *   Timer bar 
 *   Support for watermarks 
 *   Design customization for almost all features
-*   Custom CSS support for adding additional styling features to the slider
+*   Custom CSS support for adding additional styling features to the slider  
+*   Possibility to use Slider WD Media Upload for uploading multiple images at once  
 
 Upgrade to [WordPress Slider Pro](http://web-dorado.com/products/wordpress-slider-plugin.html) to add features:
 *   26 transition effects   
