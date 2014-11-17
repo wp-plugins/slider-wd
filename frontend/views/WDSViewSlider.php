@@ -396,8 +396,8 @@ class WDSViewSlider {
         wds_clear_layers_effects_out_before_change_<?php echo $wds; ?>["<?php echo $key; ?>"] = [];
         wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"] = [];
         wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["id"] = "<?php echo $slide_row->id; ?>";
-        wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["image_url"] = "<?php echo $slide_row->image_url; ?>";
-        wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["thumb_url"] = "<?php echo $slide_row->thumb_url; ?>";
+        wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["image_url"] = "<?php echo addslashes(htmlspecialchars_decode ($slide_row->image_url,ENT_QUOTES)); ?>";
+        wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["thumb_url"] = "<?php echo addslashes(htmlspecialchars_decode ($slide_row->thumb_url,ENT_QUOTES)); ?>";
         wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["is_video"] = "<?php echo $slide_row->type == "YOUTUBE" || $slide_row->type == "VIMEO"; ?>";
         wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["slide_layers_count"] = 0;
         <?php
@@ -486,7 +486,7 @@ class WDSViewSlider {
                         <div id="wds_slideshow_image<?php echo $image_div_num; ?>_<?php echo $wds; ?>"
                              class="wds_slideshow_image_<?php echo $wds; ?>"
                              onclick="<?php echo $slide_row->link ? 'window.open(\'' . $slide_row->link . '\')' : ''; ?>"
-                             style="<?php echo $slide_row->link ? 'cursor: pointer;' : ''; ?><?php echo ((!$slider_row->preload_images || $image_div_num == '') ? "background-image: url('" . $slide_row->image_url . "');" : ""); ?>">
+                             style="<?php echo $slide_row->link ? 'cursor: pointer;' : ''; ?><?php echo ((!$slider_row->preload_images || $image_div_num == '') ? "background-image: url('" . addslashes(htmlspecialchars_decode ($slide_row->image_url,ENT_QUOTES)) . "');" : ""); ?>">
                           <?php
                         }
                         else {
@@ -910,7 +910,7 @@ class WDSViewSlider {
           var next_image_class = "#image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[key]["id"];
           <?php if ($slider_row->preload_images) { ?>
           if (!wds_data_<?php echo $wds; ?>[key]["is_video"]) {
-            jQuery(next_image_class).find("div").css("background-image", "url('" + wds_data_<?php echo $wds; ?>[key]["image_url"] + "')");
+            jQuery(next_image_class).find("div").css("background-image", 'url("' + wds_data_<?php echo $wds; ?>[key]["image_url"] + '")');
           }
           <?php } ?>
           var current_slide_layers_count = wds_data_<?php echo $wds; ?>[current_key]["slide_layers_count"];

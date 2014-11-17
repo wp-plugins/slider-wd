@@ -119,7 +119,7 @@ class WDSModelSliders_wds {
       $row->prev_next_butt = 1;
       $row->play_paus_butt = 0;
       $row->navigation = 'hover';
-      $row->rl_butt_style = 'fa-angle-double';
+      $row->rl_butt_style = 'fa-angle';
       $row->rl_butt_size = 40;
       $row->pp_butt_size = 40;
       $row->butts_color = '000000';
@@ -129,11 +129,11 @@ class WDSModelSliders_wds {
       $row->nav_border_color = 'FFFFFF';
       $row->nav_border_radius = '20px';
       $row->nav_bg_color = 'FFFFFF';
-      $row->butts_transparent = 50;
+      $row->butts_transparent = 100;
       $row->enable_bullets = 1;
       $row->bull_position = 'bottom';
-      $row->bull_style = 'fa-circle-o';
-      $row->bull_size = 25;
+      $row->bull_style = 'fa-square-o';
+      $row->bull_size = 20;
       $row->bull_color = 'FFFFFF';
       $row->bull_act_color = 'FFFFFF';
       $row->bull_margin = 3;

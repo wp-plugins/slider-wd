@@ -116,11 +116,11 @@ class WDSControllerSliders_wds {
     $prev_next_butt = ((isset($_POST['prev_next_butt'])) ? (int) esc_html(stripslashes($_POST['prev_next_butt'])) : 1);	
     $play_paus_butt = ((isset($_POST['play_paus_butt'])) ? (int) esc_html(stripslashes($_POST['play_paus_butt'])) : 0);
     $navigation = ((isset($_POST['navigation'])) ? esc_html(stripslashes($_POST['navigation'])) : 'hover');
-    $rl_butt_style = ((isset($_POST['rl_butt_style']) && $allow) ? esc_html(stripslashes($_POST['rl_butt_style'])) : 'fa-angle-double');
+    $rl_butt_style = ((isset($_POST['rl_butt_style']) && $allow) ? esc_html(stripslashes($_POST['rl_butt_style'])) : 'fa-angle');
     $rl_butt_size = ((isset($_POST['rl_butt_size']) && $allow) ? (int) esc_html(stripslashes($_POST['rl_butt_size'])) : 40);
     $pp_butt_size = ((isset($_POST['pp_butt_size']) && $allow) ? (int) esc_html(stripslashes($_POST['pp_butt_size'])) : 40);	
     $butts_color = ((isset($_POST['butts_color']) && $allow) ? esc_html(stripslashes($_POST['butts_color'])) : '000000');
-    $butts_transparent = ((isset($_POST['butts_transparent']) && $allow) ? (int) esc_html(stripslashes($_POST['butts_transparent'])) : 50);
+    $butts_transparent = ((isset($_POST['butts_transparent']) && $allow) ? (int) esc_html(stripslashes($_POST['butts_transparent'])) : 100);
     $hover_color = ((isset($_POST['hover_color']) && $allow) ? esc_html(stripslashes($_POST['hover_color'])) : '000000');
     $nav_border_width = ((isset($_POST['nav_border_width']) && $allow) ? (int) esc_html(stripslashes($_POST['nav_border_width'])) : 0);
     $nav_border_style = ((isset($_POST['nav_border_style']) && $allow) ? esc_html(stripslashes($_POST['nav_border_style'])) : 'none');
@@ -131,8 +131,8 @@ class WDSControllerSliders_wds {
     if (isset($_POST['enable_bullets']) && (esc_html(stripslashes($_POST['enable_bullets'])) == 0)) {
       $bull_position = 'none';
     }
-    $bull_style = ((isset($_POST['bull_style']) && $allow) ? esc_html(stripslashes($_POST['bull_style'])) : 'fa-circle-o');
-    $bull_size = ((isset($_POST['bull_size']) && $allow) ? (int) esc_html(stripslashes($_POST['bull_size'])) : 25);
+    $bull_style = ((isset($_POST['bull_style']) && $allow) ? esc_html(stripslashes($_POST['bull_style'])) : 'fa-square-o');
+    $bull_size = ((isset($_POST['bull_size']) && $allow) ? (int) esc_html(stripslashes($_POST['bull_size'])) : 20);
     $bull_color = ((isset($_POST['bull_color']) && $allow) ? esc_html(stripslashes($_POST['bull_color'])) : 'FFFFFF');	
     $bull_act_color = ((isset($_POST['bull_act_color']) && $allow) ? esc_html(stripslashes($_POST['bull_act_color'])) : 'FFFFFF');
     $bull_margin = ((isset($_POST['bull_margin']) && $allow) ? (int) esc_html(stripslashes($_POST['bull_margin'])) : 3);
