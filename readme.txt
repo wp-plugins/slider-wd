@@ -128,6 +128,10 @@ If any problem occurs, please contact us at  [info@web-dorado.com](mailto:info@w
 
 
 == Changelog ==
+
+= 1.0.3 =
+single quota in image name (bug fixed)
+
 = 1.0.2 =
 
 *  Turn SliderWD Media Upload
