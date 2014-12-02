@@ -4,7 +4,7 @@
  * Plugin Name: Slider WD
  * Plugin URI: http://web-dorado.com/products/wordpress-slider-plugin.html
  * Description: This is a responsive plugin, which allows adding sliders to your posts/pages and to custom location. It uses large number of transition effects and supports various types of layers.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: WebDorado
  * Author URI: http://web-dorado.com/
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -209,19 +209,19 @@ function wds_activate() {
   global $wpdb;
   wds_install();
   if (!$wpdb->get_var("SELECT * FROM " . $wpdb->prefix . "wdsslider")) {
-    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslider` VALUES(1, "Default slider", 1, 0, 800, 300, "cover", "center", "none", 5, 1, 0, 0, "", 1, "000000", 100, 0, "none", "FFFFFF", "", 0, "", 0, 1, 1, 0, "hover", "fa-angle", 40, 40, "FFFFFF", 100, "CCCCCC", 0, "none", "FFFFFF", "20px", "FFFFFF", "bottom", "fa-square-o", 20, "FFFFFF", "FFFFFF", 3, "none", 100, 50, "000000", 0, 0, "none", "FFFFFF", 50, "none", "middle-center", 15, "", "", 20, "arial.ttf", "FFFFFF", 70, "#wds_0_slide2_layer2 {\r\n  text-align: center !important;\r\n}", "none", 5, "FFFFFF", 50, 1)');
+    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslider` VALUES(1, "Default slider", 1, 0, 800, 300, "cover", "center", "none", 5, 1, 0, 0, "", 1, "000000", 100, 0, "none", "FFFFFF", "", 0, "", 0, 1, 1, 0, "hover", "fa-angle", 40, 40, "FFFFFF", 100, "CCCCCC", 0, "none", "FFFFFF", "20px", "FFFFFF", "bottom", "fa-square-o", 20, "FFFFFF", "FFFFFF", 3, "none", 100, 50, "000000", 0, 0, "none", "FFFFFF", 50, "none", "middle-center", 15, "", "", 20, "arial.ttf", "FFFFFF", 70, "#wds_0_slide2_layer2 {\r\n  text-align: center !important;\r\n}", "none", 5, "FFFFFF", 50, 1, 0)');
   }
   if (!$wpdb->get_var("SELECT * FROM " . $wpdb->prefix . "wdsslide")) {
-    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslide` VALUES(1, 1, "Slide 1", "image", "' . WD_S_URL . '/demo/1.jpg", "' . WD_S_URL . '/demo/1-150x150.jpg", 1, "", 1)');
-    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslide` VALUES(2, 1, "Slide 2", "image", "' . WD_S_URL . '/demo/2.jpg", "' . WD_S_URL . '/demo/2-150x150.jpg", 1, "", 2)');
-    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslide` VALUES(3, 1, "Slide 3", "image", "' . WD_S_URL . '/demo/3.jpg", "' . WD_S_URL . '/demo/3-150x150.jpg", 1, "", 3)');
+    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslide` VALUES(1, 1, "Slide 1", "image", "' . WD_S_URL . '/demo/1.jpg", "' . WD_S_URL . '/demo/1-150x150.jpg", 1, "", 1, 0)');
+    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslide` VALUES(2, 1, "Slide 2", "image", "' . WD_S_URL . '/demo/2.jpg", "' . WD_S_URL . '/demo/2-150x150.jpg", 1, "", 2, 0)');
+    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslide` VALUES(3, 1, "Slide 3", "image", "' . WD_S_URL . '/demo/3.jpg", "' . WD_S_URL . '/demo/3-150x150.jpg", 1, "", 3, 0)');
   }
 }
 register_activation_hook(__FILE__, 'wds_activate');
 
 function wds_install() {
   $version = get_option("wds_version");
-  $new_version = '1.0.3';
+  $new_version = '1.0.4';
   if ($version && version_compare($version, $new_version, '<')) {
     require_once WD_S_DIR . "/sliders-update.php";
     wds_update($version);

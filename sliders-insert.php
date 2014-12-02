@@ -72,6 +72,7 @@ function wds_insert() {
     `timer_bar_color` varchar(8) NOT NULL,
     `timer_bar_transparent` int(4) NOT NULL,
     `spider_uploader` tinyint(1) NOT NULL,
+    `stop_animation`  tinyint(1) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdsslider);
@@ -85,6 +86,7 @@ function wds_insert() {
     `published` tinyint(1) NOT NULL,
     `link` mediumtext NOT NULL,
     `order` bigint(20) NOT NULL,
+    `target_attr_slide`tinyint(1) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdsslide);
@@ -125,6 +127,7 @@ function wds_insert() {
     `duration_eff_in` bigint(20) NOT NULL,
     `layer_effect_out` varchar(16) NOT NULL,	
     `duration_eff_out` bigint(20) NOT NULL,
+    `target_attr_layer` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdslayer);

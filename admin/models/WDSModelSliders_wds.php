@@ -161,6 +161,7 @@ class WDSModelSliders_wds {
       $row->built_in_watermark_font = '';
       $row->built_in_watermark_color = 'FFFFFF';
       $row->built_in_watermark_opacity = 70;
+      $row->stop_animation = 0;
       $row->css = '';
     }
     return $row;

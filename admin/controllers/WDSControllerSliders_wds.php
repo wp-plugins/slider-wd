@@ -165,6 +165,7 @@ class WDSControllerSliders_wds {
     $timer_bar_size = (isset($_POST['timer_bar_size']) ? esc_html(stripslashes($_POST['timer_bar_size'])) : 5);
     $timer_bar_color = (isset($_POST['timer_bar_color']) ? esc_html(stripslashes($_POST['timer_bar_color'])) : 'FFFFFF');
     $timer_bar_transparent = (isset($_POST['timer_bar_transparent']) ? esc_html(stripslashes($_POST['timer_bar_transparent'])) : 50);
+    $stop_animation = ((isset($_POST['stop_animation'])) ? (int) esc_html(stripslashes($_POST['stop_animation'])) : 0);
     if (!$slider_id) {
       $save = $wpdb->insert($wpdb->prefix . 'wdsslider', array(			
         'name' => $name,
@@ -235,6 +236,7 @@ class WDSControllerSliders_wds {
         'timer_bar_transparent' => $timer_bar_transparent,
         'layer_out_next' => $layer_out_next,
         'spider_uploader' => $spider_uploader,
+        'stop_animation' => $stop_animation,
       ), array(
         '%s',
         '%d',
@@ -301,6 +303,7 @@ class WDSControllerSliders_wds {
         '%s',
         '%d',
         '%s',
+        '%d',
         '%d',
         '%d',
         '%d',
@@ -377,6 +380,7 @@ class WDSControllerSliders_wds {
         'timer_bar_transparent' => $timer_bar_transparent,
         'layer_out_next' => $layer_out_next,
         'spider_uploader' => $spider_uploader,
+        'stop_animation' => $stop_animation,
         ), array('id' => $slider_id));
     }
     if ($save !== FALSE) {
@@ -411,6 +415,7 @@ class WDSControllerSliders_wds {
         $type = ((isset($_POST['type' . $slide_id])) ? esc_html(stripslashes($_POST['type' . $slide_id])) : '');
         $order = ((isset($_POST['order' . $slide_id])) ? esc_html(stripslashes($_POST['order' . $slide_id])) : '');
         $published = ((isset($_POST['published' . $slide_id])) ? esc_html(stripslashes($_POST['published' . $slide_id])) : '');
+        $target_attr_slide = ((isset($_POST['target_attr_slide' . $slide_id])) ? esc_html(stripslashes($_POST['target_attr_slide' . $slide_id])) : 0);
         $link = ((isset($_POST['link' . $slide_id])) ? esc_html(stripslashes($_POST['link' . $slide_id])) : '');
         $image_url = ((isset($_POST['image_url' . $slide_id])) ? esc_html(stripslashes($_POST['image_url' . $slide_id])) : '');
         $thumb_url = ((isset($_POST['thumb_url' . $slide_id])) ? esc_html(stripslashes($_POST['thumb_url' . $slide_id])) : '');
@@ -424,6 +429,7 @@ class WDSControllerSliders_wds {
             'link' => $link,
             'image_url' => $image_url,
             'thumb_url' => $thumb_url,
+            'target_attr_slide' => $target_attr_slide,
           ), array(
             '%d',
             '%s',
@@ -433,6 +439,7 @@ class WDSControllerSliders_wds {
             '%s',
             '%s',
             '%s',
+            '%d',
           ));
           if ($allow) {
             $slide_id_pr = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . 'wdsslide');
@@ -449,6 +456,7 @@ class WDSControllerSliders_wds {
             'link' => $link,
             'image_url' => $image_url,
             'thumb_url' => $thumb_url,
+            'target_attr_slide' => $target_attr_slide,
           ), array('id' => $slide_id));
           if ($allow) {
             $this->save_layer_db($slide_id, $slide_id);
@@ -472,6 +480,7 @@ class WDSControllerSliders_wds {
         $depth = ((isset($params_array['depth'])) ? esc_html(stripslashes($params_array['depth'])) : '');
         $text = ((isset($params_array['text'])) ? stripslashes($params_array['text']) : '');
         $link = ((isset($params_array['link'])) ? esc_html(stripslashes($params_array['link'])) : '');
+        $target_attr_layer = ((isset($params_array['target_attr_layer'])) ? esc_html(stripslashes($params_array['target_attr_layer'])) : 0);
         $left = ((isset($params_array['left'])) ? esc_html(stripslashes($params_array['left'])) : '');
         $top = ((isset($params_array['top'])) ? esc_html(stripslashes($params_array['top'])) : '');
         $start = ((isset($params_array['start'])) ? esc_html(stripslashes($params_array['start'])) : '');
@@ -539,6 +548,7 @@ class WDSControllerSliders_wds {
               'layer_effect_out' => $layer_effect_out,
               'duration_eff_in' => $duration_eff_in,
               'duration_eff_out' => $duration_eff_out,
+              'target_attr_layer' => $target_attr_layer,
             ), array(
               '%d',
               '%s',
@@ -574,6 +584,7 @@ class WDSControllerSliders_wds {
               '%s',
               '%s',
               '%s',
+              '%d',
               '%d',
               '%d',
             ));
@@ -614,6 +625,7 @@ class WDSControllerSliders_wds {
               'layer_effect_out' => $layer_effect_out,
               'duration_eff_in' => $duration_eff_in,
               'duration_eff_out' => $duration_eff_out,
+              'target_attr_layer' => $target_attr_layer,
             ), array('id' => $layer_id));
           }
         }

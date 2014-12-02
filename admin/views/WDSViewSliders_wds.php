@@ -531,6 +531,14 @@ class WDSViewSliders_wds {
                     </td>
                   </tr>
                   <tr>
+                    <td class="spider_label"><label>Stop on hover: </label></td>
+                    <td>
+                      <input type="radio" id="stop_animation1" name="stop_animation" <?php echo (($row->stop_animation) ? 'checked="checked"' : ''); ?> value="1" /><label for="stop_animation1">Yes</label>
+                      <input type="radio" id="stop_animation0" name="stop_animation" <?php echo (($row->stop_animation) ? '' : 'checked="checked"'); ?> value="0" /><label for="stop_animation0">No</label>
+                      <div class="spider_description">The option works when autoplay is on.</div>
+                    </td>
+                  </tr>
+                  <tr>
                     <td class="spider_label"><label>Shuffle: </label></td>
                     <td>
                       <input type="radio" id="shuffle1" name="shuffle" <?php echo (($row->shuffle) ? 'checked="checked"' : ''); ?> value="1" /><label for="shuffle1">Yes</label>
@@ -1242,6 +1250,7 @@ class WDSViewSliders_wds {
                           </td>
                           <td>
                             <input id="link<?php echo $slide_row->id; ?>" type="text" size="39" value="<?php echo $slide_row->link; ?>" name="link<?php echo $slide_row->id; ?>" />
+                            <input id="target_attr_slide<?php echo $slide_row->id; ?>" type="checkbox"  name="target_attr_slide<?php echo $slide_row->id; ?>" <?php echo (($slide_row->target_attr_slide) ? 'checked="checked"' : ''); ?> value="1" /><label for="target_attr_slide<?php echo $slide_row->id; ?>"> Open in a new window</label>
                             <div class="spider_description">You can set a redirection link, so that the user will get to the mentioned location upon hitting the slide.<br />Use http:// and https:// for external links.</div>
                           </td>
                         </tr>
@@ -1472,6 +1481,7 @@ class WDSViewSliders_wds {
                               </td>
                               <td>
                                 <input id="<?php echo $prefix; ?>_link" type="text" size="39" value="<?php echo $layer->link; ?>" name="<?php echo $prefix; ?>_link" />
+                                <input id="<?php echo $prefix; ?>_target_attr_layer" type="checkbox"  name="<?php echo $prefix; ?>_target_attr_layer" <?php echo (($layer->target_attr_layer) ? 'checked="checked"' : ''); ?> value="1" /><label for="<?php echo $prefix; ?>_target_attr_layer"> Open in a new window</label>
                                 <div class="spider_description">Use http:// and https:// for external links.</div>
                               </td>
                               <td class="spider_label">
@@ -1579,6 +1589,7 @@ class WDSViewSliders_wds {
                               </td>
                               <td>
                                 <input id="<?php echo $prefix; ?>_link" type="text" size="39" value="<?php echo $layer->link; ?>" name="<?php echo $prefix; ?>_link" />
+                                <input id="<?php echo $prefix; ?>_target_attr_layer" type="checkbox"  name="<?php echo $prefix; ?>_target_attr_layer" <?php echo (($layer->target_attr_layer) ? 'checked="checked"' : ''); ?> value="1" /><label for="<?php echo $prefix; ?>_target_attr_layer"> Open in a new window</label>
                                 <div class="spider_description">Use http:// and https:// for external links.</div>
                               </td>
                               <td class="spider_label">

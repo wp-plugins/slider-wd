@@ -20,6 +20,7 @@ function spider_ajax_save(form_id, event) {
   post_data["effect"] = jQuery("#effect").val();
   post_data["time_intervval"] = jQuery("#time_intervval").val();
   post_data["autoplay"] = jQuery("input[name=autoplay]:checked").val();
+  post_data["stop_animation"] = jQuery("input[name=stop_animation]:checked").val();
   post_data["shuffle"] = jQuery("input[name=shuffle]:checked").val();
   post_data["music"] = jQuery("input[name=music]:checked").val();
   post_data["music_url"] = jQuery("#music_url").val();
@@ -105,6 +106,7 @@ function spider_ajax_save(form_id, event) {
       post_data["order" + slide_id] = jQuery("#order" + slide_id).val();
       post_data["published" + slide_id] = jQuery("input[name=published" + slide_id + "]:checked").val();
       post_data["link" + slide_id] = jQuery("#link" + slide_id).val();
+      post_data["target_attr_slide" + slide_id] = jQuery("input[name=target_attr_slide" + slide_id +" ]:checked").val();
       post_data["type" + slide_id] = jQuery("#type" + slide_id).val();
       post_data["image_url" + slide_id] = jQuery("#image_url" + slide_id).val();
       post_data["thumb_url" + slide_id] = jQuery("#thumb_url" + slide_id).val();
@@ -133,6 +135,7 @@ function spider_ajax_save(form_id, event) {
                 json_data["ffamily"] = jQuery("#" + prefix + "_ffamily").val();
                 json_data["fweight"] = jQuery("#" + prefix + "_fweight").val();
                 json_data["link"] = jQuery("#" + prefix + "_link").val();
+                json_data["target_attr_layer"] = jQuery("input[name=" + prefix + "_target_attr_layer]:checked").val();
                 json_data["padding"] = jQuery("#" + prefix + "_padding").val();
                 json_data["fbgcolor"] = jQuery("#" + prefix + "_fbgcolor").val();
                 json_data["transparent"] = jQuery("#" + prefix + "_transparent").val();
@@ -150,6 +153,7 @@ function spider_ajax_save(form_id, event) {
                 json_data["image_scale"] = jQuery("input[name=slide" + slide_id + "_layer" + layer_id + "_image_scale]:checked").val();
                 json_data["alt"] = jQuery("#" + prefix + "_alt").val();
                 json_data["link"] = jQuery("#" + prefix + "_link").val();
+                json_data["target_attr_layer"] = jQuery("input[name=" + prefix + "_target_attr_layer]:checked").val();
                 json_data["imgtransparent"] = jQuery("#" + prefix + "_imgtransparent").val();
                 json_data["border_width"] = jQuery("#" + prefix + "_border_width").val();
                 json_data["border_style"] = jQuery("#" + prefix + "_border_style").val();
@@ -1233,7 +1237,9 @@ function wds_add_layer(type, id, layerID, event, duplicate, files) {
              '<td><input type="text" id="' + prefix + '_alt" name="' + prefix + '_alt" value="" size="39" />' +
                  '<div class="spider_description">Set the HTML attribute specified in the IMG tag.</div></td>';
   var link = '<td class="spider_label"><label for="' + prefix + '_link">Link: </label></td>' +
-             '<td><input type="text" id="' + prefix + '_link" name="' + prefix + '_link" value="" size="39" /><div class="spider_description">Use http:// and https:// for external links.</div></td>';
+             '<td><input type="text" id="' + prefix + '_link" name="' + prefix + '_link" value="" size="39" />' +
+                 '<input id="' + prefix + '_target_attr_layer" type="checkbox"  name="' + prefix + '_target_attr_layer" value="1" checked="checked" /><label for="' + prefix + '_target_attr_layer"> Open in a new window</label>' +
+                 '<div class="spider_description">Use http:// and https:// for external links.</div></td>';
   var position = '<td class="spider_label"><label>Position: </label></td>' +
                  '<td> X <input type="text" name="' + prefix + '_left" id="' + prefix + '_left" value="0" class="spider_int_input" onkeypress="return spider_check_isnum(event)" onchange="jQuery(\'#' + prefix + '\').css({left: jQuery(this).val() + \'px\'})" />' +
                      ' Y <input type="text" name="' + prefix + '_top" id="' + prefix + '_top" value="0" class="spider_int_input" onkeypress="return spider_check_isnum(event)" onchange="jQuery(\'#' + prefix + '\').css({top: jQuery(this).val() + \'px\'})" />' +
@@ -1647,6 +1653,7 @@ function wds_add_slide() {
                   '<label for="published' + slideID + '0">No</label></td>' +
           '</tr><tr id="trlink' + slideID + '"><td class="spider_label"><label for="link' + slideID + '">Link the slide to: </label></td>' +
                    '<td><input id="link' + slideID + '" type="text" size="39" value="" name="link' + slideID + '" />' +
+                       '<input id="target_attr_slide' + slideID + '" type="checkbox"  name="target_attr_slide' + slideID + '" value="1" checked="checked" /><label for="target_attr_slide' + slideID + '"> Open in a new window</label>' +
                        '<div class="spider_description">You can set a redirection link, so that the user will get to the mentioned location upon hitting the slide.<br />Use http:// and https:// for external links.</div></td>' +
           '</tr><tr><td colspan="4">' +
             ' <input class="button-' + (!fv ? "primary" : "secondary wds_free_button") + ' button button-small" type="button" value="Add Text Layer" onclick="' + (!fv ? "wds_add_layer(\'text\', \'' + slideID + '\')" : "alert('This functionality is disabled in free version.')") + '; return false;">' +
