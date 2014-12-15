@@ -131,6 +131,10 @@ If any problem occurs, please contact us at  [info@web-dorado.com](mailto:info@w
 
 == Changelog ==
 
+= 1.0.4 =
+stop on hover option
+slide, text layer, image layer link open in a new window option
+
 = 1.0.3 =
 single quota in image name (bug fixed)
 
