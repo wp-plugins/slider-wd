@@ -22,7 +22,7 @@ The number of the slides for each slider is not limited. Various layers can be a
 
 
 *   Responsiveness
-*   Possibility of adding unlimited sliders and unlimited images for each slider
+*   Possibility of adding unlimited sliders and unlimited slides for each slider
 *   Three options for adding images (from Media Library, by Slider WD Media Upload option or by using image URL)  
 *   Full-width slider support
 *   5 transition effects 
