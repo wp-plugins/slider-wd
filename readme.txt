@@ -172,7 +172,8 @@ For Mac Users
 Go to your Downloads folder and locate the folder with the plugin. Right-click on the folder and select Compress. Now you have a newly created .zip file which can be installed as described here.   
 4. Click "Upload&Install" button.   
 5. Click "Activate Plugin" button for activating the plugin.    
-If installation does any problem occurs, please contact us info@web-dorado.com.    
+
+If any problem occurs with Slider WD, please contact us at info@web-dorado.com.   
 
 = Step 2:  Adding images to Sliders. =
 Go to Slider WD >Sliders > Add New.  
