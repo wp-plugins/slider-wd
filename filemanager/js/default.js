@@ -174,11 +174,9 @@ function submitFiles() {
       var fileData = [];
       fileData['name'] = filesSelected[i];
       fileData['filename'] = jQuery(file_object).attr("filename");
-      /*fileData['url'] = dir + "/" + filesSelected[i]; alert(dirUrl);*/
-	  fileData['url'] = dirUrl + "/" + filesSelected[i]; /*alert(dirUrl);*/
+      fileData['url'] = dirUrl + "/" + filesSelected[i];
       fileData['reliative_url'] = dirUrl + "/" + filesSelected[i];
-      /*fileData['thumb_url'] = dir + "/thumb/" + filesSelected[i];*/
-	  fileData['thumb_url'] = dirUrl + "/thumb/" + filesSelected[i];
+      fileData['thumb_url'] = dirUrl + "/thumb/" + filesSelected[i];
       fileData['thumb'] = jQuery(file_object).attr("filethumb");
       fileData['size'] = jQuery(file_object).attr("filesize");
       fileData['filetype'] = jQuery(file_object).attr("filetype");
@@ -187,7 +185,7 @@ function submitFiles() {
       filesValid.push(fileData);
     }
   }
-  window.parent[callback](filesValid, image_for, slide_id);
+  window.parent[callback](filesValid, image_for, slide_id, layer_id);
   window.parent.tb_remove();
 }
 

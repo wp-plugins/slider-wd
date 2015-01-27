@@ -73,6 +73,14 @@ function wds_insert() {
     `timer_bar_transparent` int(4) NOT NULL,
     `spider_uploader` tinyint(1) NOT NULL,
     `stop_animation`  tinyint(1) NOT NULL,
+    `right_butt_url` varchar(255) NOT NULL,
+    `left_butt_url` varchar(255) NOT NULL,
+    `right_butt_hov_url` varchar(255) NOT NULL,
+    `left_butt_hov_url` varchar(255) NOT NULL,
+    `rl_butt_img_or_not` varchar(8) NOT NULL,
+    `bullets_img_main_url` varchar(255) NOT NULL,
+    `bullets_img_hov_url` varchar(255) NOT NULL,
+    `bull_butt_img_or_not` varchar(8) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdsslider);
@@ -86,7 +94,7 @@ function wds_insert() {
     `published` tinyint(1) NOT NULL,
     `link` mediumtext NOT NULL,
     `order` bigint(20) NOT NULL,
-    `target_attr_slide`tinyint(1) NOT NULL,
+    `target_attr_slide` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdsslide);

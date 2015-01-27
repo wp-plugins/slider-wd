@@ -72,13 +72,11 @@ class FilemanagerView {
         var dir = "<?php echo (isset($_REQUEST['dir']) ? addslashes(esc_html($_REQUEST['dir'])) : ''); ?>"; 
         var dirUrl = "<?php echo $this->controller->get_uploads_url() . (isset($_REQUEST['dir']) ? esc_html($_REQUEST['dir']) . '/' : ''); ?>";
         var callback = "<?php echo (isset($_REQUEST['callback']) ? esc_html($_REQUEST['callback']) : ''); ?>";
-		var image_for = "<?php echo (isset($_REQUEST['image_for']) ? esc_html($_REQUEST['image_for']) : ''); ?>";
-		var slide_id = "<?php echo (isset($_REQUEST['slide_id']) ? esc_html($_REQUEST['slide_id']) : ''); ?>";
+        var image_for = "<?php echo (isset($_REQUEST['image_for']) ? esc_html($_REQUEST['image_for']) : ''); ?>";
+        var slide_id = "<?php echo (isset($_REQUEST['slide_id']) ? esc_html($_REQUEST['slide_id']) : ''); ?>";
+        var layer_id = "<?php echo (isset($_REQUEST['layer_id']) ? esc_html($_REQUEST['layer_id']) : ''); ?>";
         var sortBy = "<?php echo $sort_by; ?>";
         var sortOrder = "<?php echo $sort_order; ?>";
-		
-		
-		
       </script>
       <script src="<?php echo WD_S_URL; ?>/filemanager/js/default.js?ver=<?php echo get_option("wd_bwg_version"); ?>"></script>
       <link href="<?php echo WD_S_URL; ?>/filemanager/css/default.css?ver=<?php echo get_option("wd_bwg_version"); ?>" type="text/css" rel="stylesheet">
@@ -414,24 +412,24 @@ class FilemanagerView {
             </div>
           </div>
         </div>
-
-        <input type="hidden" name="task" value="">
-        <input type="hidden" name="extensions" value="<?php echo (isset($_REQUEST['extensions']) ? esc_html($_REQUEST['extensions']) : '*'); ?>">
-        <input type="hidden" name="callback" value="<?php echo (isset($_REQUEST['callback']) ? esc_html($_REQUEST['callback']) : ''); ?>">
-		<input type="hidden" name="image_for" value="<?php echo (isset($_REQUEST['image_for']) ? esc_html($_REQUEST['image_for']) : ''); ?>">
-		<input type="hidden" name="slide_id" value="<?php echo (isset($_REQUEST['slide_id']) ? esc_html($_REQUEST['slide_id']) : ''); ?>">
-        <input type="hidden" name="sort_by" value="<?php echo $sort_by; ?>">
-        <input type="hidden" name="sort_order" value="<?php echo $sort_order; ?>">
-        <input type="hidden" name="items_view" value="<?php echo $items_view; ?>">
-        <input type="hidden" name="dir" value="<?php echo (isset($_REQUEST['dir']) ? esc_html($_REQUEST['dir']) : ''); ?>"/>
-        <input type="hidden" name="file_names" value=""/>
-        <input type="hidden" name="file_namesML" value=""/>
-        <input type="hidden" name="file_new_name" value=""/>
-        <input type="hidden" name="new_dir_name" value=""/>
-        <input type="hidden" name="clipboard_task" value="<?php echo $clipboard_task; ?>"/>
-        <input type="hidden" name="clipboard_files" value="<?php echo $clipboard_files; ?>"/>
-        <input type="hidden" name="clipboard_src" value="<?php echo $clipboard_src; ?>"/>
-        <input type="hidden" name="clipboard_dest" value="<?php echo $clipboard_dest; ?>"/>
+        <input type="hidden" name="task" value="" />
+        <input type="hidden" name="extensions" value="<?php echo (isset($_REQUEST['extensions']) ? esc_html($_REQUEST['extensions']) : '*'); ?>" />
+        <input type="hidden" name="callback" value="<?php echo (isset($_REQUEST['callback']) ? esc_html($_REQUEST['callback']) : ''); ?>" />
+        <input type="hidden" name="image_for" value="<?php echo (isset($_REQUEST['image_for']) ? esc_html($_REQUEST['image_for']) : ''); ?>" />
+        <input type="hidden" name="slide_id" value="<?php echo (isset($_REQUEST['slide_id']) ? esc_html($_REQUEST['slide_id']) : ''); ?>" />
+        <input type="hidden" name="layer_id" value="<?php echo (isset($_REQUEST['layer_id']) ? esc_html($_REQUEST['layer_id']) : ''); ?>" />
+        <input type="hidden" name="sort_by" value="<?php echo $sort_by; ?>" />
+        <input type="hidden" name="sort_order" value="<?php echo $sort_order; ?>" />
+        <input type="hidden" name="items_view" value="<?php echo $items_view; ?>" />
+        <input type="hidden" name="dir" value="<?php echo (isset($_REQUEST['dir']) ? esc_html($_REQUEST['dir']) : ''); ?>" />
+        <input type="hidden" name="file_names" value="" />
+        <input type="hidden" name="file_namesML" value="" />
+        <input type="hidden" name="file_new_name" value="" />
+        <input type="hidden" name="new_dir_name" value="" />
+        <input type="hidden" name="clipboard_task" value="<?php echo $clipboard_task; ?>" />
+        <input type="hidden" name="clipboard_files" value="<?php echo $clipboard_files; ?>" />
+        <input type="hidden" name="clipboard_src" value="<?php echo $clipboard_src; ?>" />
+        <input type="hidden" name="clipboard_dest" value="<?php echo $clipboard_dest; ?>" />
       </form>
       <?php
       die();

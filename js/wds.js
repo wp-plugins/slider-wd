@@ -41,7 +41,12 @@ function spider_ajax_save(form_id, event) {
   post_data["prev_next_butt"] = jQuery("input[name=prev_next_butt]:checked").val();
   post_data["play_paus_butt"] = jQuery("input[name=play_paus_butt]:checked").val();
   post_data["navigation"] = jQuery("input[name=navigation]:checked").val();
+  post_data["rl_butt_img_or_not"] = jQuery("input[name=rl_butt_img_or_not]:checked").val();
   post_data["rl_butt_style"] = jQuery("#rl_butt_style").val();
+  post_data["right_butt_url"] = jQuery("#right_butt_url").val();
+  post_data["left_butt_url"] = jQuery("#left_butt_url").val();
+  post_data["right_butt_hov_url"] = jQuery("#right_butt_hov_url").val();
+  post_data["left_butt_hov_url"] = jQuery("#left_butt_hov_url").val();
   post_data["rl_butt_size"] = jQuery("#rl_butt_size").val();
   post_data["pp_butt_size"] = jQuery("#pp_butt_size").val();
   post_data["butts_color"] = jQuery("#butts_color").val();
@@ -57,6 +62,9 @@ function spider_ajax_save(form_id, event) {
   post_data["enable_bullets"] = jQuery("input[name=enable_bullets]:checked").val();
   post_data["bull_position"] = jQuery("#bull_position").val();
   post_data["bull_style"] = jQuery("#bull_style").val();
+  post_data["bullets_img_main_url"] = jQuery("#bullets_img_main_url").val();
+  post_data["bullets_img_hov_url"] = jQuery("#bullets_img_hov_url").val();
+  post_data["bull_butt_img_or_not"] = jQuery("input[name=bull_butt_img_or_not]:checked").val();
   post_data["bull_size"] = jQuery("#bull_size").val();
   post_data["bull_color"] = jQuery("#bull_color").val();
   post_data["bull_act_color"] = jQuery("#bull_act_color").val();
@@ -287,6 +295,10 @@ function wds_success(form_id, end) {
 
 
 function wds_onload() {
+  var type_key;
+  var color_key;
+  var bull_type_key;
+  var bull_color_key;
   jQuery(".wds_tabs").show();
   var nav_tab = jQuery("#nav_tab").val();
   wds_change_nav(jQuery(".wds_nav_tabs li[tab_type='" + nav_tab + "']"), 'wds_nav_' + nav_tab + '_box');
@@ -301,6 +313,50 @@ function wds_onload() {
   else {
     bwg_enable_disable('none', 'tr_music_url', 'music0');
   }
+
+  jQuery('.wds_rl_butt_groups').each(function(i) {
+    var type_key = jQuery(this).attr('value');
+    var src_top_left	= rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/1.png';
+    var src_top_right	= rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/2.png';
+    var src_bottom_left	= rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/3.png';
+    var src_bottom_right  	= rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/4.png';
+   
+    jQuery(this).find('.src_top_left').attr('src', src_top_left);
+    jQuery(this).find('.src_top_right').attr('src', src_top_right);
+    jQuery(this).find('.src_bottom_left').attr('src', src_bottom_left);
+    jQuery(this).find('.src_bottom_right').attr('src', src_bottom_right);	 
+  });
+
+  jQuery('.wds_rl_butt_col_groups').each(function(i) {
+    var color_key = jQuery(this).attr('value');	 
+    src_col_top_left	= rl_butt_dir + wds_rl_butt_type[type_cur_fold]["type_name"] + '/' + wds_rl_butt_type[type_cur_fold][color_key] + '/1.png';
+    src_col_top_right	= rl_butt_dir + wds_rl_butt_type[type_cur_fold]["type_name"] + '/' + wds_rl_butt_type[type_cur_fold][color_key] + '/2.png';
+    src_col_bottom_left	= rl_butt_dir + wds_rl_butt_type[type_cur_fold]["type_name"] + '/' + wds_rl_butt_type[type_cur_fold][color_key] + '/3.png';
+    src_col_bottom_right  	= rl_butt_dir + wds_rl_butt_type[type_cur_fold]["type_name"] + '/' + wds_rl_butt_type[type_cur_fold][color_key] + '/4.png';
+   
+    jQuery(this).find('.src_col_top_left').attr('src', src_col_top_left);	
+    jQuery(this).find('.src_col_top_right').attr('src', src_col_top_right);
+    jQuery(this).find('.src_col_bottom_left').attr('src', src_col_bottom_left);
+    jQuery(this).find('.src_col_bottom_right').attr('src', src_col_bottom_right);	 
+  }); 
+
+  jQuery('.wds_bull_butt_groups').each(function(i) {
+    bull_type_key = jQuery(this).attr('value');
+    bull_src_left	= blt_img_dir + wds_blt_img_type[bull_type_key]["type_name"] + '/1/1.png';
+    bull_src_right	= blt_img_dir + wds_blt_img_type[bull_type_key]["type_name"] + '/1/2.png';
+   
+    jQuery(this).find('.bull_src_left').attr('src', bull_src_left);
+    jQuery(this).find('.bull_src_right').attr('src', bull_src_right);	 
+  });
+
+  jQuery('.wds_bull_butt_col_groups').each(function(i) {
+    bull_color_key = jQuery(this).attr('value');	 
+    bull_col_src_left	= blt_img_dir + wds_blt_img_type[bull_type_cur_fold]["type_name"] + '/' + wds_blt_img_type[bull_type_cur_fold][bull_color_key] + '/1.png';
+    bull_col_src_right	= blt_img_dir + wds_blt_img_type[bull_type_cur_fold]["type_name"] + '/' + wds_blt_img_type[bull_type_cur_fold][bull_color_key] + '/2.png';
+   
+    jQuery(this).find('.bull_col_src_left').attr('src', bull_col_src_left);	
+    jQuery(this).find('.bull_col_src_right').attr('src', bull_col_src_right);	 
+  });
 }
 
 function spider_select_value(obj) {
@@ -468,6 +524,7 @@ function spider_check_all_items() {
     jQuery('#check_all').trigger('click');
   // }
 }
+
 function spider_check_all_items_checkbox() {
   if (jQuery('#check_all_items').attr('checked')) {
     jQuery('#check_all_items').attr('checked', false);
@@ -560,24 +617,15 @@ function spider_uploader(button_id, input_id, delete_id, img_id) {
 }
 
 // Remove uploaded file.
-function spider_remove_url(button_id, input_id, delete_id, img_id) {
+function spider_remove_url(input_id, img_id) {
   if (typeof img_id == 'undefined') {
     img_id = '';
   }
-  if (document.getElementById(button_id)) {
-    // document.getElementById(button_id).style.display = '';
-  }
   if (document.getElementById(input_id)) {
     document.getElementById(input_id).value = '';
-    // document.getElementById(input_id).style.display = 'none';
-  }
-  if (document.getElementById(delete_id)) {
-    // document.getElementById(delete_id).style.display = 'none';
   }
   if ((img_id != '') && document.getElementById(img_id)) {
     document.getElementById(img_id).style.backgroundImage = "url('')";
-    // document.getElementById(img_id).src = '';
-    // document.getElementById(img_id).style.display = 'none';
   }
 }
 
@@ -651,35 +699,6 @@ function spider_get_items(e) {
     }
   }
   window.parent.bwg_add_items(trackIds, titles, types);
-}
-
-function bwg_check_checkboxes() { 
-  var flag = false;
-  var ids_string = jQuery("#ids_string").val();
-  ids_array = ids_string.split(",");
-  for (var i in ids_array) {
-    if (ids_array.hasOwnProperty(i) && ids_array[i]) {
-      if (jQuery("#check_" + ids_array[i]).attr('checked') == 'checked') {
-        flag = true;
-      }
-	}
-  }
-  if(flag) {
-    if(jQuery(".buttons_div_right").find("a").hasClass( "thickbox" )) {       
-      return true; 
-	}
-	else { 
-	  jQuery(".buttons_div_right").find("a").addClass( "thickbox thickbox-preview" );
-	  jQuery('#draganddrop').hide();
-	  return true;
-	}
-  } 
-  else { 
-	jQuery(".buttons_div_right").find("a").removeClass( "thickbox thickbox-preview" );
-    jQuery('#draganddrop').html("<strong><p>You must select at least one item.</p></strong>");
-    jQuery('#draganddrop').show();
-	return false;
-  }  
 }
 
 function preview_built_in_watermark() {
@@ -760,6 +779,247 @@ function bwg_inputs() {
 function bwg_enable_disable(display, id, current) {
   jQuery("#" + current).attr('checked', 'checked');
   jQuery("#" + id).css('display', display);
+}
+
+function change_rl_butt_style(type_key) {
+  jQuery("#wds_left_style").removeClass().addClass("fa " + type_key + "-left");
+  jQuery("#wds_right_style").removeClass().addClass("fa " + type_key + "-right");
+}
+
+function change_bull_style(type_key) {
+  jQuery("#wds_act_bull_style").removeClass().addClass("fa " + type_key.replace("-o", ""));
+  jQuery("#wds_deact_bull_style").removeClass().addClass("fa " + type_key);
+}
+
+function change_rl_butt_type(that) {
+  var type_key = jQuery(that).attr('value');
+  src	= rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/1.png';
+  var options = '';
+  var divs = '';
+  for (var i = 0; i < wds_rl_butt_type[type_key].length - 1; i++) {
+    var num = i + 1;
+    divs += '<div class="spider_option_cont" value="' + i + '"  onclick="change_rl_butt_color(this, ' + type_key + ')" > ' +
+			  '<div  class="spider_option_cont_title" >' +
+			    'Color-'+ num +
+			  '</div>' +
+			  '<div class="spider_option_cont_img" >' + 
+			    '<img  src="' + rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/'+wds_rl_butt_type[type_key][i]+'/1.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			    '<img  src="' + rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/'+wds_rl_butt_type[type_key][i]+'/2.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			    '<img  src="' + rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/'+wds_rl_butt_type[type_key][i]+'/3.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			    '<img  src="' + rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/'+wds_rl_butt_type[type_key][i]+'/4.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			  '</div>' +
+		    '</div>';
+  }
+  jQuery(".spider_options_cont .spider_option_cont").css({backgroundColor: ""});
+  jQuery(that).css({backgroundColor: "#3399FF"});
+  jQuery('.spider_options_color_cont').html(divs);
+  jQuery('#rl_butt_img_l').attr("src", rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/1.png');
+  jQuery('#rl_butt_img_r').attr("src", rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/2.png');
+  jQuery('#rl_butt_hov_img_l').attr("src", rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/3.png');
+  jQuery('#rl_butt_hov_img_r').attr("src", rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/4.png');
+
+  jQuery('#left_butt_url').val(rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/1.png');
+  jQuery('#right_butt_url').val(rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/2.png');
+  jQuery('#left_butt_hov_url').val(rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/3.png');
+  jQuery('#right_butt_hov_url').val(rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/4.png');
+}
+				  
+function change_rl_butt_color(that, type_key) {
+  var color_key = jQuery(that).attr('value');
+  var src = rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/' + wds_rl_butt_type[type_key][color_key];
+  jQuery('#rl_butt_img_l').attr("src", src + '/1.png');
+  jQuery('#rl_butt_img_r').attr("src", src + '/2.png');
+  jQuery('#rl_butt_hov_img_l').attr("src", src + '/3.png');
+  jQuery('#rl_butt_hov_img_r').attr("src", src + '/4.png');
+
+  jQuery('#left_butt_url').val(src + '/1.png');
+  jQuery('#right_butt_url').val(src + '/2.png');
+  jQuery('#left_butt_hov_url').val(src + '/3.png');
+  jQuery('#right_butt_hov_url').val(src + '/4.png');
+  jQuery(".spider_options_color_cont .spider_option_cont").css({backgroundColor: ""});
+  jQuery(that).css({backgroundColor: "#3399FF"});
+}
+
+function change_src() {
+  var src_l = jQuery('#rl_butt_img_l').attr("src");
+  var src_r = jQuery('#rl_butt_img_r').attr("src");
+
+  var src_h_l = jQuery('#rl_butt_hov_img_l').attr("src");
+  var src_h_r = jQuery('#rl_butt_hov_img_r').attr("src");
+
+  jQuery('#rl_butt_img_l').attr("src", src_h_l);
+  jQuery('#rl_butt_img_r').attr("src", src_h_r);
+  jQuery('#rl_butt_hov_img_l').attr("src", src_l);
+  jQuery('#rl_butt_hov_img_r').attr("src", src_r);
+
+  jQuery('#left_butt_url').val(src_h_l);
+  jQuery('#right_butt_url').val(src_h_r);
+  jQuery('#left_butt_hov_url').val(src_l);
+  jQuery('#right_butt_hov_url').val(src_r);
+}
+
+function wds_choose_option(that) {
+  jQuery('.spider_options_cont').toggle(1, function() {});
+  jQuery(that).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+}
+
+function wds_choose_bull_option(that) {
+  jQuery('.spider_bull_options_cont').toggle(1, function() {});
+  jQuery(that).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+}
+
+function wds_change_custom_src() {
+  var src_l = jQuery('#left_butt_img').attr("src");
+  var src_r = jQuery('#right_butt_img').attr("src");
+
+  var src_h_l = jQuery('#left_butt_hov_img').attr("src");
+  var src_h_r = jQuery('#right_butt_hov_img').attr("src");
+
+  jQuery('#left_butt_img').attr("src", src_h_l);
+  jQuery('#right_butt_img').attr("src", src_h_r);
+  jQuery('#left_butt_hov_img').attr("src", src_l);
+  jQuery('#right_butt_hov_img').attr("src", src_r);
+
+  jQuery('#left_butt_url').val(src_h_l);
+  jQuery('#right_butt_url').val(src_h_r);
+  jQuery('#left_butt_hov_url').val(src_l);
+  jQuery('#right_butt_hov_url').val(src_r);
+}
+
+function wds_change_bullets_custom_src() {
+  var src_m = jQuery('#bull_img_main').attr("src");
+  var src_h = jQuery('#bull_img_hov').attr("src"); 
+
+  jQuery('#bull_img_main').attr("src", src_h);
+  jQuery('#bull_img_hov').attr("src", src_m);
+
+  jQuery('#bullets_img_main_url').val(src_h);
+  jQuery('#bullets_img_hov_url').val(src_m);
+}
+
+function change_bullets_images_type(that) {
+  var type_key = jQuery(that).attr('value');
+  var src	= blt_img_dir + wds_blt_img_type[type_key]["type_name"] + '/1/1.png';
+  var options = '';
+  var divs = '';
+  for (var i = 0; i < wds_blt_img_type[type_key].length-1; i++) {
+    var num = i + 1;
+    divs += '<div class="spider_option_cont" value="'+i+'"  onclick="change_bullets_images_color(this, ' + type_key + ')" > ' +
+			  '<div  class="spider_option_cont_title" style="width: 64%" >' +
+				'Color-'+ num +
+			  '</div>' +
+			  '<div class="spider_option_cont_img" style="width: 22%;padding: 6px 5px 0px 5px;" >' + 
+				'<img  src="' + blt_img_dir + wds_blt_img_type[type_key]["type_name"] + '/'+wds_blt_img_type[type_key][i]+'/1.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+				'<img  src="' + blt_img_dir + wds_blt_img_type[type_key]["type_name"] + '/'+wds_blt_img_type[type_key][i]+'/2.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			  '</div>' +
+			'</div>';
+	
+  }
+  jQuery(".spider_bull_options_cont .spider_option_cont").css({backgroundColor: ""});
+  jQuery(that).css({backgroundColor: "#3399FF"});
+  var select = '<select name="bullets_images_color" id="bullets_images_color" onchange="change_bullets_images_color(this, '+type_key+')">' + options + '</select>';
+  jQuery('.spider_bull_options_color_cont').html(divs);
+  jQuery('#bullets_images_color_cont').html(select);
+  jQuery('#bullets_img_main').attr("src", blt_img_dir + wds_blt_img_type[type_key]["type_name"] + '/1/1.png');
+  jQuery('#bullets_img_hov').attr("src", blt_img_dir + wds_blt_img_type[type_key]["type_name"] + '/1/2.png');
+
+  jQuery('#bullets_img_main_url').val(blt_img_dir + wds_blt_img_type[type_key]["type_name"] + '/1/1.png');
+  jQuery('#bullets_img_hov_url').val(blt_img_dir + wds_blt_img_type[type_key]["type_name"] + '/1/2.png');
+}
+
+function change_bullets_images_color(that, type_key) {
+  var color_key = jQuery(that).attr('value');
+  jQuery(".spider_bull_options_color_cont .spider_option_cont").css({backgroundColor: ""});
+  jQuery(that).css({backgroundColor: "#3399FF"});
+  var src = blt_img_dir + wds_blt_img_type[type_key]["type_name"] + '/' + wds_blt_img_type[type_key][color_key];
+  jQuery('#bullets_img_main').attr("src", src + '/1.png');
+  jQuery('#bullets_img_hov').attr("src", src + '/2.png');
+
+  jQuery('#bullets_img_main_url').val(src + '/1.png');
+  jQuery('#bullets_img_hov_url').val(src + '/2.png');
+}
+
+function change_bullets_src() {
+  var src_l = jQuery('#bullets_img_main').attr("src");
+  var src_r = jQuery('#bullets_img_hov').attr("src");
+
+  jQuery('#bullets_img_main').attr("src", src_r);
+  jQuery('#bullets_img_hov').attr("src", src_l);
+
+  jQuery('#bullets_img_main_url').val(src_r);
+  jQuery('#bullets_img_hov_url').val(src_l);
+}
+
+function image_for_next_prev_butt(display) {
+  switch (display) {
+    case 'our' : {
+      jQuery("#rl_butt_img_or_not_our").attr('checked', 'checked');
+      jQuery("#right_left_butt_style").css('display', 'none');
+      jQuery("#right_butt_upl").css('display', 'none');
+      jQuery("#right_left_butt_select").css('display', '');
+      jQuery("#tr_butts_color").css('display', 'none');
+      jQuery("#tr_hover_color").css('display', 'none');
+      break;
+    }
+    case 'custom' : {
+      jQuery("#rl_butt_img_or_not_custom").attr('checked', 'checked');
+      jQuery("#right_butt_upl").css('display', '');
+      jQuery("#right_left_butt_select").css('display', 'none');
+      jQuery("#right_left_butt_style").css('display', 'none');
+      jQuery("#tr_butts_color").css('display', 'none');
+      jQuery("#tr_hover_color").css('display', 'none');
+      break;
+    }
+    case 'style' : {
+      jQuery("#rl_butt_img_or_not_0").attr('checked', 'checked');
+      jQuery("#right_butt_upl").css('display', 'none');
+      jQuery("#right_left_butt_select").css('display', 'none');
+      jQuery("#right_left_butt_style").css('display', '');
+      jQuery("#tr_butts_color").css('display', '');
+      jQuery("#tr_hover_color").css('display', '');
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+}
+
+function image_for_bull_butt(display) {
+  switch (display) {
+    case 'our' : {
+      jQuery("#bull_butt_img_or_not_our").attr('checked', 'checked');
+      jQuery("#bullets_style").css('display', 'none');
+      jQuery("#bullets_images_cust").css('display', 'none');  
+      jQuery("#bullets_images_select").css('display', '');
+      jQuery("#bullets_act_color").css('display', 'none');
+      jQuery("#bullets_color").css('display', 'none');
+      break;
+    }
+
+    case 'custom' : {
+      jQuery("#bull_butt_img_or_not_cust").attr('checked', 'checked');
+      jQuery("#bullets_images_cust").css('display', '');
+      jQuery("#bullets_images_select").css('display', 'none');
+      jQuery("#bullets_style").css('display', 'none');
+      jQuery("#bullets_act_color").css('display', 'none');
+      jQuery("#bullets_color").css('display', 'none');
+      break;
+    }
+	
+    case 'style' : {
+      jQuery("#bull_butt_img_or_not_stl").attr('checked', 'checked');
+      jQuery("#bullets_images_select").css('display', 'none');
+	  jQuery("#bullets_images_cust").css('display', 'none');  
+      jQuery("#bullets_style").css('display', '');
+      jQuery("#bullets_act_color").css('display', '');
+      jQuery("#bullets_color").css('display', '');
+      break;
+    }
+    default: {
+      break;
+    }
+  }
 }
 
 function bwg_change_album_view_type(type) {
@@ -845,6 +1105,45 @@ function spider_media_uploader(id, e) {
         document.getElementById("music_url").value = music_url;
         break;
       }
+      case 'nav_left_but': {
+        /* Add image for left button.*/
+        jQuery("#left_butt_img").attr("src", image_url);
+        jQuery("#left_butt_url").val(image_url);
+        break;
+      }
+      case 'nav_right_but': {
+        /* Add image for right buttons.*/
+        jQuery("#right_butt_img").attr("src", image_url);
+        jQuery("#right_butt_url").val(image_url);
+        break;
+      }
+      case 'nav_left_hov_but': {
+        /* Add hover image for right buttons.*/
+        jQuery("#left_butt_hov_img").attr("src", image_url);
+        jQuery("#left_butt_hov_url").val(image_url);
+        break;
+      }
+      case 'nav_right_hov_but': {
+        /* Add hover image for left button.*/
+        jQuery("#right_butt_hov_img").attr("src", image_url);
+        jQuery("#right_butt_hov_url").val(image_url);
+        break;
+      }
+	
+	  case 'bullets_main_but': {
+        /* Add image for main button.*/
+        jQuery("#bull_img_main").attr("src", image_url);
+        jQuery("#bullets_img_main_url").val(image_url);
+        break;
+      }
+	  case 'bullets_hov_but': {
+        /* Add image for hover button.*/
+        jQuery("#bull_img_hov").attr("src", image_url);
+        jQuery("#bullets_img_hov_url").val(image_url);
+        break;
+      }
+	  
+	  
       default: {
         jQuery("#image_url" + id).val(image_url);
         jQuery("#thumb_url" + id).val(thumb_url);
@@ -860,27 +1159,44 @@ function spider_media_uploader(id, e) {
   custom_uploader.open();
 }
 
-function wds_add_image(files, image_for, slide_id) {	
+function wds_add_image(files, image_for, slide_id, layer_id) {
   switch (image_for) {
     case 'add_slides': {
+      /* Delete active slide if it has now image.*/
+      jQuery(".wds_box input[id^='image_url']").each(function () {
+        var slide_id = jQuery(this).attr("id").replace("image_url", "");
+        if (!jQuery("#image_url" + slide_id).val() && !jQuery("#slide" + slide_id + "_layer_ids_string").val()) {
+          wds_remove_slide(slide_id, 0);
+        }
+      });
       /* Add one or more slides.*/
-      for (var i in files) { 
-      wds_add_slide();
-      var slides_count = jQuery(".wbs_subtab a[id^='wbs_subtab']").length;
-      var new_slide_id = "pr_" + slides_count;
-      jQuery("#image_url" + new_slide_id).val(files[i]['url']);
-      jQuery("#thumb_url" + new_slide_id).val(files[i]['thumb_url']);
-      jQuery("#wds_preview_image" + new_slide_id).css("background-image", 'url("' + files[i]['url'] + '")');
-      jQuery("#delete_image_url" + new_slide_id).css("display", "inline-block");
-      jQuery("#wds_preview_image" + new_slide_id).css("display", "inline-block");
-      jQuery("#type" + new_slide_id).val("image");
-      jQuery("#trlink" + new_slide_id).show();
-    }
+      for (var i in files) {
+        wds_add_slide();
+        var slides_count = jQuery(".wbs_subtab a[id^='wbs_subtab']").length;
+        var new_slide_id = "pr_" + slides_count;
+        jQuery("#image_url" + new_slide_id).val(files[i]['url']);
+        jQuery("#thumb_url" + new_slide_id).val(files[i]['thumb_url']);
+        jQuery("#wds_preview_image" + new_slide_id).css("background-image", 'url("' + files[i]['url'] + '")');
+        jQuery("#delete_image_url" + new_slide_id).css("display", "inline-block");
+        jQuery("#wds_preview_image" + new_slide_id).css("display", "inline-block");
+        jQuery("#type" + new_slide_id).val("image");
+        jQuery("#trlink" + new_slide_id).show();
+      }
     break;
     }
     case 'add_layer': {
       /* Add image layer to current slide.*/
       wds_add_layer('image', slide_id, '', '', '', files);
+      break;
+    }
+    case 'add_update_layer': {
+      /* Update current layer image.*/
+      if (typeof layer_id == "undefined") {
+        var layer_id = "";
+      }
+      console.log(layer_id);
+      jQuery("#slide" + slide_id + "_layer" + layer_id).attr('src', files[0]['url']);
+      jQuery("#slide" + slide_id + "_layer" + layer_id+"_image_url").val(files[0]['url']);  
       break;
     }
     case 'add_update_slide': {
@@ -893,11 +1209,48 @@ function wds_add_image(files, image_for, slide_id) {
       jQuery("#wds_preview_image" + slide_id).css("display", "inline-block");
       jQuery("#type" + slide_id).val("image");
       jQuery("#trlink" + slide_id).show();
+      break;
     }
     case 'watermark': {
       /* Add image for watermark.*/
       document.getElementById("built_in_watermark_url").value = files[0]['url']; 
       preview_built_in_watermark();							
+      break;
+    }
+    case 'nav_right_but': {
+      /* Add image for right buttons.*/
+      document.getElementById("right_butt_url").value = files[0]['url']; 
+      document.getElementById("right_butt_img").src = files[0]['url'];
+      break;
+    }
+    case 'nav_left_but': {
+      /* Add image for left button.*/
+      document.getElementById("left_butt_url").value = files[0]['url']; 
+      document.getElementById("left_butt_img").src = files[0]['url'];
+      break;
+    }
+    case 'nav_right_hov_but': {
+      /* Add hover image for right buttons.*/
+      document.getElementById("right_butt_hov_url").value = files[0]['url']; 
+      document.getElementById("right_butt_hov_img").src = files[0]['url'];
+      break;
+    }
+    case 'nav_left_hov_but': {
+      /* Add hover image for left button.*/
+      document.getElementById("left_butt_hov_url").value = files[0]['url']; 
+      document.getElementById("left_butt_hov_img").src = files[0]['url'];
+      break;
+    }
+    case 'bullets_main_but': {
+      /* Add image for main button.*/
+      document.getElementById("bullets_img_main_url").value = files[0]['url'];
+      document.getElementById("bull_img_main").src = files[0]['url'];
+      break;
+    }
+    case 'bullets_hov_but': {
+      /* Add image for hover button.*/
+      document.getElementById("bullets_img_hov_url").value = files[0]['url'];
+      document.getElementById("bull_img_hov").src = files[0]['url'];
       break;
     }
     default: {
@@ -1077,7 +1430,7 @@ function wds_duplicate_layer(type, id, layerID) {
 }
 
 var wds_layerID = 0;
-function wds_add_layer(type, id, layerID, event, duplicate, files) {
+function wds_add_layer(type, id, layerID, event, duplicate, files, edit) {
   var layers_count = jQuery(".wds_slide" + id + " tbody").length;
   wds_layerID = layers_count;
   if (typeof layerID == "undefined" || layerID == "") {
@@ -1086,6 +1439,9 @@ function wds_add_layer(type, id, layerID, event, duplicate, files) {
   }
   if (typeof duplicate == "undefined") {
     var duplicate = 0;
+  }
+  if (typeof edit == "undefined") {
+    var edit = 0;
   }
 
   var layer_effects_in_option = "";
@@ -1277,6 +1633,7 @@ function wds_add_layer(type, id, layerID, event, duplicate, files) {
                      '<input type="text" name="' + prefix + '_image_width" id="' + prefix + '_image_width" value="" class="spider_int_input" onkeyup="wds_scale(\'#' + prefix + '_image_scale\', \'' + prefix + '\')" /> x ' +
                      '<input type="text" name="' + prefix + '_image_height" id="' + prefix + '_image_height" value="" class="spider_int_input" onkeyup="wds_scale(\'#' + prefix + '_image_scale\', \'' + prefix + '\')" /> px ' +
                      '<input type="checkbox" name="' + prefix + '_image_scale" id="' + prefix + '_image_scale" onchange="wds_scale(this, \'' + prefix + '\')" /><label for="' + prefix + '_image_scale">Scale</label>' +
+                     '<input class="button-secondary wds_free_button" type="button" value="Edit Image" onclick="alert(\'This functionality is disabled in free version.\')" />' +
                      '<div class="spider_description">Set width and height of the image.</div></td>';
   var social_button = '<td class="spider_label"><label for="' + prefix + '_social_button">Social button: </label></td>' +
                       '<td><select name="' + prefix + '_social_button" id="' + prefix + '_social_button" onchange="jQuery(\'#' + prefix + '\').attr(\'class\', \'wds_draggable fa fa-\' + jQuery(this).val())">' + social_button_option + '</select><div class="spider_description"></div></td>';
@@ -1370,32 +1727,34 @@ function wds_add_layer(type, id, layerID, event, duplicate, files) {
       break;
     }
     case 'image': {
-      var tbody_html = tbody +
-      '<tr class="wds_layer_tr">' +
-        dimensions +
-        layer_effect_in +
-      '</tr><tr class="wds_layer_tr">' +
-        alt +
-        layer_effect_out +
-      '</tr><tr class="wds_layer_tr">' +
-        link +
-        border_width +
-      '</tr><tr class="wds_layer_tr">' +
-        position +
-        border_radius +
-      '</tr><tr class="wds_layer_tr">' +
-        imgtransparent + 
-        shadow +
-      '</tr><tr class="wds_layer_tr">' +
-        published +
-      '</tr>' + layer_type;
+      if(edit == 0) {
+        var tbody_html = tbody +
+        '<tr class="wds_layer_tr">' +
+          dimensions +
+          layer_effect_in +
+        '</tr><tr class="wds_layer_tr">' +
+          alt +
+          layer_effect_out +
+        '</tr><tr class="wds_layer_tr">' +
+          link +
+          border_width +
+        '</tr><tr class="wds_layer_tr">' +
+          position +
+          border_radius +
+        '</tr><tr class="wds_layer_tr">' +
+          imgtransparent + 
+          shadow +
+        '</tr><tr class="wds_layer_tr">' +
+          published +
+        '</tr>' + layer_type;
+      }
       if (!duplicate) {
-	    if(spider_uploader) { // Add image layer by spider uploader
-		  wds_add_image_layer_by_spider_uploader(prefix, files, tbodyID, id, layerID, tbody_html);
-		}
-		else { // Add image layer by media uploader
-		  image_escape = wds_add_image_layer(prefix, event, tbodyID, id, layerID, tbody_html);
-		}		
+        if (spider_uploader) { // Add image layer by spider uploader.
+          wds_add_image_layer_by_spider_uploader(prefix, files, tbodyID, id, layerID, tbody_html);
+        }
+        else { // Add image layer by media uploader.
+          image_escape = wds_add_image_layer(prefix, event, tbodyID, id, layerID, tbody_html, edit);
+        }
       }
       else {
         jQuery("#" + tbodyID).append(tbody_html);
@@ -1411,6 +1770,7 @@ function wds_add_layer(type, id, layerID, event, duplicate, files) {
     jscolor.bind();
   }
   wds_layer_weights(id);
+  return layerID;
 }
 
 function wds_scale(that, prefix) {
@@ -1439,10 +1799,6 @@ function wds_drag_layer(id) {
   jQuery(".wds_draggable_" + id).bind('dragstart', function(event) {
     jQuery(this).addClass('wds_active_layer');
   }).bind('drag',function(event) {
-    // jQuery(this).css({
-      // top: event.offsetY,
-      // left: event.offsetX
-    // });
     var prefix = jQuery(this).attr("id");
     jQuery("#" + prefix + "_left").val(parseInt(jQuery(this).offset().left - jQuery(".wds_preview_image" + id).offset().left));
     jQuery("#" + prefix + "_top").val(parseInt(jQuery(this).offset().top - jQuery(".wds_preview_image" + id).offset().top));
@@ -1486,13 +1842,16 @@ function wds_slide_weights() {
   jQuery(".aui-sortable").disableSelection();
 }
 
-function wds_add_image_layer(prefix, e, tbodyID, id, layerID, tbody_html) {
+function wds_add_image_layer(prefix, e, tbodyID, id, layerID, tbody_html, edit) {
   var custom_uploader;
   e.preventDefault();
   // If the uploader object has already been created, reopen the dialog.
   if (custom_uploader) {
     custom_uploader.open();
     return;
+  }
+  if (typeof edit == "undefined") {
+    var edit = 0;
   }
   // Extend the wp.media object.
   custom_uploader = wp.media.frames.file_frame = wp.media({
@@ -1505,29 +1864,35 @@ function wds_add_image_layer(prefix, e, tbodyID, id, layerID, tbody_html) {
   custom_uploader.on('select', function() {
     jQuery("#" + tbodyID).append(tbody_html);
     attachment = custom_uploader.state().get('selection').first().toJSON();
-    jQuery("#wds_preview_image" + id).append(jQuery("<img />").attr({
-      id: prefix,
-      "class": "wds_draggable_" + id + " wds_draggable",
-      onclick: "wds_showhide_layer('" + tbodyID + "', 1)",
-      src: attachment.url,
-      style: "z-index: " + layerID.replace("pr_", "") + "; " +
-             "left: 0; top: 0; " +
-             "border: 2px none #FFFFFF; " +
-             "border-radius: 2px; " +
-             "opacity: 1; filter: Alpha(opacity=100); " +
-             "position: absolute;"
-    }));
+    if (edit == 0) {
+      jQuery("#wds_preview_image" + id).append(jQuery("<img />").attr({
+        id: prefix,
+        "class": "wds_draggable_" + id + " wds_draggable",
+        onclick: "wds_showhide_layer('" + tbodyID + "', 1)",
+        src: attachment.url,
+        style: "z-index: " + layerID.replace("pr_", "") + "; " +
+               "left: 0; top: 0; " +
+               "border: 2px none #FFFFFF; " +
+               "border-radius: 2px; " +
+               "opacity: 1; filter: Alpha(opacity=100); " +
+               "position: absolute;"
+      }));
 
-    var att_width = attachment.width ? attachment.width : jQuery("#" + prefix).width();
-    var att_height = attachment.height ? attachment.height : jQuery("#" + prefix).height();
-    var width = Math.min(att_width, jQuery("#wds_preview_image" + id).width());
-    var height = Math.min(att_height, jQuery("#wds_preview_image" + id).height());
+      var att_width = attachment.width ? attachment.width : jQuery("#" + prefix).width();
+      var att_height = attachment.height ? attachment.height : jQuery("#" + prefix).height();
+      var width = Math.min(att_width, jQuery("#wds_preview_image" + id).width());
+      var height = Math.min(att_height, jQuery("#wds_preview_image" + id).height());
 
-    jQuery("#" + prefix + "_image_url").val(attachment.url);
-    jQuery("#" + prefix + "_image_width").val(width);
-    jQuery("#" + prefix + "_image_height").val(height);
-    jQuery("#" + prefix + "_image_scale").attr("checked", "checked");
-    wds_scale("#" + prefix + "_image_scale", prefix);
+      jQuery("#" + prefix + "_image_url").val(attachment.url);
+      jQuery("#" + prefix + "_image_width").val(width);
+      jQuery("#" + prefix + "_image_height").val(height);
+      jQuery("#" + prefix + "_image_scale").attr("checked", "checked");
+      wds_scale("#" + prefix + "_image_scale", prefix);
+    }
+    else {
+      jQuery("#" + prefix).attr("src", attachment.url);
+      jQuery("#" + prefix + "_image_url").val(attachment.url);
+    }
     wds_drag_layer(id);
     jscolor.bind();
   });
@@ -1602,8 +1967,8 @@ function wds_add_slide() {
   var uploader_href_for_add_slide = uploader_href.replace('slideID', slideID);
   var uploader_href_for_add_layer = uploader_href_for_add_slide.replace('add_update_slide', 'add_layer'); 
   if (spider_uploader) {
-    slide_upload_by = ' <a href="' + uploader_href_for_add_slide + '" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Image" onclick="return false;">Add Image</a>';
-    img_layer_upload_by = ' <a href="' + (!fv ? uploader_href_for_add_layer : "") + '" class="button-' + (!fv ? "primary thickbox thickbox-preview" : "secondary wds_free_button") + ' button button-small" id="content-add_media" title="Add Image Layer" onclick="' + (!fv ? "" : "alert('This functionality is disabled in free version.')") + '; return false;">Add Image Layer</a>';
+    slide_upload_by = ' <a href="' + uploader_href_for_add_slide + '" class="button-primary thickbox thickbox-preview" title="Add Image" onclick="return false;">Add Image</a>';
+    img_layer_upload_by = ' <a href="' + (!fv ? uploader_href_for_add_layer : "") + '" class="button-' + (!fv ? "primary thickbox thickbox-preview" : "secondary wds_free_button") + ' button button-small" title="Add Image Layer" onclick="' + (!fv ? "" : "alert('This functionality is disabled in free version.')") + '; return false;">Add Image Layer</a>';
   }
   else {
     slide_upload_by = ' <input id="button_image_url' + slideID + '" class="button-primary" type="button" value="Add Image from Media Library" onclick="spider_media_uploader(\'' + slideID + '\', event); return false;" />';
@@ -1628,9 +1993,10 @@ function wds_add_slide() {
             slide_upload_by +
             ' <input class="button-primary" type="button" value="Add Image by URL" onclick="wds_add_image_url(\'' + slideID + '\')">' +
             ' <input class="button-secondary wds_free_button" type="button" value="Add Video" onclick="alert(\'This functionality is disabled in free version.\')">' +
-            ' <input id="delete_image_url' + slideID + '" class="button-secondary" type="button" value="Remove" onclick="spider_remove_url(\'button_image_url' + slideID + '\', \'image_url' + slideID + '\', \'delete_image_url' + slideID + '\', \'wds_preview_image' + slideID + '\')">' +
-            ' <input id="image_url' + slideID + '" type="hidden" style="display: inline-block;" value="" name="image_url' + slideID + '">' +
-            ' <input id="thumb_url' + slideID + '" type="hidden" value="" name="thumb_url' + slideID + '"></td>' +
+	    ' <input class="button-secondary wds_free_button" type="button" value="Add Post" onclick="alert(\'This functionality is disabled in free version.\')">' +
+            ' <input id="delete_image_url' + slideID + '" class="button-secondary" type="button" value="Remove" onclick="spider_remove_url(\'image_url' + slideID + '\', \'wds_preview_image' + slideID + '\')" />' +
+            ' <input id="image_url' + slideID + '" type="hidden" value="" name="image_url' + slideID + '" />' +
+            ' <input id="thumb_url' + slideID + '" type="hidden" value="" name="thumb_url' + slideID + '" /></td>' +
           '</tr><tr><td colspan="4">' +
             '<div id="wds_preview_wrapper_' + slideID + '" class="wds_preview_wrapper" style="width: ' + jQuery("#width").val() + 'px; height: ' + jQuery("#height").val() + 'px;">' +
             '<div class="wds_preview" style="overflow: hidden; position: absolute; width: inherit; height: inherit; background-color: transparent; background-image: none; display: block;">' +
@@ -1666,34 +2032,41 @@ function wds_add_slide() {
             'jQuery(window).load(function() {' +
               'wds_drag_layer(\'' + slideID + '\');' +
             '});' +
-            'spider_remove_url(\'button_image_url1\', \'image_url' + slideID + '\', \'delete_image_url' + slideID + '\', \'wds_preview_image' + slideID + '\');' +
+            'spider_remove_url(\'image_url' + slideID + '\', \'wds_preview_image' + slideID + '\');' +
           '</script>' +
           '</div>');
   wds_slide_weights();
+  return slideID;
 }
 
-function wds_remove_slide(slideID) {
-  if (confirm("Do you want to delete slide?")) {
-    jQuery("#sub_tab").val("");
-    jQuery(".wds_slides_box *").removeClass("wds_sub_active");
-    jQuery(".wds_slide" + slideID).remove();
-    jQuery("#wbs_subtab" + slideID).remove();
-
-    var slideIDs = jQuery("#slide_ids_string").val();
-    slideIDs = slideIDs.replace(slideID + ",", "");
-    jQuery("#slide_ids_string").val(slideIDs);
-    var delslideIds = jQuery("#del_slide_ids_string").val() + slideID + ",";
-    jQuery("#del_slide_ids_string").val(delslideIds);
-
-    var slides = jQuery(".wbs_subtab a[id^='wbs_subtab']");
-    for (var i in slides) {
-      if (slides[i]) {
-        firstSlideID = slides[i].id.replace("wbs_subtab", "");
-        jQuery("#wbs_subtab" + firstSlideID).addClass("wds_sub_active");
-        jQuery(".wds_slide" + firstSlideID).addClass("wds_sub_active");
-      }
-      break;
+function wds_remove_slide(slideID, conf) {
+  if (typeof conf == "undefined") {
+    var conf = 1;
+  }
+  if (conf) {
+    if (!confirm("Do you want to delete slide?")) {
+      return;
     }
+  }
+  jQuery("#sub_tab").val("");
+  jQuery(".wds_slides_box *").removeClass("wds_sub_active");
+  jQuery(".wds_slide" + slideID).remove();
+  jQuery("#wbs_subtab" + slideID).remove();
+
+  var slideIDs = jQuery("#slide_ids_string").val();
+  slideIDs = slideIDs.replace(slideID + ",", "");
+  jQuery("#slide_ids_string").val(slideIDs);
+  var delslideIds = jQuery("#del_slide_ids_string").val() + slideID + ",";
+  jQuery("#del_slide_ids_string").val(delslideIds);
+
+  var slides = jQuery(".wbs_subtab a[id^='wbs_subtab']");
+  for (var i in slides) {
+    if (slides[i]) {
+      firstSlideID = slides[i].id.replace("wbs_subtab", "");
+      jQuery("#wbs_subtab" + firstSlideID).addClass("wds_sub_active");
+      jQuery(".wds_slide" + firstSlideID).addClass("wds_sub_active");
+    }
+    break;
   }
 }
 

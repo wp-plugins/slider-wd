@@ -201,6 +201,9 @@ class WDW_S_Library {
           if (document.getElementById("search_value")) {
             document.getElementById("search_value").value = "";
           }
+          if (document.getElementById("category_id")) {
+            document.getElementById("category_id").value = -1;
+          }
           document.getElementById("<?php echo $form_id; ?>").submit();
         }
       </script>

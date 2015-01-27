@@ -12,6 +12,20 @@ function wds_update($version) {
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslide ADD `target_attr_slide` tinyint(1) NOT NULL DEFAULT 1");
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `target_attr_layer` tinyint(1) NOT NULL DEFAULT 1");
   }
+  if (version_compare($version, '1.0.5') == -1) {
+    // Add right/left button image/hover image url.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `right_butt_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/arrow/arrow11/1/2.png' . "'");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `left_butt_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/arrow/arrow11/1/1.png' . "'");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `right_butt_hov_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/arrow/arrow11/1/4.png' . "'");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `left_butt_hov_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/arrow/arrow11/1/3.png' . "'");
+    // Whether to display right/left buttons by image or not.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `rl_butt_img_or_not` varchar(8) NOT NULL DEFAULT 'style'");
+    // Add bullets image/hover image url.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `bullets_img_main_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/bullet/bullet1/1/1.png' . "'");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `bullets_img_hov_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/bullet/bullet1/1/2.png' . "'");
+    // Whether to display bullets by image or not.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `bull_butt_img_or_not` varchar(8) NOT NULL DEFAULT 'style'");
+  }
   return;
 }
 

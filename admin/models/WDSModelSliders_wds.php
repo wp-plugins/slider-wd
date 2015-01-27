@@ -39,6 +39,7 @@ class WDSModelSliders_wds {
       $rows[0]->published = 1;
       $rows[0]->link = '';
       $rows[0]->order = 1;
+      $rows[0]->target_attr_slide = 1;
     }
     return $rows;
   }
@@ -89,7 +90,6 @@ class WDSModelSliders_wds {
       }
       else {
         $row->name = '';
-        
       }
       $row->id = $id;
       $row->width = 800;
@@ -163,6 +163,14 @@ class WDSModelSliders_wds {
       $row->built_in_watermark_opacity = 70;
       $row->stop_animation = 0;
       $row->css = '';
+      $row->right_butt_url = WD_S_URL . '/images/arrow/arrow11/1/2.png';
+      $row->left_butt_url = WD_S_URL . '/images/arrow/arrow11/1/1.png';
+      $row->right_butt_hov_url = WD_S_URL . '/images/arrow/arrow11/1/4.png';
+      $row->left_butt_hov_url = WD_S_URL . '/images/arrow/arrow11/1/3.png';
+      $row->rl_butt_img_or_not = 'style';
+      $row->bullets_img_main_url = WD_S_URL . '/images/bullet/bullet1/1/1.png';
+      $row->bullets_img_hov_url = WD_S_URL . '/images/bullet/bullet1/1/2.png';
+      $row->bull_butt_img_or_not = 'style';
     }
     return $row;
   }

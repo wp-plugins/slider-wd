@@ -166,6 +166,14 @@ class WDSControllerSliders_wds {
     $timer_bar_color = (isset($_POST['timer_bar_color']) ? esc_html(stripslashes($_POST['timer_bar_color'])) : 'FFFFFF');
     $timer_bar_transparent = (isset($_POST['timer_bar_transparent']) ? esc_html(stripslashes($_POST['timer_bar_transparent'])) : 50);
     $stop_animation = ((isset($_POST['stop_animation'])) ? (int) esc_html(stripslashes($_POST['stop_animation'])) : 0);
+    $right_butt_url = (isset($_POST['right_butt_url']) ? esc_html(stripslashes($_POST['right_butt_url'])) : WD_S_URL . '/images/arrow/arrow11/1/2.png');
+    $left_butt_url = (isset($_POST['left_butt_url']) ? esc_html(stripslashes($_POST['left_butt_url'])) : WD_S_URL . '/images/arrow/arrow11/1/1.png');
+    $right_butt_hov_url = (isset($_POST['right_butt_hov_url']) ? esc_html(stripslashes($_POST['right_butt_hov_url'])) : WD_S_URL . '/images/arrow/arrow11/1/4.png');
+    $left_butt_hov_url = (isset($_POST['left_butt_hov_url']) ? esc_html(stripslashes($_POST['left_butt_hov_url'])) : WD_S_URL . '/images/arrow/arrow11/1/3.png');
+    $rl_butt_img_or_not = (isset($_POST['rl_butt_img_or_not']) ? esc_html(stripslashes($_POST['rl_butt_img_or_not'])) : 'style');
+    $bullets_img_main_url = (isset($_POST['bullets_img_main_url']) ? esc_html(stripslashes($_POST['bullets_img_main_url'])) : WD_S_URL . '/images/bullet/bullet1/1/1.png');
+    $bullets_img_hov_url = (isset($_POST['bullets_img_hov_url']) ? esc_html(stripslashes($_POST['bullets_img_hov_url'])) : WD_S_URL . '/images/bullet/bullet1/1/2.png');
+    $bull_butt_img_or_not = (isset($_POST['bull_butt_img_or_not']) ? esc_html(stripslashes($_POST['bull_butt_img_or_not'])) : 'style');
     if (!$slider_id) {
       $save = $wpdb->insert($wpdb->prefix . 'wdsslider', array(			
         'name' => $name,
@@ -237,6 +245,14 @@ class WDSControllerSliders_wds {
         'layer_out_next' => $layer_out_next,
         'spider_uploader' => $spider_uploader,
         'stop_animation' => $stop_animation,
+        'right_butt_url' => $right_butt_url,
+        'left_butt_url' => $left_butt_url,
+        'right_butt_hov_url' => $right_butt_hov_url,
+        'left_butt_hov_url' => $left_butt_hov_url,
+        'rl_butt_img_or_not' => $rl_butt_img_or_not,
+        'bullets_img_main_url' => $bullets_img_main_url,
+        'bullets_img_hov_url' => $bullets_img_hov_url,
+        'bull_butt_img_or_not' => $bull_butt_img_or_not,
       ), array(
         '%s',
         '%d',
@@ -307,6 +323,14 @@ class WDSControllerSliders_wds {
         '%d',
         '%d',
         '%d',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
       ));
       $_POST['current_id'] = (int) $wpdb->get_var('SELECT MAX(`id`) FROM ' . $wpdb->prefix . 'wdsslider');
     }
@@ -381,6 +405,14 @@ class WDSControllerSliders_wds {
         'layer_out_next' => $layer_out_next,
         'spider_uploader' => $spider_uploader,
         'stop_animation' => $stop_animation,
+        'right_butt_url' => $right_butt_url,
+        'left_butt_url' => $left_butt_url,
+        'right_butt_hov_url' => $right_butt_hov_url,
+        'left_butt_hov_url' => $left_butt_hov_url,
+        'rl_butt_img_or_not' => $rl_butt_img_or_not,
+        'bullets_img_main_url' => $bullets_img_main_url,
+        'bullets_img_hov_url' => $bullets_img_hov_url,
+        'bull_butt_img_or_not' => $bull_butt_img_or_not,
         ), array('id' => $slider_id));
     }
     if ($save !== FALSE) {

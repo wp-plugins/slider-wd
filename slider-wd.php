@@ -4,7 +4,7 @@
  * Plugin Name: Slider WD
  * Plugin URI: http://web-dorado.com/products/wordpress-slider-plugin.html
  * Description: This is a responsive plugin, which allows adding sliders to your posts/pages and to custom location. It uses large number of transition effects and supports various types of layers.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: WebDorado
  * Author URI: http://web-dorado.com/
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -97,6 +97,14 @@ function wds_frontend() {
 }
 
 function wds_ajax() {
+  if (function_exists('current_user_can')) {
+    if (!current_user_can('manage_options')) {
+      die('Access Denied');
+    }
+  }
+  else {
+    die('Access Denied');
+  }
   require_once(WD_S_DIR . '/framework/WDW_S_Library.php');
   $page = WDW_S_Library::get('action');
   if ($page != '' && (($page == 'WDSShortcode'))) {
@@ -108,7 +116,7 @@ function wds_ajax() {
 }
 
 function wds_shortcode($params) {
-  shortcode_atts(array('id' => 0), $params);
+  $params = shortcode_atts(array('id' => 0), $params);
   ob_start();
   wds_front_end($params['id']);
   return str_replace(array("\r\n", "\n", "\r"), '', ob_get_clean());
@@ -170,7 +178,7 @@ function wds_admin_ajax() {
 }
 add_action('admin_head', 'wds_admin_ajax');
 
-// Add images to Slider
+// Add images to Slider.
 add_action('wp_ajax_wds_UploadHandler', 'wds_UploadHandler');
 add_action('wp_ajax_addImage', 'wds_filemanager_ajax');
 
@@ -181,7 +189,7 @@ function wds_UploadHandler() {
 
 function wds_filemanager_ajax() { 
   if (function_exists('current_user_can')) {
-    if (!current_user_can('publish_posts')) {
+    if (!current_user_can('manage_options')) {
       die('Access Denied');
     }
   }
@@ -209,7 +217,89 @@ function wds_activate() {
   global $wpdb;
   wds_install();
   if (!$wpdb->get_var("SELECT * FROM " . $wpdb->prefix . "wdsslider")) {
-    $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslider` VALUES(1, "Default slider", 1, 0, 800, 300, "cover", "center", "none", 5, 1, 0, 0, "", 1, "000000", 100, 0, "none", "FFFFFF", "", 0, "", 0, 1, 1, 0, "hover", "fa-angle", 40, 40, "FFFFFF", 100, "CCCCCC", 0, "none", "FFFFFF", "20px", "FFFFFF", "bottom", "fa-square-o", 20, "FFFFFF", "FFFFFF", 3, "none", 100, 50, "000000", 0, 0, "none", "FFFFFF", 50, "none", "middle-center", 15, "", "", 20, "arial.ttf", "FFFFFF", 70, "#wds_0_slide2_layer2 {\r\n  text-align: center !important;\r\n}", "none", 5, "FFFFFF", 50, 1, 0)');
+    $wpdb->insert(
+      $wpdb->prefix . 'wdsslider', 
+      array(
+        'id' => 1,
+        'name' => 'Default slider',
+        'published' => 1,
+        'full_width' => 0,
+        'width' => 800,
+        'height' => 300,
+        'bg_fit' => 'cover',
+        'align' => 'center',
+        'effect' => 'none',
+        'time_intervval' => 5,
+        'autoplay' => 1,
+        'shuffle' => 0,
+        'music' => 0,
+        'music_url' => '',
+        'preload_images' => 1,
+        'background_color' => '000000',
+        'background_transparent' => 100,
+        'glb_border_width' => 0,
+        'glb_border_style' => 'none',
+        'glb_border_color' => 'FFFFFF',
+        'glb_border_radius' => '',
+        'glb_margin' => 0,
+        'glb_box_shadow' => '',
+        'image_right_click' => 0,
+        'layer_out_next' => 1,
+        'prev_next_butt' => 1,
+        'play_paus_butt' => 0,
+        'navigation' => 'hover',
+        'rl_butt_style' => 'fa-angle',
+        'rl_butt_size' => 40,
+        'pp_butt_size' => 40,
+        'butts_color' => 'FFFFFF',
+        'butts_transparent' => 100,
+        'hover_color' => 'CCCCCC',
+        'nav_border_width' => 0,
+        'nav_border_style' => 'none',
+        'nav_border_color' => 'FFFFFF',
+        'nav_border_radius' => '20px',
+        'nav_bg_color' => 'FFFFFF',
+        'bull_position' => 'bottom',
+        'bull_style' => 'fa-square-o',
+        'bull_size' => 20,
+        'bull_color' => 'FFFFFF',
+        'bull_act_color' => 'FFFFFF',
+        'bull_margin' => 3,
+        'film_pos' => 'none',
+        'film_thumb_width' => 100,
+        'film_thumb_height' => 50,
+        'film_bg_color' => '000000',
+        'film_tmb_margin' => 0,
+        'film_act_border_width' => 0,
+        'film_act_border_style' => 'none',
+        'film_act_border_color' => 'FFFFFF',
+        'film_dac_transparent' => 50,
+        'timer_bar_type' => 'none',
+        'timer_bar_size' => 5,
+        'timer_bar_color' => 'FFFFFF',
+        'timer_bar_transparent' => 50,
+        'built_in_watermark_type' => 'none',
+        'built_in_watermark_position' => 'middle-center',
+        'built_in_watermark_size' => 15,
+        'built_in_watermark_url' => WD_S_URL . '/images/watermark.png',
+        'built_in_watermark_text' => 'web-dorado.com',
+        'built_in_watermark_font_size' => 20,
+        'built_in_watermark_font' => '',
+        'built_in_watermark_color' => 'FFFFFF',
+        'built_in_watermark_opacity' => 70,
+        'css' => '',
+        'stop_animation' => 0,
+        'spider_uploader' => 1,
+        'right_butt_url' => WD_S_URL . '/images/arrow/arrow11/1/2.png',
+        'left_butt_url' => WD_S_URL . '/images/arrow/arrow11/1/1.png',
+        'right_butt_hov_url' => WD_S_URL . '/images/arrow/arrow11/1/4.png',
+        'left_butt_hov_url' => WD_S_URL . '/images/arrow/arrow11/1/3.png',
+        'rl_butt_img_or_not' => 'style',
+        'bullets_img_main_url' => WD_S_URL . '/images/bullet/bullet1/1/1.png',
+        'bullets_img_hov_url' => WD_S_URL . '/images/bullet/bullet1/1/2.png',
+        'bull_butt_img_or_not' => 'style',
+      )
+    );
   }
   if (!$wpdb->get_var("SELECT * FROM " . $wpdb->prefix . "wdsslide")) {
     $wpdb->query('INSERT INTO `' . $wpdb->prefix . 'wdsslide` VALUES(1, 1, "Slide 1", "image", "' . WD_S_URL . '/demo/1.jpg", "' . WD_S_URL . '/demo/1-150x150.jpg", 1, "", 1, 0)');
@@ -221,19 +311,16 @@ register_activation_hook(__FILE__, 'wds_activate');
 
 function wds_install() {
   $version = get_option("wds_version");
-  $new_version = '1.0.4';
+  $new_version = '1.0.5';
   if ($version && version_compare($version, $new_version, '<')) {
     require_once WD_S_DIR . "/sliders-update.php";
     wds_update($version);
     update_option("wds_version", $new_version);
   }
-  else {
+  elseif (!$version) {
     require_once WD_S_DIR . "/sliders-insert.php";
     wds_insert();
-    if (!$version) {
-      var_dump('aa');
-      add_option("wds_theme_version", '1.0.0', '', 'no');
-    }
+    add_option("wds_theme_version", '1.0.0', '', 'no');
     add_option("wds_version", $new_version, '', 'no');
   }
 }
@@ -243,8 +330,9 @@ if (!isset($_GET['action']) || $_GET['action'] != 'deactivate') {
 
 // Plugin styles.
 function wds_styles() {
+  $version = get_option("wds_version");
   wp_admin_css('thickbox');
-  wp_enqueue_style('wds_tables', WD_S_URL . '/css/wds_tables.css');
+  wp_enqueue_style('wds_tables', WD_S_URL . '/css/wds_tables.css', array(), $version);
 }
 
 // Plugin scripts.
@@ -255,7 +343,7 @@ function wds_scripts() {
   wp_enqueue_script('jquery');
   wp_enqueue_script('jquery-ui-sortable');
   wp_enqueue_script('jquery-ui-draggable');
-  wp_enqueue_script('wds_admin', WD_S_URL . '/js/wds.js', array(), get_option("wds_version"));
+  wp_enqueue_script('wds_admin', WD_S_URL . '/js/wds.js', array(), $version);
   wp_enqueue_script('jscolor', WD_S_URL . '/js/jscolor/jscolor.js', array(), '1.3.9');
   wp_enqueue_style('wds_font-awesome', WD_S_URL . '/css/font-awesome-4.0.1/font-awesome.css', array(), '4.0.1');
   wp_enqueue_style('wds_effects', WD_S_URL . '/css/wds_effects.css', array(), $version);
@@ -264,6 +352,9 @@ function wds_scripts() {
 function wds_front_end_scripts() {
   $version = get_option("wds_version");
   wp_enqueue_script('jquery');
+
+  wp_enqueue_script('wds_jquery_mobile', WD_S_URL . '/js/jquery.mobile.js', array(), $version);
+
   wp_enqueue_style('wds_frontend', WD_S_URL . '/css/wds_frontend.css', array(), $version);
   wp_enqueue_style('wds_effects', WD_S_URL . '/css/wds_effects.css', array(), $version);
 

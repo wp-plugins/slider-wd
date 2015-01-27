@@ -404,12 +404,13 @@ class WDSViewSliders_wds {
         <?php
         if ($row->spider_uploader) {
           ?>
-        <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_slides', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Images" onclick="return false;">
+        <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_slides', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" title="Add Images" onclick="return false;">
           Add Images
         </a>
           <?php
         }
         ?>
+        <input class="button-secondary wds_free_button" type="button" value="Add Posts" onclick="alert('This functionality is disabled in free version.')" />
         <input class="button-primary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
                                                                spider_set_input_value('task', 'set_watermark');
                                                                spider_ajax_save('sliders_form', event);" value="Set Watermark" />
@@ -690,22 +691,187 @@ class WDSViewSliders_wds {
                       <div class="spider_description">Select between the option of always displaying the navigation buttons or only when hovered.</div>
                     </td>
                   </tr>
+                  <tr>
+                    <td class="spider_label_options">
+                      <label>Image for Next / Previous buttons: </label>
+                    </td>
+                    <td>
+                      <input type="radio" name="rl_butt_img_or_not" id="rl_butt_img_or_not_our" value="our" <?php if ($row->rl_butt_img_or_not == 'our') echo 'checked="checked"'; ?> onClick="image_for_next_prev_butt('our')" /><label for="rl_butt_img_or_not_our">Default</label>
+                      <input type="radio" name="rl_butt_img_or_not" id="rl_butt_img_or_not_cust" value="custom" <?php if ($row->rl_butt_img_or_not == 'custom') echo 'checked="checked"'; ?> onClick="image_for_next_prev_butt('custom')" /><label for="rl_butt_img_or_not_cust">Custom</label>
+                      <input type="radio" name="rl_butt_img_or_not" id="rl_butt_img_or_not_style" value="style" <?php if ($row->rl_butt_img_or_not == 'style') echo 'checked="checked"'; ?> onClick="image_for_next_prev_butt('style')" /><label for="rl_butt_img_or_not_style">Styled</label>
+                      <input type="hidden" id="right_butt_url" name="right_butt_url" value="<?php echo $row->right_butt_url; ?>" />
+                      <input type="hidden" id="right_butt_hov_url" name="right_butt_hov_url" value="<?php echo $row->right_butt_hov_url; ?>" />
+                      <input type="hidden" id="left_butt_url" name="left_butt_url" value="<?php echo $row->left_butt_url; ?>" />
+                      <input type="hidden" id="left_butt_hov_url" name="left_butt_hov_url" value="<?php echo $row->left_butt_hov_url; ?>" />
+                      <div class="spider_description">Choose whether to use default navigation buttons or to upload custom ones.</div>
+                    </td>
+                  </tr>	
                 </tbody>
                 <tbody class="<?php echo $fv_class; ?>"<?php echo $fv_title; ?>>
                   <?php echo $fv_message; ?>
                   <tr id="right_left_butt_style">
                     <td class="spider_label <?php echo $fv_class; ?>"><label for="rl_butt_style">Next / Previous buttons style: </label></td>
                     <td>
-                      <select name="rl_butt_style" id="rl_butt_style" <?php echo $fv_disabled; ?>>
-                      <?php
-                      foreach ($button_styles as $key => $button_style) {
-                        ?>
-                        <option value="<?php echo $key; ?>" <?php echo (($row->rl_butt_style == $key) ? 'selected="selected"' : ''); ?>><?php echo $button_style; ?></option>
-                        <?php
-                      }
-                      ?>
-                      </select>
+                      <div style="display: table;">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <select name="rl_butt_style" id="rl_butt_style" onchange="change_rl_butt_style(jQuery(this).val())">
+                          <?php
+                          foreach ($button_styles as $key => $button_style) {
+                            ?>
+                            <option value="<?php echo $key; ?>" <?php echo (($row->rl_butt_style == $key) ? 'selected="selected"' : ''); ?>><?php echo $button_style; ?></option>
+                            <?php
+                          }
+                          ?>
+                          </select>
+                        </div>
+                        <div style="display: table-cell; vertical-align: middle; background-color: rgba(229, 229, 229, 0.62); text-align: center;">
+                          <i id="wds_left_style" class="fa <?php echo $row->rl_butt_style; ?>-left" style="color: #<?php echo $row->butts_color; ?>; display: inline-block; font-size: 40px; width: 40px; height: 40px;"></i>
+                          <i id="wds_right_style" class="fa <?php echo $row->rl_butt_style; ?>-right" style="color: #<?php echo $row->butts_color; ?>; display: inline-block; font-size: 40px; width: 40px; height: 40px;"></i>
+                        </div>
+                      </div>
                       <div class="spider_description">Choose the style of the button you prefer to have as navigation buttons.</div>
+                    </td>
+                  </tr>				  
+                  <tr id="right_butt_upl">
+                    <td class="spider_label_options" style="vertical-align: middle;">
+                      <label>Upload buttons images: </label>
+                    </td>
+                    <td>
+                      <div style="display: table;">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Previous Button" onclick="alert('This functionality is disabled in free version.')" />
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Previous Button Hover" onclick="alert('This functionality is disabled in free version.')" />
+                        </div>
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Next Button" onclick="alert('This functionality is disabled in free version.')" />
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Next Button Hover" onclick="alert('This functionality is disabled in free version.')" />
+                        </div>
+                        <div style="width:100px; display: table-cell; vertical-align: middle; text-align: center;background-color: rgba(229, 229, 229, 0.62); padding-top: 4px; border-radius: 3px;">
+                          <img id="left_butt_img" src="<?php echo $row->left_butt_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="right_butt_img" src="<?php echo $row->right_butt_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="left_butt_hov_img" src="<?php echo $row->left_butt_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="right_butt_hov_img" src="<?php echo $row->right_butt_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                        </div>
+                        <div style="display: table-cell; text-align: center; vertical-align: middle;">
+                          <input type="button" class="button button-small wds_reverse" onclick="wds_change_custom_src()" value="Reverse" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <script>				  
+                    var wds_rl_butt_type = [];
+                    var rl_butt_dir = '<?php echo WD_S_URL . '/images/arrow/'; ?>';
+					var type_cur_fold = '1';
+                    <?php				    
+                    $folder_names = scandir(WD_S_DIR . '/images/arrow'); 
+                    $cur_fold_name = '';
+                    $cur_type_key = '';
+                    $cur_color_key = '';
+                    $cur_sub_fold_names = array();
+                    array_splice($folder_names, 0, 2);
+                    $flag = FALSE;
+                    foreach ($folder_names as $type_key => $folder_name) {
+                      if (is_dir(WD_S_DIR . '/images/arrow/' . $folder_name)) {
+                        ?>
+                        wds_rl_butt_type["<?php echo $type_key; ?>"] = [];
+                        wds_rl_butt_type["<?php echo $type_key; ?>"]["type_name"] = "<?php echo $folder_name; ?>";
+                        <?php
+                        if ($row->left_butt_url != '') {
+                          /* Getting current button's type folder and color folder.*/
+                          $check_cur_fold = explode('/' , $row->left_butt_url);
+                          if (in_array($folder_name, $check_cur_fold)) {
+                            $flag = TRUE;
+                            $cur_fold_name = $folder_name;
+                            $cur_type_key = $type_key;
+                            $cur_sub_fold_names = scandir(WD_S_DIR . '/images/arrow/' . $cur_fold_name);
+                            array_splice($cur_sub_fold_names, 0, 2);
+							?>
+							  type_cur_fold = '<?php echo $cur_type_key;?>';
+							<?php
+                          }
+                        }
+                        $sub_folder_names = scandir( WD_S_DIR . '/images/arrow/' . $folder_name);
+                        array_splice($sub_folder_names, 0, 2);
+                        foreach ($sub_folder_names as $color_key => $sub_folder_name) {
+                          if (is_dir(WD_S_DIR . '/images/arrow/' . $folder_name . '/' . $sub_folder_name)) {
+                            if ($cur_fold_name == $folder_name) {
+                              /* Getting current button's color key.*/
+                              if (in_array($sub_folder_name, $check_cur_fold)) {
+                                $cur_color_key = $color_key;
+                              }
+                            }
+                            ?>
+                            wds_rl_butt_type["<?php echo $type_key; ?>"]["<?php echo $color_key; ?>"] = "<?php echo $sub_folder_name; ?>";
+                            <?php
+                          }
+                        }
+                      }
+                      else {
+                        echo $folder_name . " is not a directory.";
+                      }
+                    }
+                    ?> 
+                  </script>
+                  <tr id="right_left_butt_select">
+                    <td class="spider_label_options" style="vertical-align: middle;">
+                      <label for="right_butt_url">Choose buttons: </label>
+                    </td>
+                    <td style="display: block;">
+                      <div style="display: table; margin-bottom: 14px;">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <div style="display: block; width: 180px;">
+                            <div class="spider_choose_option" onclick="wds_choose_option(this)"> 
+                              <div  class="spider_option_main_title">Choose group</div>
+                              <div class="spider_sel_option_ic"><i class="fa fa-angle-down fa-lg" style="color: #1E8CBE"></i></div>
+                            </div>
+                            <div class="spider_options_cont">
+                            <?php
+                            foreach ($folder_names as $type_key => $folder_name) {
+                              ?> 							  							  
+                              <div class="spider_option_cont wds_rl_butt_groups" value="<?php echo $type_key; ?>" <?php echo (($cur_type_key == $type_key) ? 'selected="selected"; style="background-color: #3399FF;"' : ''); ?> onclick="change_rl_butt_type(this)"> 
+                                <div  class="spider_option_cont_title">
+                                  <?php echo 'Group-' . ++$type_key; ?>
+                                </div>
+                                <div class="spider_option_cont_img">
+                                  <img class="src_top_left" style="display: inline-block; width: 14px; height: 14px;" />
+                                  <img class="src_top_right" style="display: inline-block; width: 14px; height: 14px;" />
+                                  <img class="src_bottom_left" style="display: inline-block; width: 14px; height: 14px;" />
+                                  <img class="src_bottom_right" style="display: inline-block; width: 14px; height: 14px;" /> 
+                                </div>
+                              </div>
+                              <?php
+                            }
+                            if (!$flag) {
+                              /* Folder doesn't exist.*/
+                              ?>
+                              <div class="spider_option_cont" value="0" selected="selected" disabled="disabled">Custom</div>
+                              <?php
+                            }
+                            ?>
+                            </div>
+                          </div>							
+                        </div>
+                        <div style="display:table-cell;vertical-align: middle;">
+                          <div style="display: block; width: 180px; margin-left: 12px;">
+                            <div class="spider_choose_option" onclick="alert('This functionality is disabled in free version.')">
+                              <div  class="spider_option_main_title">Choose color</div>
+                              <div class="spider_sel_option_ic"><i class="fa fa-angle-down fa-lg" style="color:#1E8CBE"></i></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div style="width:100px; display: table-cell; vertical-align: middle; text-align: center;">
+                          <div style=" display: block; margin-left: 12px; vertical-align: middle; text-align: center;background-color: rgba(229, 229, 229, 0.62); padding-top: 4px; border-radius: 3px;">
+                          <img id="rl_butt_img_l" src="<?php echo $row->left_butt_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="rl_butt_img_r" src="<?php echo $row->right_butt_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="rl_butt_hov_img_l" src="<?php echo $row->left_butt_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="rl_butt_hov_img_r" src="<?php echo $row->right_butt_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          </div>
+                        </div>
+                        <div style="display: table-cell; text-align: center; vertical-align: middle;">
+                          <input type="button" class="button button-small wds_reverse" onclick="change_src()" value="Reverse" />
+                        </div>
+                      </div>
+                      <div class="spider_description">Choose the type and color for navigation button images. The option is designed for limited preview (colors not included) purposes and can't be saved.</div>
                     </td>
                   </tr>
                   <tr id="right_left_butt_size">
@@ -722,14 +888,14 @@ class WDSViewSliders_wds {
                       <div class="spider_description">Set the size for the play / pause buttons.</div>
                     </td>
                   </tr>
-                  <tr id="buttons_color">
+                  <tr id="tr_butts_color">
                     <td class="spider_label <?php echo $fv_class; ?>"><label for="butts_color">Buttons color: </label></td>
                     <td>
-                      <input type="text" name="butts_color" id="butts_color" value="<?php echo $row->butts_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <input type="text" name="butts_color" id="butts_color" value="<?php echo $row->butts_color; ?>" class="color" <?php echo $fv_disabled; ?> onchange="jQuery('#wds_left_style,#wds_right_style').css({color: '#' + jQuery(this).val()})" />
                       <div class="spider_description">Select a color for the navigation buttons.</div>
                     </td>
                   </tr>
-                  <tr>
+                  <tr id="tr_hover_color">
                     <td class="spider_label <?php echo $fv_class; ?>"><label for="hover_color">Hover color: </label></td>
                     <td>
                       <input type="text" name="hover_color" id="hover_color" value="<?php echo $row->hover_color; ?>" class="color" <?php echo $fv_disabled; ?> />
@@ -791,22 +957,177 @@ class WDSViewSliders_wds {
                       <div class="spider_description">Select the position for the navigation bullets.</div>
                     </td>
                   </tr>
+                  <tr>
+                    <td class="spider_label_options">
+                      <label>Image for bullets: </label>
+                    </td>
+                    <td>
+                      <input type="radio" name="bull_butt_img_or_not" id="bull_butt_img_or_not_our" value="our" <?php if ($row->bull_butt_img_or_not == 'our') echo 'checked="checked"'; ?> onClick="image_for_bull_butt('our')" /><label for="bull_butt_img_or_not_our">Default</label>
+                      <input type="radio" name="bull_butt_img_or_not" id="bull_butt_img_or_not_cust" value="custom" <?php if ($row->bull_butt_img_or_not == 'custom') echo 'checked="checked"'; ?> onClick="image_for_bull_butt('custom')" /><label for="bull_butt_img_or_not_cust">Custom</label>
+                      <input type="radio" name="bull_butt_img_or_not" id="bull_butt_img_or_not_stl" value="style" <?php if ($row->bull_butt_img_or_not == 'style') echo 'checked="checked"'; ?> onClick="image_for_bull_butt('style')" /><label for="bull_butt_img_or_not_stl">Styled</label>
+                      <input type="hidden" id="bullets_img_main_url" name="bullets_img_main_url" value="<?php echo $row->bullets_img_main_url; ?>" />
+                      <input type="hidden" id="bullets_img_hov_url" name="bullets_img_hov_url" value="<?php echo $row->bullets_img_hov_url; ?>" />
+                      <div class="spider_description">Choose whether to use default or styled bullets.</div>
+                    </td>
+                  </tr>
                 </tbody>
                 <tbody class="<?php echo $fv_class; ?>"<?php echo $fv_title; ?>>
                   <?php echo $fv_message; ?>
-                  <tr>
+                  <tr id="bullets_style">
                     <td class="spider_label <?php echo $fv_class; ?>"><label for="bull_style">Bullet style: </label></td>
                     <td>
-                      <select name="bull_style" id="bull_style" <?php echo $fv_disabled; ?>>
-                        <?php
-                        foreach ($bull_styles as $key => $bull_style) {
-                          ?>
-                          <option value="<?php echo $key; ?>" <?php echo (($row->bull_style == $key) ? 'selected="selected"' : ''); ?>><?php echo $bull_style; ?></option>
-                          <?php
-                        }
-                        ?>
-                      </select>
+                      <div style="display: table;">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <select name="bull_style" id="bull_style" <?php echo $fv_disabled; ?> onchange="change_bull_style(jQuery(this).val())">
+                            <?php
+                            foreach ($bull_styles as $key => $bull_style) {
+                              ?>
+                              <option value="<?php echo $key; ?>" <?php echo (($row->bull_style == $key) ? 'selected="selected"' : ''); ?>><?php echo $bull_style; ?></option>
+                              <?php
+                            }
+                            ?>
+                          </select>
+                        </div>
+                        <div style="display: table-cell; vertical-align: middle; background-color: rgba(229, 229, 229, 0.62); text-align: center;">
+                          <i id="wds_act_bull_style" class="fa <?php echo str_replace('-o', '', $row->bull_style); ?>" style="color: #<?php echo $row->bull_act_color; ?>; display: inline-block; font-size: 40px; width: 40px; height: 40px;"></i>
+                          <i id="wds_deact_bull_style" class="fa <?php echo $row->bull_style; ?>" style="color: #<?php echo $row->bull_color; ?>; display: inline-block; font-size: 40px; width: 40px; height: 40px;"></i>
+                        </div>
+                      </div>
                       <div class="spider_description">Choose the style for the bullets.</div>
+                    </td>
+                  </tr>
+                  <script>				  
+                    var wds_blt_img_type = [];
+                    var blt_img_dir = '<?php echo WD_S_URL . '/images/bullet/'; ?>';
+					var bull_type_cur_fold = '1';
+                    <?php				    
+                    $folder_names = scandir(WD_S_DIR . '/images/bullet'); 
+                    $bull_cur_fold_name = '';
+                    $bull_cur_type_key = '';
+                    $bull_cur_color_key = '';
+                    $bull_cur_sub_fold_names = array();
+                    array_splice($folder_names, 0, 2);
+                    $flag = FALSE;
+                    foreach ($folder_names as $type_key => $folder_name) {
+                      if (is_dir(WD_S_DIR . '/images/bullet/' . $folder_name)) {
+                        ?>
+                        wds_blt_img_type["<?php echo $type_key; ?>"] = [];
+                        wds_blt_img_type["<?php echo $type_key; ?>"]["type_name"] = "<?php echo $folder_name; ?>";
+                        <?php
+                        if ($row->bullets_img_main_url != '') {
+                          /* Getting current button's type folder and color folder.*/
+                          $check_bull_cur_fold = explode('/' , $row->bullets_img_main_url);
+                          if (in_array($folder_name, $check_bull_cur_fold)) {
+                            $flag = TRUE;
+                            $bull_cur_fold_name = $folder_name;
+                            $bull_cur_type_key = $type_key;
+                            $bull_cur_sub_fold_names = scandir(WD_S_DIR . '/images/bullet/' . $bull_cur_fold_name);
+                            array_splice($bull_cur_sub_fold_names, 0, 2);
+							?>
+							  bull_type_cur_fold = '<?php echo $bull_cur_type_key;?>';
+							<?php						
+                          }
+                        }
+                        $sub_folder_names = scandir(WD_S_DIR . '/images/bullet/' . $folder_name);						  
+                        array_splice($sub_folder_names, 0, 2); 
+                        foreach ($sub_folder_names as $color_key => $sub_folder_name) {
+                          if (is_dir(WD_S_DIR . '/images/bullet/' . $folder_name . '/' . $sub_folder_name)) {
+                            if ($bull_cur_fold_name == $folder_name) {
+                              /* Getting current button's color key.*/
+                              if (in_array($sub_folder_name, $check_bull_cur_fold)) {
+                                $bull_cur_color_key = $color_key;
+                              }
+                            }
+                            ?>
+                            wds_blt_img_type["<?php echo $type_key; ?>"]["<?php echo $color_key; ?>"] = "<?php echo $sub_folder_name; ?>";
+                            <?php 
+                          }
+                        }
+                      }
+                      else {
+                        echo $folder_name . " is not a directory";
+                      }
+                    }
+                    ?> 
+                  </script>
+                  <tr id="bullets_images_cust">
+                    <td class="spider_label_options" style="vertical-align: middle;">
+                      <label>Upload buttons images: </label>
+                    </td>
+                    <td>
+                      <div style="display: table;">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Active Button" onclick="alert('This functionality is disabled in free version.')" />
+                        </div>
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <input class="button-secondary wds_free_button" type="button" value="Deactive Button" onclick="alert('This functionality is disabled in free version.')" />
+                        </div>  
+                        <div style="width:100px; display: table-cell; vertical-align: middle; text-align: center;background-color: rgba(229, 229, 229, 0.62); padding-top: 4px; border-radius: 3px;">
+                          <img id="bull_img_main" src="<?php echo $row->bullets_img_main_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="bull_img_hov" src="<?php echo $row->bullets_img_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" /> 
+                        </div>
+                        <div style="display: table-cell; text-align: center; vertical-align: middle;">
+                          <input type="button" class="button button-small wds_reverse" onclick="wds_change_bullets_custom_src()" value="Reverse" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="bullets_images_select">
+                    <td class="spider_label_options" style="vertical-align: middle;">
+                      <label for="bullets_images_url">Chooes buttons: </label>
+                    </td>
+                    <td style="display: block;">
+                      <div style="display: table; margin-bottom: 14px;">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <div style="display: block; width: 180px;">
+                            <div class="spider_choose_option" onclick="wds_choose_bull_option(this)">
+                              <div class="spider_option_main_title">Choose group</div>
+                              <div class="spider_sel_option_ic"><i class="fa fa-angle-down fa-lg" style="color: #1E8CBE;"></i></div>
+                            </div>
+                            <div class="spider_bull_options_cont">
+                            <?php
+                            foreach ($folder_names as $type_key => $folder_name) {
+                              ?>
+                              <div class="spider_option_cont wds_bull_butt_groups" value="<?php echo $type_key; ?>" <?php echo (($bull_cur_type_key == $type_key) ? 'selected="selected" style="background-color: #3399FF;"' : ''); ?> onclick="change_bullets_images_type(this)">
+                                <div class="spider_option_cont_title" style="width: 64%;">
+                                  <?php echo 'Group-' . ++$type_key; ?>
+                                </div>
+                                <div class="spider_option_cont_img">
+                                  <img class="bull_src_left" style="display: inline-block; width: 14px; height: 14px;" />
+                                  <img class="bull_src_right" style="display: inline-block; width: 14px; height: 14px;" />
+                                </div>
+                              </div>
+                              <?php
+                            }
+                            if (!$flag) {
+                              /* Folder doesn't exist.*/
+                              ?>
+                              <div class="spider_option_cont" value="0" selected="selected" disabled="disabled">Custom</div>
+                              <?php
+                            }
+                            ?>
+                            </div>
+                          </div>							
+                        </div>
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <div style="display: block; width: 180px; margin-left: 12px;">
+                            <div class="spider_choose_option" onclick="alert('This functionality is disabled in free version.')" >
+                              <div class="spider_option_main_title" >Choose color</div>
+                              <div class="spider_sel_option_ic"><i class="fa fa-angle-down fa-lg" style="color: #1E8CBE;"></i></div>
+                            </div>
+                          </div>
+                        </div>						
+                        <div style="width: 100px; display: table-cell; vertical-align: middle; text-align: center;">
+                          <div style="display: block; vertical-align: middle; margin-left: 12px; text-align: center; background-color: rgba(229, 229, 229, 0.62); padding-top: 4px; border-radius: 3px;">
+                            <img id="bullets_img_main" src="<?php echo $row->bullets_img_main_url; ?>" style="display: inline-block; width: 40px; height: 40px;" />
+                            <img id="bullets_img_hov" src="<?php echo $row->bullets_img_hov_url; ?>" style="display: inline-block; width: 40px; height: 40px;" />
+                          </div>
+                        </div>						
+                        <div style="display: table-cell; text-align: center; vertical-align: middle;">
+                          <input type="button" class="button button-small wds_reverse" onclick="change_bullets_src()" value="Reverse" />
+                        </div>
+                      </div>
+                      <div class="spider_description">Choose the type and color for the bullets. The option is designed for limited preview (colors not included) purposes and can't be saved.</div>
                     </td>
                   </tr>
                   <tr id="bullet_size">
@@ -819,14 +1140,14 @@ class WDSViewSliders_wds {
                   <tr id="bullets_color">
                     <td class="spider_label <?php echo $fv_class; ?>"><label for="bull_color">Color: </label></td>
                     <td>
-                      <input type="text" name="bull_color" id="bull_color" value="<?php echo $row->bull_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <input type="text" name="bull_color" id="bull_color" value="<?php echo $row->bull_color; ?>" class="color" <?php echo $fv_disabled; ?> onchange="jQuery('#wds_deact_bull_style').css({color: '#' + jQuery(this).val()})" />
                       <div class="spider_description">Select the color for the navigation bullets.</div>
                     </td>
                   </tr> 
                   <tr id="bullets_act_color">
                     <td class="spider_label <?php echo $fv_class; ?>"><label for="bull_act_color">Active color: </label></td>
                     <td>
-                      <input type="text" name="bull_act_color" id="bull_act_color" value="<?php echo $row->bull_act_color; ?>" class="color" <?php echo $fv_disabled; ?> />
+                      <input type="text" name="bull_act_color" id="bull_act_color" value="<?php echo $row->bull_act_color; ?>" class="color" <?php echo $fv_disabled; ?> onchange="jQuery('#wds_act_bull_style').css({color: '#' + jQuery(this).val()})" />
                       <div class="spider_description">Select the color for the bullet, which is currently displaying a corresponding image.</div>
                     </td>
                   </tr>
@@ -840,7 +1161,7 @@ class WDSViewSliders_wds {
                 </tbody>
               </table>
             </div>
-            <div class="wds_nav_box wds_nav_filmstrip_box spider_free_version_label" title="This option is disabled in free version.">
+            <div class="wds_nav_box wds_nav_filmstrip_box spider_free_version_label" title="This functionality is disabled in free version.">
               <table>
                 <tbody>
                   <tr>
@@ -998,7 +1319,7 @@ class WDSViewSliders_wds {
                               }
                               else {
                                 ?>
-                              <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'watermark', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Image" onclick="return false;">
+                              <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'watermark', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" title="Add Image" onclick="return false;">
                                 Add Image
                               </a>
                                 <?php
@@ -1172,7 +1493,7 @@ class WDSViewSliders_wds {
                             }
                             else {
                               ?>
-                            <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_update_slide', 'slide_id' => $slide_row->id, 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" id="content-add_media" title="Add Image" onclick="return false;">
+                            <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_update_slide', 'slide_id' => $slide_row->id, 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" title="Add Image" onclick="return false;">
                               Add Image
                             </a>
                               <?php
@@ -1180,8 +1501,9 @@ class WDSViewSliders_wds {
                             ?>
                             <input type="button" class="button-primary" onclick="wds_add_image_url('<?php echo $slide_row->id; ?>')" value="Add Image by URL" />
                             <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Add Video" />
-                            <input type="button" class="button-secondary" id="delete_image_url<?php echo $slide_row->id; ?>" onclick="spider_remove_url('button_image_url<?php echo $slide_row->id; ?>', 'image_url<?php echo $slide_row->id; ?>', 'delete_image_url<?php echo $slide_row->id; ?>', 'wds_preview_image<?php echo $slide_row->id; ?>')" value="Remove" />
-                            <input type="hidden" id="image_url<?php echo $slide_row->id; ?>" name="image_url<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->image_url; ?>" style="display: inline-block;" />
+			    <input class="button-secondary wds_free_button" type="button" value="Add Post" onclick="alert('This functionality is disabled in free version.')" />
+                            <input type="button" class="button-secondary" id="delete_image_url<?php echo $slide_row->id; ?>" onclick="spider_remove_url('image_url<?php echo $slide_row->id; ?>', 'wds_preview_image<?php echo $slide_row->id; ?>')" value="Remove" />
+                            <input type="hidden" id="image_url<?php echo $slide_row->id; ?>" name="image_url<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->image_url; ?>" />
                             <input type="hidden" id="thumb_url<?php echo $slide_row->id; ?>" name="thumb_url<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->thumb_url; ?>" />
                           </td>
                         </tr>
@@ -1265,7 +1587,7 @@ class WDSViewSliders_wds {
                             }
                             else {
                               ?>
-                            <a href="<?php echo !$fv ? add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_layer', 'slide_id' => $slide_row->id, 'TB_iframe' => '1'), admin_url('admin-ajax.php')) : ''; ?>" onclick="<?php echo !$fv ? '' : "alert('This functionality is disabled in free version.')"; ?>; return false;" class="button-<?php echo !$fv ? "primary thickbox thickbox-preview" : "secondary wds_free_button"; ?> button button-small" id="content-add_media" title="Add Image Layer">
+                            <a href="<?php echo !$fv ? add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_layer', 'slide_id' => $slide_row->id, 'TB_iframe' => '1'), admin_url('admin-ajax.php')) : ''; ?>" onclick="<?php echo !$fv ? '' : "alert('This functionality is disabled in free version.')"; ?>; return false;" class="button-<?php echo !$fv ? "primary thickbox thickbox-preview" : "secondary wds_free_button"; ?> button button-small" title="Add Image Layer">
                               Add Image layer
                             </a>
                               <?php
@@ -1519,6 +1841,7 @@ class WDSViewSliders_wds {
                                 <input id="<?php echo $prefix; ?>_image_width" class="spider_int_input" type="text" onkeyup="wds_scale('#<?php echo $prefix; ?>_image_scale', '<?php echo $prefix; ?>')" value="<?php echo $layer->image_width; ?>" name="<?php echo $prefix; ?>_image_width" /> x 
                                 <input id="<?php echo $prefix; ?>_image_height" class="spider_int_input" type="text" onkeyup="wds_scale('#<?php echo $prefix; ?>_image_scale', '<?php echo $prefix; ?>')" value="<?php echo $layer->image_height; ?>" name="<?php echo $prefix; ?>_image_height" /> px 
                                 <input id="<?php echo $prefix; ?>_image_scale" type="checkbox" onchange="wds_scale(this, '<?php echo $prefix; ?>')" name="<?php echo $prefix; ?>_image_scale" <?php echo (($layer->image_scale) ? 'checked="checked"' : ''); ?> /><label for="<?php echo $prefix; ?>_image_scale">Scale</label>
+                                <input class="button-secondary wds_free_button" type="button" value="Edit Image" onclick="alert('This functionality is disabled in free version.')" />
                                 <div class="spider_description">Set width and height of the image.</div>
                               </td>
                               <td class="spider_label">
@@ -1804,6 +2127,8 @@ class WDSViewSliders_wds {
                   </div>
                     <script>
                       jQuery(document).ready(function() {
+                        image_for_next_prev_butt('<?php echo $row->rl_butt_img_or_not; ?>');
+                        image_for_bull_butt('<?php echo $row->bull_butt_img_or_not; ?>');						
                         wds_whr('width');
                         wds_drag_layer('<?php echo $slide_row->id; ?>');
                         wds_layer_weights('<?php echo $slide_row->id; ?>');
@@ -1844,9 +2169,9 @@ class WDSViewSliders_wds {
       </div>
       <input id="task" name="task" type="hidden" value="" />
       <script>
-        var uploader_href = '<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_update_slide', 'slide_id' => 'slideID', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>';		
+        var uploader_href = '<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_update_slide', 'slide_id' => 'slideID', 'layer_id' => 'layerID', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>';		
         var fv = '<?php echo $fv; ?>';
-        jQuery(window).load(function() {
+        jQuery(document).ready(function() {
           wds_onload();
         });
       </script>

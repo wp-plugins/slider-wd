@@ -50,8 +50,8 @@ class FilemanagerModel {
       /*$data['media_library_files'] = ($this->controller->get_options_data()->enable_ML_import ? $this->get_media_library_files($session_data['sort_by'], $session_data['sort_order']) : array());*/
       $data['extensions'] = (isset($_REQUEST['extensions']) ? esc_html($_REQUEST['extensions']) : '');
       $data['callback'] = (isset($_REQUEST['callback']) ? esc_html($_REQUEST['callback']) : '');
-	  $data['image_for'] = (isset($_REQUEST['image_for']) ? esc_html($_REQUEST['image_for']) : '');
-	  $data['slide_id'] = (isset($_REQUEST['slide_id']) ? esc_html($_REQUEST['slide_id']) : '');
+      $data['image_for'] = (isset($_REQUEST['image_for']) ? esc_html($_REQUEST['image_for']) : '');
+      $data['slide_id'] = (isset($_REQUEST['slide_id']) ? esc_html($_REQUEST['slide_id']) : '');
 
       return $data;
     }
@@ -64,20 +64,13 @@ class FilemanagerModel {
     // Private Methods                                                                    //
     ////////////////////////////////////////////////////////////////////////////////////////
     private function get_from_session($key, $default) {
-      // if (isset($_SESSION[$key])) {
-      // if (isset($_REQUEST[$key])) {
-        if (isset($_REQUEST[$key])) {
-          // $_SESSION[$key] = $_REQUEST[$key];
-          $_REQUEST[$key] = stripslashes($_REQUEST[$key]);
-        }
-        else {
-          // $_SESSION[$key] = $default;
-          $_REQUEST[$key] = stripslashes($default);
-        }
-        // return $_SESSION[$key];
-        return stripslashes($_REQUEST[$key]);
-      // }
-      // return '';
+      if (isset($_REQUEST[$key])) {
+        $_REQUEST[$key] = stripslashes($_REQUEST[$key]);
+      }
+      else {
+        $_REQUEST[$key] = stripslashes($default);
+      }
+      return esc_html(stripslashes($_REQUEST[$key]));
     }
 
     public function get_path_components() {
@@ -108,10 +101,15 @@ class FilemanagerModel {
       $icons_dir_path = WD_S_DIR . '/filemanager/images/file_icons';
       $icons_dir_url = WD_S_URL . '/filemanager/images/file_icons';
       $valid_types = explode(',', isset($_REQUEST['extensions']) ? strtolower(esc_html($_REQUEST['extensions'])) : '*');
+      $image_for = isset($_REQUEST['image_for']) ? esc_html($_REQUEST['image_for']) : '';
       $parent_dir = $this->controller->get_uploads_dir() . (isset($_REQUEST['dir']) ? '/' . esc_html($_REQUEST['dir']) : '');
       $parent_dir_url = $this->controller->get_uploads_url() . (isset($_REQUEST['dir']) ? '/' . esc_html($_REQUEST['dir']) : '');
-
-
+      
+      if ($image_for == 'nav_right_but' || $image_for == 'nav_right_hov_but' || $image_for == 'nav_left_but' || $image_for == 'nav_left_hov_but') {
+        if (!is_dir($parent_dir)) {
+          mkdir($parent_dir, 0777);
+        }
+      }
       $file_names = $this->get_sorted_file_names($parent_dir, $sort_by, $sort_order);
 
       $dirs = array();

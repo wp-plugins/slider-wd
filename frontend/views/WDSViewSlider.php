@@ -181,6 +181,7 @@ class WDSViewSlider {
           font-size: <?php echo $media_bull_size; ?>px;
           width: <?php echo $media_bull_size; ?>px;
           margin: <?php echo $media_bull_margin; ?>px;
+          height: <?php echo $media_bull_size; ?>px;
         }
         #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_pp_btn_cont {  
           font-size: <?php echo $media_pp_butt_size; ?>px;
@@ -243,6 +244,68 @@ class WDSViewSlider {
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_right-ico_<?php echo $wds; ?> {
         left: <?php echo $navigation; ?>px;
       }
+      <?php
+      if ($slider_row->rl_butt_img_or_not != 'style') {
+        ?>
+	    #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_left-ico_<?php echo $wds; ?> {
+        left: -<?php echo $navigation; ?>px;
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->left_butt_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: background-image 0.2s ease-out;
+        -ms-transition: background-image 0.2s ease-out;
+        -moz-transition: background-image 0.2s ease-out;
+        -webkit-transition: background-image 0.2s ease-out;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_left-ico_<?php echo $wds; ?>:before {
+        content: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->left_butt_hov_url, ENT_QUOTES)); ?>');
+        width: 0;
+        height: 0;
+        visibility: hidden;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_left-ico_<?php echo $wds; ?>:hover {
+        left: -<?php echo $navigation; ?>px;
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->left_butt_hov_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover; 
+        transition: background-image 0.2s ease-in;
+        -ms-transition: background-image 0.2s ease-in;
+        -moz-transition: background-image 0.2s ease-in;
+        -webkit-transition: background-image 0.2s ease-in;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_right-ico_<?php echo $wds; ?> {
+        left: <?php echo $navigation; ?>px;
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->right_butt_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: background-image 0.2s ease-out;
+        -ms-transition: background-image 0.2s ease-out;
+        -moz-transition: background-image 0.2s ease-out;
+        -webkit-transition: background-image 0.2s ease-out;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_right-ico_<?php echo $wds; ?>:before {
+        content: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->right_butt_hov_url, ENT_QUOTES)); ?>');
+        width: 0;
+        height: 0;
+        visibility: hidden;
+      }
+	    #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_right-ico_<?php echo $wds; ?>:hover {
+        left: <?php echo $navigation; ?>px;
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->right_butt_hov_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: background-image 0.2s ease-in;
+        -ms-transition: background-image 0.2s ease-in;
+        -moz-transition: background-image 0.2s ease-in;
+        -webkit-transition: background-image 0.2s ease-in;
+      }
+        <?php
+      }
+      ?>
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> #wds_slideshow_play_pause_<?php echo $wds; ?> {
         opacity: <?php echo $pp_btn_opacity; ?>;
         filter: "Alpha(opacity=<?php echo $pp_btn_opacity * 100; ?>)";
@@ -252,7 +315,7 @@ class WDSViewSlider {
         color: #<?php echo $slider_row->hover_color; ?>;
         cursor: pointer;
       }
-      
+
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_none_selectable_<?php echo $wds; ?> {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -338,8 +401,38 @@ class WDSViewSlider {
         color: #<?php echo $slider_row->bull_act_color; ?>;
         opacity: 1;
         filter: Alpha(opacity=100);
+        <?php
+        if ($slider_row->bull_butt_img_or_not != 'style') {
+          ?>
+        display: inline-block;
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->bullets_img_main_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: background-image 0.2s ease-in;
+        -ms-transition: background-image 0.2s ease-in;
+        -moz-transition: background-image 0.2s ease-in;
+        -webkit-transition: background-image 0.2s ease-in;
+          <?php
+        }
+        ?>
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_dots_deactive_<?php echo $wds; ?> {
+        <?php
+        if ($slider_row->bull_butt_img_or_not != 'style') {
+          ?>
+        display: inline-block;
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->bullets_img_hov_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: background-image 0.2s ease-in;
+        -ms-transition: background-image 0.2s ease-in;
+        -moz-transition: background-image 0.2s ease-in;
+        -webkit-transition: background-image 0.2s ease-in;
+          <?php
+        }
+        ?>
       }
 
       /* Timer.*/
@@ -421,7 +514,7 @@ class WDSViewSlider {
       }
       ?>    
     </script>
-    <div id="wds_container1_<?php echo $wds; ?>" <?php echo ($enable_slideshow_autoplay && $slider_row->stop_animation) ? 'onmouseover="wds_stop_animation_' . $wds . '();" onmouseout="wds_play_animation_' . $wds . '()"' : ''; ?>>
+    <div id="wds_container1_<?php echo $wds; ?>">
       <div class="wds_loading">
         <img src="<?php echo WD_S_URL . '/images/ajax_loader.png'; ?>" class="wds_loading_img" style="float: none; width:50px;" />
       </div>
@@ -438,11 +531,24 @@ class WDSViewSlider {
               <div class="wds_slideshow_dots_thumbnails_<?php echo $wds; ?>">
                 <?php
                 foreach ($slide_rows as $key => $slide_row) {
-                ?>
+                  if ($slider_row->bull_butt_img_or_not == 'style') {
+                    ?>
                 <i id="wds_dots_<?php echo $key; ?>_<?php echo $wds; ?>"
                    class="wds_slideshow_dots_<?php echo $wds; ?> fa <?php echo (($slide_row->id == $current_image_id) ? $bull_style_active . ' wds_slideshow_dots_active_' . $wds : $bull_style_deactive . ' wds_slideshow_dots_deactive_' . $wds); ?>"
-                   onclick="wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), '<?php echo $key; ?>', wds_data_<?php echo $wds; ?>)" image_id="<?php echo $slide_row->id; ?>" image_key="<?php echo $key; ?>"></i>
-                <?php
+                   onclick="wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), '<?php echo $key; ?>', wds_data_<?php echo $wds; ?>)" image_id="<?php echo $slide_row->id; ?>"
+                   image_key="<?php echo $key; ?>">
+                </i>
+                    <?php
+                  }
+                  else {
+                    ?>
+                <span id="wds_dots_<?php echo $key; ?>_<?php echo $wds; ?>"
+                      class="wds_slideshow_dots_<?php echo $wds; ?> <?php echo (($slide_row->id == $current_image_id) ? ' wds_slideshow_dots_active_' . $wds : ' wds_slideshow_dots_deactive_' . $wds); ?>"
+                      onclick="wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), '<?php echo $key; ?>', wds_data_<?php echo $wds; ?>)" 
+                      image_id="<?php echo $slide_row->id; ?>" image_key="<?php echo $key; ?>">
+                </span>
+                    <?php
+                  }
                 }
                 ?>
               </div>
@@ -483,7 +589,7 @@ class WDSViewSlider {
                         <?php 
                         if (!$is_video) {
                           ?>
-                        <div id="wds_slideshow_image<?php echo $image_div_num; ?>_<?php echo $wds; ?>"
+                        <div img_id="wds_slideshow_image<?php echo $image_div_num; ?>_<?php echo $wds; ?>"
                              class="wds_slideshow_image_<?php echo $wds; ?>"
                              onclick="<?php echo $slide_row->link ? 'window.open(\'' . $slide_row->link . '\', \'' . ($slide_row->target_attr_slide ? '_blank' : '_self') . '\')' : ''; ?>"
                              style="<?php echo $slide_row->link ? 'cursor: pointer;' : ''; ?><?php echo ((!$slider_row->preload_images || $image_div_num == '') ? "background-image: url('" . addslashes(htmlspecialchars_decode ($slide_row->image_url,ENT_QUOTES)) . "');" : ""); ?>">
@@ -491,7 +597,7 @@ class WDSViewSlider {
                         }
                         else {
                           ?>
-                        <div id="wds_slideshow_image<?php echo $image_div_num; ?>_<?php echo $wds; ?>" class="wds_slideshow_video_<?php echo $wds; ?>" image_id="<?php echo $slide_row->id; ?>">
+                        <div img_id="wds_slideshow_image<?php echo $image_div_num; ?>_<?php echo $wds; ?>" class="wds_slideshow_video_<?php echo $wds; ?>" image_id="<?php echo $slide_row->id; ?>">
                           <iframe class="wds_video_frame_<?php echo $wds; ?>" src="<?php echo ($slide_row->type == "YOUTUBE" ? "//www.youtube.com/embed/" . $slide_row->image_url . "?enablejsapi=1&wmode=transparent" : "//player.vimeo.com/video/" . $slide_row->image_url . "?api=1"); ?>" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>
                           <?php
                         }
@@ -565,7 +671,13 @@ class WDSViewSlider {
                   <span class="wds_btn_cont wds_contTableCell" style="position: relative; text-align: left;">
                     <span class="wds_left_btn_cont">
                       <span class="wds_left-ico_<?php echo $wds; ?>" onclick="wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) - iterator_<?php echo $wds; ?>()) >= 0 ? (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) - iterator_<?php echo $wds; ?>()) % wds_data_<?php echo $wds; ?>.length : wds_data_<?php echo $wds; ?>.length - 1, wds_data_<?php echo $wds; ?>); return false;">
-                        <i class="fa <?php echo $slider_row->rl_butt_style; ?>-left"></i>
+                        <?php
+                        if ($slider_row->rl_butt_img_or_not == 'style') {
+                          ?>
+                          <i class="fa <?php echo $slider_row->rl_butt_style; ?>-left"></i>
+                          <?php
+                        }
+                        ?>
                       </span>
                     </span>
                    </span>
@@ -576,7 +688,13 @@ class WDSViewSlider {
                   <span class="wds_btn_cont wds_contTableCell" style="position: relative; text-align: right;">
                     <span class="wds_right_btn_cont">
                       <span class="wds_right-ico_<?php echo $wds; ?>" onclick="wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) + iterator_<?php echo $wds; ?>()) % wds_data_<?php echo $wds; ?>.length, wds_data_<?php echo $wds; ?>); return false;">
-                        <i class="fa <?php echo $slider_row->rl_butt_style; ?>-right"></i>
+                        <?php
+                        if ($slider_row->rl_butt_img_or_not == 'style') {
+                          ?>
+                          <i class="fa <?php echo $slider_row->rl_butt_style; ?>-right"></i>
+                          <?php
+                        }
+                        ?>
                       </span>
                     </span>
                   </span>
@@ -668,8 +786,10 @@ class WDSViewSlider {
       function wds_set_dots_class_<?php echo $wds; ?>() {
         jQuery(".wds_slideshow_dots_<?php echo $wds; ?>").removeClass("wds_slideshow_dots_active_<?php echo $wds; ?>").addClass("wds_slideshow_dots_deactive_<?php echo $wds; ?>");
         jQuery("#wds_dots_" + wds_current_key_<?php echo $wds; ?> + "_<?php echo $wds; ?>").removeClass("wds_slideshow_dots_deactive_<?php echo $wds; ?>").addClass("wds_slideshow_dots_active_<?php echo $wds; ?>");
+        <?php if ($slider_row->bull_butt_img_or_not == 'style') { ?>
         jQuery(".wds_slideshow_dots_<?php echo $wds; ?>").removeClass("<?php echo $bull_style_active; ?>").addClass("<?php echo $bull_style_deactive; ?>");
         jQuery("#wds_dots_" + wds_current_key_<?php echo $wds; ?> + "_<?php echo $wds; ?>").removeClass("<?php echo $bull_style_deactive; ?>").addClass("<?php echo $bull_style_active; ?>");
+        <?php } ?>
       }
       function wds_grid_<?php echo $wds; ?>(cols, rows, ro, tx, ty, sc, op, current_image_class, next_image_class, direction, random, roy, easing) {
         /* If browser does not support CSS transitions.*/
@@ -877,9 +997,9 @@ class WDSViewSlider {
           jQuery(this)[0].contentWindow.postMessage('{ "method": "pause" }', "*");
         });
         if (wds_data_<?php echo $wds; ?>[key]) {
-          /*if (jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause') || ('<?php echo $autoplay; ?>')) {
+          if (jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause') || ('<?php echo $autoplay; ?>')) {
             play_<?php echo $wds; ?>();
-          }*/
+          }
           if (!from_effect) {
             /* Change image key.*/
             jQuery("#wds_current_image_key_<?php echo $wds; ?>").val(key);
@@ -904,8 +1024,8 @@ class WDSViewSlider {
           /* Set active thumbnail position.*/
           wds_current_filmstrip_pos_<?php echo $wds; ?> = key * (jQuery(".wds_slideshow_filmstrip_thumbnail_<?php echo $wds; ?>").<?php echo $width_or_height; ?>() + 2 + 2 * 0);
           wds_current_key_<?php echo $wds; ?> = key;
-          /* Change image id, title, description.*/
-          jQuery("#wds_slideshow_image_<?php echo $wds; ?>").attr('image_id', wds_data_<?php echo $wds; ?>[key]["id"]);
+          /* Change image id.*/
+          jQuery("div[img_id=wds_slideshow_image_<?php echo $wds; ?>]").attr('image_id', wds_data_<?php echo $wds; ?>[key]["id"]);
           var current_image_class = "#image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[current_key]["id"];
           var next_image_class = "#image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[key]["id"];
           <?php if ($slider_row->preload_images) { ?>
@@ -915,7 +1035,7 @@ class WDSViewSlider {
           <?php } ?>
           var current_slide_layers_count = wds_data_<?php echo $wds; ?>[current_key]["slide_layers_count"];
           var next_slide_layers_count = wds_data_<?php echo $wds; ?>[key]["slide_layers_count"];
-          
+
           /* Clear layers before image change.*/
           function set_layer_effect_out_before_change(m) {
             wds_clear_layers_effects_out_before_change_<?php echo $wds; ?>[current_key][m] = setTimeout(function() {
@@ -981,9 +1101,11 @@ class WDSViewSlider {
           for (var j = 0; j < next_slide_layers_count; j++) {
             set_layer_effect_in(j);
           }
-          /* Loop through layers out.*/
-          for (var i = 0; i < next_slide_layers_count; i++) {
-            set_layer_effect_out(i);
+          /* Loop through layers out if pause button not pressed.*/
+          if (jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-pause")) {
+            for (var i = 0; i < next_slide_layers_count; i++) {
+              set_layer_effect_out(i);
+            }
           }
           setTimeout(function() {
             if (typeof jQuery().finish !== 'undefined') {
@@ -993,9 +1115,7 @@ class WDSViewSlider {
             }
             jQuery(".wds_line_timer_<?php echo $wds; ?>").css({width: 0});
             wds_<?php echo $slideshow_effect; ?>_<?php echo $wds; ?>(current_image_class, next_image_class, direction);
-            <?php
-            if ($enable_slideshow_autoplay && !$slider_row->stop_animation) {
-              ?>
+            if (('<?php echo $slider_row->timer_bar_type; ?>' != 'none') && (<?php echo $enable_slideshow_autoplay; ?> || jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause'))) {
               if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
                 jQuery(".wds_line_timer_<?php echo $wds; ?>").animate({
                   width: "100%"
@@ -1004,8 +1124,8 @@ class WDSViewSlider {
                   specialEasing: {width: "linear"}
                 });
               }
-              <?php
             }
+	    <?php
             if ($bull_position != 'none' && $slides_count > 1) {
               ?>
               wds_move_dots_<?php echo $wds; ?>();
@@ -1128,6 +1248,26 @@ class WDSViewSlider {
         });
       }
       jQuery(window).load(function () {
+        <?php if ($enable_slideshow_autoplay && $slider_row->stop_animation) {
+        ?>
+        jQuery("#wds_container1_<?php echo $wds; ?>").mouseover(function(e) {
+          wds_stop_animation_<?php echo $wds; ?>();
+        });
+        jQuery("#wds_container1_<?php echo $wds; ?>").mouseout(function(e) {
+          if (!e) {
+            var e = window.event;
+          }
+          var reltg = (e.relatedTarget) ? e.relatedTarget : e.toElement;
+          while (reltg.tagName != 'BODY') {
+            if (reltg.id == this.id){
+              return;
+            }
+            reltg = reltg.parentNode;
+          }
+          wds_play_animation_<?php echo $wds; ?>();
+        });
+        <?php
+        } ?>
         jQuery(".wds_slideshow_image_<?php echo $wds; ?> span, .wds_slideshow_image_<?php echo $wds; ?> i").each(function () {
           jQuery(this).attr("wds_fpaddingl", jQuery(this).css("paddingLeft"));
           jQuery(this).attr("wds_fpaddingr", jQuery(this).css("paddingRight"));
@@ -1190,15 +1330,24 @@ class WDSViewSlider {
         jQuery("#wds_slideshow_play_pause_<?php echo $wds; ?>").on(wds_click, function () {
           if (jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
             /* Play.*/
-            play_<?php echo $wds; ?>();
             jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("title", "<?php echo __('Pause', 'bwg'); ?>");
             jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("class", "wds_ctrl_btn_<?php echo $wds; ?> wds_slideshow_play_pause_<?php echo $wds; ?> fa fa-pause");
+            play_<?php echo $wds; ?>();
             if (<?php echo $enable_slideshow_music ?>) {
               document.getElementById("wds_audio_<?php echo $wds; ?>").play();
             }
           }
           else {
             /* Pause.*/
+            /* Pause layers out effect.*/
+            var current_key = jQuery('#wds_current_image_key_<?php echo $wds; ?>').val();
+            var current_slide_layers_count = wds_data_<?php echo $wds; ?>[current_key]["slide_layers_count"];
+            setTimeout(function() {
+              for (var k = 0; k < current_slide_layers_count; k++) {
+                clearTimeout(wds_clear_layers_effects_out_<?php echo $wds; ?>[current_key][k]);
+              }
+            }, wds_duration_for_clear_effects_<?php echo $wds; ?>);
+
             window.clearInterval(wds_playInterval_<?php echo $wds; ?>);
             jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("title", "<?php echo __('Play', 'bwg'); ?>");
             jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("class", "wds_ctrl_btn_<?php echo $wds; ?> wds_slideshow_play_pause_<?php echo $wds; ?> fa fa-play");
@@ -1242,9 +1391,15 @@ class WDSViewSlider {
         }
       });
 	    function wds_stop_animation_<?php echo $wds; ?>() {
-				window.clearInterval(wds_playInterval_<?php echo $wds; ?>);
-        jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("title", "<?php echo __('Play', 'bwg'); ?>");
-        jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("class", "wds_ctrl_btn_<?php echo $wds; ?> wds_slideshow_play_pause_<?php echo $wds; ?> fa fa-play");
+        window.clearInterval(wds_playInterval_<?php echo $wds; ?>);
+        /* Pause layers out effect.*/
+        var current_key = jQuery('#wds_current_image_key_<?php echo $wds; ?>').val();
+        var current_slide_layers_count = wds_data_<?php echo $wds; ?>[current_key]["slide_layers_count"];			
+        setTimeout(function() {
+          for (var k = 0; k < current_slide_layers_count; k++) {
+            clearTimeout(wds_clear_layers_effects_out_<?php echo $wds; ?>[current_key][k]);
+          }
+        }, wds_duration_for_clear_effects_<?php echo $wds; ?>);
         if (<?php echo $enable_slideshow_music ?>) {
           document.getElementById("wds_audio_<?php echo $wds; ?>").pause();
         }
@@ -1255,9 +1410,10 @@ class WDSViewSlider {
         }
 			}
       function wds_play_animation_<?php echo $wds; ?>() {
+        if (jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
+          return;
+        }
 		    play_<?php echo $wds; ?>();
-        jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("title", "<?php echo __('Pause', 'bwg'); ?>");
-        jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("class", "wds_ctrl_btn_<?php echo $wds; ?> wds_slideshow_play_pause_<?php echo $wds; ?> fa fa-pause");
         if (<?php echo $enable_slideshow_music ?>) {
           document.getElementById("wds_audio_<?php echo $wds; ?>").play();
         }	 
@@ -1291,18 +1447,14 @@ class WDSViewSlider {
 		    }, wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_end"]);
 		  }
       function play_<?php echo $wds; ?>() {
-        <?php
-        if ($enable_slideshow_autoplay) {
-          ?>
+        if (('<?php echo $slider_row->timer_bar_type; ?>' != 'none') && (<?php echo $enable_slideshow_autoplay; ?> || jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause'))) {
           jQuery(".wds_line_timer_<?php echo $wds; ?>").animate({
             width: "100%"
           }, {
             duration: <?php echo $slideshow_interval * 1000; ?>,
             specialEasing: {width: "linear"}
           });
-          <?php
         }
-        ?>
         window.clearInterval(wds_playInterval_<?php echo $wds; ?>);
         /* Play.*/
         wds_playInterval_<?php echo $wds; ?> = setInterval(function () {

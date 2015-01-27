@@ -1,3 +1,25 @@
+#bullets_images_type,
+#bullets_images_color,
+#bull_style,
+#rl_butt_type,
+#rl_butt_color,
+#rl_butt_style {
+  margin: 0 10px 0 0;
+  width: 100px;
+}
+
+.wds_ctrl_btn_upload {
+  display: block !important;
+  margin: 5px 0 !important;
+  text-align: center;
+  vertical-align: middle;
+  width: 95%;
+}
+
+.wds_reverse {
+  margin: 0 5px !important;
+}
+
 .wds_free_button,
 .wds_free_button:hover {
   background: linear-gradient(to bottom, #E5E5E5, #E5E5E5) repeat scroll 0 0 #f3f3f3 !important;
@@ -272,6 +294,69 @@
   font-weight: bold;
   vertical-align: top;
   width: 150px;
+}
+
+.spider_choose_option {
+  display: table; 
+  box-shadow: 0px 0px 1px 1px #D2D2D2;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  padding: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 100%;
+}
+
+.spider_options_cont, .spider_bull_options_cont, .spider_options_color_cont, .spider_bull_options_color_cont {
+  display: none;
+  width: 180px; 
+  height: 150px; 
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.spider_option_cont {
+  display: block;
+  border-bottom: 1px solid #D3D3D3;
+  padding: 3px 0px 3px 0px;
+  box-sizing: content-box;
+  width: 98%;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+.spider_option_cont_title {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0px 0px 0px 4px;
+}
+
+.spider_option_cont_img {
+  display: table-cell;
+  width: 23%;
+  height: 15px;
+  text-align: right;
+  padding: 5px 4px 0px 0px;
+  box-sizing: border-box;
+  background-color: #EEEEEE;
+}
+
+.spider_option_main_title {
+  display: table-cell;
+  width: 65%;
+  vertical-align: middle;
+  padding: 0px 0px 0px 4px;
+  color: #555;
+}
+
+.spider_sel_option_ic {
+  display: table-cell;
+  width: 20%;
+  height: 15px;
+  text-align: right;
+  padding: 0px 6px 0px 0px;
+  box-sizing: border-box;
 }
 
 .spider_int_input {

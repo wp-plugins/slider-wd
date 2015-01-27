@@ -11,7 +11,7 @@
  */
  
 if (function_exists('current_user_can')) {
-  if (!current_user_can('read')) {
+  if (!current_user_can('manage_options')) {
     die('Access Denied');
   }
 }
