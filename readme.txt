@@ -130,6 +130,10 @@ After downloading the ZIP file of the slider plugin,
 
 == Changelog ==
 
+= 1.0.5 =
+Image for Next / Previous buttons (Default, Custom, Styled)
+Image for bullets (Default, Custom, Styled)
+
 = 1.0.4 =
 stop on hover option
 slide, text layer, image layer link open in a new window option
