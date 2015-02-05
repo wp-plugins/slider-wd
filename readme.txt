@@ -45,10 +45,10 @@ The number of the slides for each slider is not limited. Various layers can be a
 *   Option of opening the slider-related link within the same page   
 
 Upgrade to [WordPress Slider Pro](http://web-dorado.com/products/wordpress-slider-plugin.html) to add features:
-*   26 transition effects   
+*   26 transition effects for Slider   
 *   38 layer effects   
 *   3 types of Layers (text, image, social sharing)   
-*   Slider Share feature for sliders (Google+, Tumblr, Twitter, Pinterest and Facebook)   
+*   Share feature for sliders (Google+, Tumblr, Twitter, Pinterest and Facebook)   
 *   Slider Filmstrip possibility    
 *   Navigation button/bullet styles   
 *   Support for Vimeo and YouTube videos   
