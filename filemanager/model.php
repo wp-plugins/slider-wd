@@ -74,7 +74,7 @@ class FilemanagerModel {
     }
 
     public function get_path_components() {
-      $dir_names = explode('/', (isset($_REQUEST['dir']) ? $_REQUEST['dir'] : ''));
+      $dir_names = explode('/', (isset($_REQUEST['dir']) ? esc_html($_REQUEST['dir']) : ''));
       $path = '';
 
       $components = array();

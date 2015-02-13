@@ -616,7 +616,7 @@ class WDSViewSliders_wds {
                     <td class="spider_label"><label for="glb_box_shadow">Shadow: </label></td>
                     <td>
                       <input type="text" name="glb_box_shadow" id="glb_box_shadow" value="<?php echo $row->glb_box_shadow; ?>" class="spider_box_input" />
-                      <div class="spider_description">Use CSS type values.</div>
+                      <div class="spider_description">Use CSS type values (e.g. 10px 10px 5px #888888).</div>
                     </td>
                   </tr>
                   <tr>
@@ -671,16 +671,6 @@ class WDSViewSliders_wds {
                       <div class="spider_description">Choose whether to display Previous and Next buttons or not.</div>
                     </td>
                   </tr> 
-                  <tr>
-                    <td class="spider_label_options">
-                      <label>Play / Pause button: </label>
-                    </td>
-                    <td>
-                      <input type="radio" name="play_paus_butt" id="play_paus_butt_1" value="1" <?php if ($row->play_paus_butt) echo 'checked="checked"'; ?> /><label for="play_paus_butt_1">Yes</label>
-                      <input type="radio" name="play_paus_butt" id="play_paus_butt_0" value="0" <?php if (!$row->play_paus_butt) echo 'checked="checked"'; ?> /><label for="play_paus_butt_0">No</label>
-                      <div class="spider_description">Choose whether to display Play and Pause buttons or not.</div>
-                    </td>
-                  </tr>
                   <tr>
                     <td class="spider_label_options">
                       <label>Show Navigation buttons: </label>
@@ -761,7 +751,7 @@ class WDSViewSliders_wds {
                   <script>				  
                     var wds_rl_butt_type = [];
                     var rl_butt_dir = '<?php echo WD_S_URL . '/images/arrow/'; ?>';
-					var type_cur_fold = '1';
+                    var type_cur_fold = '1';
                     <?php				    
                     $folder_names = scandir(WD_S_DIR . '/images/arrow'); 
                     $cur_fold_name = '';
@@ -785,9 +775,9 @@ class WDSViewSliders_wds {
                             $cur_type_key = $type_key;
                             $cur_sub_fold_names = scandir(WD_S_DIR . '/images/arrow/' . $cur_fold_name);
                             array_splice($cur_sub_fold_names, 0, 2);
-							?>
-							  type_cur_fold = '<?php echo $cur_type_key;?>';
-							<?php
+                            ?>
+                        type_cur_fold = '<?php echo $cur_type_key;?>';
+                            <?php
                           }
                         }
                         $sub_folder_names = scandir( WD_S_DIR . '/images/arrow/' . $folder_name);
@@ -828,7 +818,7 @@ class WDSViewSliders_wds {
                             <?php
                             foreach ($folder_names as $type_key => $folder_name) {
                               ?> 							  							  
-                              <div class="spider_option_cont wds_rl_butt_groups" value="<?php echo $type_key; ?>" <?php echo (($cur_type_key == $type_key) ? 'selected="selected"; style="background-color: #3399FF;"' : ''); ?> onclick="change_rl_butt_type(this)"> 
+                              <div class="spider_option_cont wds_rl_butt_groups" value="<?php echo $type_key; ?>" <?php echo (($cur_type_key == $type_key) ? 'selected="selected" style="background-color: #3399FF;"' : ''); ?> onclick="change_rl_butt_type(this)"> 
                                 <div  class="spider_option_cont_title">
                                   <?php echo 'Group-' . ++$type_key; ?>
                                 </div>
@@ -879,6 +869,186 @@ class WDSViewSliders_wds {
                     <td>
                       <input type="text" name="rl_butt_size" id="rl_butt_size" value="<?php echo $row->rl_butt_size; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" <?php echo $fv_disabled; ?> /> px
                       <div class="spider_description">Set the size for the next / previous buttons.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="spider_label_options">
+                      <label>Play / Pause button: </label>
+                    </td>
+                    <td>
+                      <input type="radio" name="play_paus_butt" id="play_paus_butt_1" value="1" <?php if ($row->play_paus_butt) echo 'checked="checked"'; ?> /><label for="play_paus_butt_1">Yes</label>
+                      <input type="radio" name="play_paus_butt" id="play_paus_butt_0" value="0" <?php if (!$row->play_paus_butt) echo 'checked="checked"'; ?> /><label for="play_paus_butt_0">No</label>
+                      <div class="spider_description">Choose whether to display Play and Pause buttons or not.</div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr>
+                    <td class="spider_label_options">
+                      <label>Image for Play / Pause buttons: </label>
+                    </td>
+                    <td>
+                      <input type="radio" name="play_paus_butt_img_or_not" id="play_pause_butt_img_or_not_our" value="our" <?php if ($row->play_paus_butt_img_or_not == 'our') echo 'checked="checked"'; ?> onClick="image_for_play_pause_butt('our')" /><label for="play_pause_butt_img_or_not_our">Default</label>
+                      <input type="radio" name="play_paus_butt_img_or_not" id="play_pause_butt_img_or_not_cust" value="custom" <?php if ($row->play_paus_butt_img_or_not == 'custom') echo 'checked="checked"'; ?> onClick="image_for_play_pause_butt('custom')" /><label for="play_pause_butt_img_or_not_cust">Custom</label>
+                      <input type="radio" name="play_paus_butt_img_or_not" id="play_pause_butt_img_or_not_select" value="style" <?php if ($row->play_paus_butt_img_or_not == 'style') echo 'checked="checked"'; ?> onClick="image_for_play_pause_butt('style')" /><label for="play_pause_butt_img_or_not_select">Styled</label>
+                      <input type="hidden" id="play_butt_url" name="play_butt_url" value="<?php echo $row->play_butt_url; ?>" />
+                      <input type="hidden" id="play_butt_hov_url" name="play_butt_hov_url" value="<?php echo $row->play_butt_hov_url; ?>" />
+                      <input type="hidden" id="paus_butt_url" name="paus_butt_url" value="<?php echo $row->paus_butt_url; ?>" />
+                      <input type="hidden" id="paus_butt_hov_url" name="paus_butt_hov_url" value="<?php echo $row->paus_butt_hov_url; ?>" />
+                      <div class="spider_description">Choose whether to use default play/pause buttons or to upload custom ones.</div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody class="<?php echo $fv_class; ?>"<?php echo $fv_title; ?>>
+                  <tr id="play_pause_butt_style">
+                    <td class="spider_label"><label for="pp_butt_style">Play / Pause buttons style: </label></td>
+                    <td>
+                      <div style="display: table-cell; vertical-align: middle; background-color: rgba(229, 229, 229, 0.62); text-align: center;">
+                        <i id="wds_play_style" class="fa fa-play" style="color: #<?php echo $row->butts_color; ?>; display: inline-block; font-size: 40px; width: 40px; height: 40px;"></i>
+                        <i id="wds_paus_style" class="fa fa-pause" style="color: #<?php echo $row->butts_color; ?>; display: inline-block; font-size: 40px; width: 40px; height: 40px;"></i>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="play_pause_butt_cust">
+                    <td class="spider_label_options" style="vertical-align: middle;">
+                      <label>Upload buttons images: </label>
+                    </td>
+                    <td>
+                      <div style="display: table;">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Play Button" onclick="alert('This functionality is disabled in free version.')" />
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Play Button Hover" onclick="alert('This functionality is disabled in free version.')" />
+                        </div>
+                        <div style="display: table-cell; vertical-align: middle;">
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Pause Button" onclick="alert('This functionality is disabled in free version.')" />
+                          <input class="button-secondary wds_ctrl_btn_upload wds_free_button" type="button" value="Pause Button Hover" onclick="alert('This functionality is disabled in free version.')" />
+                        </div>
+                        <div style="width:100px; display: table-cell; vertical-align: middle; text-align: center;background-color: rgba(229, 229, 229, 0.62); padding-top: 4px; border-radius: 3px;">
+                          <img id="play_butt_img" src="<?php echo $row->play_butt_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="paus_butt_img" src="<?php echo $row->paus_butt_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="play_butt_hov_img" src="<?php echo $row->play_butt_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                          <img id="paus_butt_hov_img" src="<?php echo $row->paus_butt_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                        </div>
+                        <div style="display: table-cell; text-align: center; vertical-align: middle;">
+                          <input type="button" class="button button-small wds_reverse" onclick="wds_change_play_paus_custom_src()" value="Reverse" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <script>				  
+                    var wds_pp_butt_type = [];
+                    var pp_butt_dir = '<?php echo WD_S_URL . '/images/button/'; ?>';
+                    var pp_type_cur_fold = '1';
+                    <?php				    
+                    $folder_names = scandir(WD_S_DIR . '/images/button'); 
+                    $butt_cur_fold_name = '';
+                    $butt_cur_type_key = '';
+                    $butt_cur_color_key = '';
+                    $butt_cur_sub_fold_names = array();
+                    array_splice($folder_names, 0, 2);
+                    $flag = FALSE;
+                    foreach ($folder_names as $type_key => $folder_name) {
+                      if (is_dir(WD_S_DIR . '/images/button/' . $folder_name)) {
+                        ?>
+                        wds_pp_butt_type["<?php echo $type_key; ?>"] = [];
+                        wds_pp_butt_type["<?php echo $type_key; ?>"]["type_name"] = "<?php echo $folder_name; ?>";
+                        <?php
+                        if ($row->play_butt_url != '') {
+                          /* Getting current button's type folder and color folder.*/
+                          $check_butt_cur_fold = explode('/' , $row->play_butt_url);
+                          if (in_array($folder_name, $check_butt_cur_fold)) {
+                            $flag = TRUE;
+                            $butt_cur_fold_name = $folder_name;
+                            $butt_cur_type_key = $type_key;
+                            $butt_cur_sub_fold_names = scandir(WD_S_DIR . '/images/button/' . $butt_cur_fold_name);
+                            array_splice($butt_cur_sub_fold_names, 0, 2);
+                            ?>
+                        pp_type_cur_fold = '<?php echo $butt_cur_type_key;?>';
+                            <?php
+                          }
+                        }
+                        $sub_folder_names = scandir( WD_S_DIR . '/images/button/' . $folder_name);
+                        array_splice($sub_folder_names, 0, 2);
+                        foreach ($sub_folder_names as $color_key => $sub_folder_name) {
+                          if (is_dir(WD_S_DIR . '/images/button/' . $folder_name . '/' . $sub_folder_name)) {
+                            if ($butt_cur_fold_name == $folder_name) {
+                              /* Getting current button's color key.*/
+                              if (in_array($sub_folder_name, $check_butt_cur_fold)) {
+                                $butt_cur_color_key = $color_key;
+                              }
+                            }
+                            ?>
+                            wds_pp_butt_type["<?php echo $type_key; ?>"]["<?php echo $color_key; ?>"] = "<?php echo $sub_folder_name; ?>";
+                            <?php
+                          }
+                        }
+                      }
+                      else {
+                        echo $folder_name . " is not a directory.";
+                      }
+                    }
+                    ?> 
+                  </script>
+                  <tr id="play_pause_butt_select">
+                    <td class="spider_label_options" style="vertical-align: middle;">
+                      <label for="right_butt_url">Choose buttons: </label>
+                    </td>
+                    <td style="display: block;">
+                        <div style="display: table; margin-bottom: 14px;">
+                          <div style="display: table-cell; vertical-align: middle;">
+                            <div style="display: block; width: 180px;">
+                              <div class="spider_choose_option" onclick="wds_choose_pp_option(this)"> 
+                                <div class="spider_option_main_title">Choose group</div>
+                                <div class="spider_sel_option_ic"><i class="fa fa-angle-down fa-lg" style="color: #1E8CBE"></i></div>
+                              </div>
+                              <div class="spider_pp_options_cont">
+                              <?php
+                              foreach ($folder_names as $type_key => $folder_name) {
+                                ?> 							  							  
+                                <div class="spider_option_cont wds_pp_butt_groups" value="<?php echo $type_key; ?>" <?php echo (($butt_cur_type_key == $type_key) ? 'selected="selected" style="background-color: #3399FF;"' : ''); ?> onclick="change_play_paus_butt_type(this)"> 
+                                  <div  class="spider_option_cont_title">
+                                    <?php echo 'Group-' . ++$type_key; ?>
+                                  </div>
+                                  <div class="spider_option_cont_img">
+                                    <img class="pp_src_top_left" style="display: inline-block; width: 14px; height: 14px;" />
+                                    <img class="pp_src_top_right" style="display: inline-block; width: 14px; height: 14px;" />
+                                    <img class="pp_src_bottom_left" style="display: inline-block; width: 14px; height: 14px;" />
+                                    <img class="pp_src_bottom_right" style="display: inline-block; width: 14px; height: 14px;" /> 
+                                  </div>
+                                </div>
+                                <?php
+                              }
+                              if (!$flag) {
+                                /* Folder doesn't exist.*/
+                                ?>
+                                <div class="spider_option_cont" value="0" selected="selected" disabled="disabled">Custom</div>
+                                <?php
+                              }
+                              ?>
+                              </div>
+                            </div>
+                          </div>
+                          <div style="display:table-cell;vertical-align: middle;">
+                            <div style="display: block; width: 180px; margin-left: 12px;">
+                              <div class="spider_choose_option" onclick="alert('This functionality is disabled in free version.')">
+                                <div  class="spider_option_main_title">Choose color</div>
+                                <div class="spider_sel_option_ic"><i class="fa fa-angle-down fa-lg" style="color:#1E8CBE"></i></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div style="width:100px; display: table-cell; vertical-align: middle; text-align: center;">
+                            <div style=" display: block; margin-left: 12px; vertical-align: middle; text-align: center;background-color: rgba(229, 229, 229, 0.62); padding-top: 4px; border-radius: 3px;">
+                              <img id="pp_butt_img_play" src="<?php echo $row->play_butt_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                              <img id="pp_butt_img_paus" src="<?php echo $row->paus_butt_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                              <img id="pp_butt_hov_img_play" src="<?php echo $row->play_butt_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                              <img id="pp_butt_hov_img_paus" src="<?php echo $row->paus_butt_hov_url; ?>" style="display:inline-block; width: 40px; height: 40px;" />
+                            </div>
+                          </div>
+                          <div style="display: table-cell; text-align: center; vertical-align: middle;">
+                            <input type="button" class="button button-small wds_reverse" onclick="change_play_paus_src()" value="Reverse" />
+                          </div>
+                        </div>
+                      <div class="spider_description">Choose the type and color for navigation button images. The option is designed for limited preview (colors not included) purposes and can't be saved.</div>
                     </td>
                   </tr>
                   <tr id="play_pause_butt_size">
@@ -1023,9 +1193,9 @@ class WDSViewSliders_wds {
                             $bull_cur_type_key = $type_key;
                             $bull_cur_sub_fold_names = scandir(WD_S_DIR . '/images/bullet/' . $bull_cur_fold_name);
                             array_splice($bull_cur_sub_fold_names, 0, 2);
-							?>
-							  bull_type_cur_fold = '<?php echo $bull_cur_type_key;?>';
-							<?php						
+                            ?>
+                        bull_type_cur_fold = '<?php echo $bull_cur_type_key;?>';
+                            <?php						
                           }
                         }
                         $sub_folder_names = scandir(WD_S_DIR . '/images/bullet/' . $folder_name);						  
@@ -1466,6 +1636,7 @@ class WDSViewSliders_wds {
                     <a id="wbs_subtab<?php echo $slide_row->id; ?>" class="connectedSortable <?php echo (((($id == 0 || !$sub_tab_type) || (strpos($sub_tab_type, 'pr') !== FALSE)) && $key == 0) || ('slide' . $slide_row->id == $sub_tab_type)) ? 'wds_sub_active' : ''; ?>" href="#">
                       <div class="handle" title="Drag to re-order"></div>
                       <input type="text" id="title<?php echo $slide_row->id; ?>" name="title<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->title; ?>" class="wds_tab_title" tab_type="slide<?php echo $slide_row->id; ?>" onclick="wds_change_sub_tab(this, 'wds_slide<?php echo $slide_row->id; ?>')"/>
+                      <span class="wds_slide_dublicate" onclick="wds_duplicate_slide('<?php echo $slide_row->id; ?>');" title="Duplicate slide"></span>					                   
                       <span class="wds_tab_remove" title="Delete slide" onclick="wds_remove_slide('<?php echo $slide_row->id; ?>')"></span>
                       <input type="hidden" name="order<?php echo $slide_row->id; ?>" id="order<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->order; ?>" />
                     </a>
@@ -1540,6 +1711,13 @@ class WDSViewSliders_wds {
                                         <?php
                                         break;
                                       }
+                                      case 'video': {
+                                        ?>
+                                        <img id="<?php echo $prefix; ?>" class="wds_draggable_<?php echo $slide_row->id; ?> wds_draggable ui-draggable" onclick="wds_showhide_layer('<?php echo $prefix; ?>_tbody', 1)" src="<?php echo $layer->image_url; ?>"
+                                             style="max-width: <?php echo $layer->image_width; ?>px; width: <?php echo $layer->image_width; ?>px; max-height: <?php echo $layer->image_height; ?>px; height: <?php echo $layer->image_height; ?>px; position: absolute; left: <?php echo $layer->left; ?>px; top: <?php echo $layer->top; ?>px; z-index: <?php echo $layer->depth; ?>; border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>; border-radius: <?php echo $layer->border_radius; ?>; box-shadow: <?php echo $layer->shadow; ?>;" />
+                                        <?php
+                                        break;
+                                      }
                                       case 'social': {
                                         ?>
                                         <style>#<?php echo $prefix; ?>:hover {color: #<?php echo $layer->hover_color; ?> !important;}</style>
@@ -1593,6 +1771,7 @@ class WDSViewSliders_wds {
                               <?php
                             }
                             ?>
+                            <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Video Layer" />
                             <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Social Button Layer" />
                           </td>
                         </tr>
@@ -1609,7 +1788,7 @@ class WDSViewSliders_wds {
                                 <div class="handle connectedSortable" title="Drag to re-order"></div>
                                 <span class="wds_layer_label" onclick="wds_showhide_layer('<?php echo $prefix; ?>_tbody', 0)"><input id="<?php echo $prefix; ?>_title" name="<?php echo $prefix; ?>_title" type="text" class="wds_layer_title" style="width: 80px;" value="<?php echo $layer->title; ?>" title="Layer title" /></span>
                                 <span class="wds_layer_remove" onclick="wds_delete_layer('<?php echo $slide_row->id; ?>', '<?php echo $layer->id; ?>')" title="Delete layer"></span>
-                                <span class="wds_layer_dublicate" onclick="wds_add_layer('<?php echo $layer->type; ?>', '<?php echo $slide_row->id; ?>', '', event, 1); wds_duplicate_layer('<?php echo $layer->type; ?>', '<?php echo $slide_row->id; ?>', '<?php echo $layer->id; ?>');" title="Duplicate layer"></span>
+                                <span class="wds_layer_dublicate" onclick="wds_add_layer('<?php echo $layer->type; ?>', '<?php echo $slide_row->id; ?>', '', 1, 0); wds_duplicate_layer('<?php echo $layer->type; ?>', '<?php echo $slide_row->id; ?>', '<?php echo $layer->id; ?>');" title="Duplicate layer"></span>
                                 <input id="<?php echo $prefix; ?>_depth" class="wds_layer_depth spider_int_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({zIndex: jQuery(this).val()})" onkeypress="return spider_check_isnum(event)" value="<?php echo $layer->depth; ?>" prefix="<?php echo $prefix; ?>" name="<?php echo $prefix; ?>_depth" title="z-index" />
                               </td>
                             </tr>
@@ -1811,7 +1990,7 @@ class WDSViewSliders_wds {
                               </td>
                               <td>
                                 <input id="<?php echo $prefix; ?>_shadow" class="spider_char_input" type="text" onchange="jQuery('#<?php echo $prefix; ?>').css({boxShadow: jQuery(this).val()})" value="<?php echo $layer->shadow; ?>" name="<?php echo $prefix; ?>_shadow" />
-                                <div class="spider_description">Use CSS type values.</div>
+                                <div class="spider_description">Use CSS type values (e.g. 10px 10px 5px #888888).</div>
                               </td>
                             </tr>
                             <tr class="wds_layer_tr" style="display: none;">
@@ -2129,6 +2308,7 @@ class WDSViewSliders_wds {
                       jQuery(document).ready(function() {
                         image_for_next_prev_butt('<?php echo $row->rl_butt_img_or_not; ?>');
                         image_for_bull_butt('<?php echo $row->bull_butt_img_or_not; ?>');						
+                        image_for_play_pause_butt('<?php echo $row->play_paus_butt_img_or_not; ?>');							
                         wds_whr('width');
                         wds_drag_layer('<?php echo $slide_row->id; ?>');
                         wds_layer_weights('<?php echo $slide_row->id; ?>');
@@ -2173,6 +2353,9 @@ class WDSViewSliders_wds {
         var fv = '<?php echo $fv; ?>';
         jQuery(document).ready(function() {
           wds_onload();
+        });
+        jQuery("#sliders_form").on("click", "a", function(e) {
+          e.preventDefault();
         });
       </script>
       <div class="opacity_add_image_url opacity_add_video wds_opacity_video" onclick="jQuery('.opacity_add_video').hide();jQuery('.opacity_add_image_url').hide();"></div>

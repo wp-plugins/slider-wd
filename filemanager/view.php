@@ -192,6 +192,9 @@ class FilemanagerView {
                   <div id="explorer_body">
                     <?php
                     foreach ($file_manager_data['files'] as $file) {
+                      $file['name'] = esc_html($file['name']);
+                      $file['filename'] = esc_html($file['filename']);
+                      $file['thumb'] = esc_html($file['thumb']);
                       ?>
                       <div class="explorer_item" draggable="true"
                            name="<?php echo $file['name']; ?>"
@@ -276,6 +279,9 @@ class FilemanagerView {
                 <div id="importer_body">
                   <?php
                   foreach ($file_manager_data['media_library_files'] as $file) {
+                    $file['name'] = esc_html($file['name']);
+                    $file['filename'] = esc_html($file['filename']);
+                    $file['thumb'] = esc_html($file['thumb']);
                     ?>
                     <div class="importer_item" draggable="true"
                          name="<?php echo $file['name']; ?>"

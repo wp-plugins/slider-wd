@@ -307,7 +307,12 @@
   width: 100%;
 }
 
-.spider_options_cont, .spider_bull_options_cont, .spider_options_color_cont, .spider_bull_options_color_cont {
+.spider_options_cont,
+.spider_bull_options_cont,
+.spider_pp_options_cont,
+.spider_options_color_cont,
+.spider_bull_options_color_cont,
+.spider_pp_options_color_cont {
   display: none;
   width: 180px; 
   height: 150px; 
@@ -630,7 +635,7 @@
   font: bold 14px/26px Arial,serif;
   height: 26px;
   padding: 0 5px;
-  width: 87px;
+  width: 105px;
 }
 
 .wds_add_layer {
@@ -671,6 +676,7 @@
   height: 9px;
   opacity: 0.5;
   filter: Alpha(opacity=50);
+  vertical-align: middle;
 }
 
 .wds_layer_remove {
@@ -693,6 +699,16 @@
   height: 15px;
   margin: 5px;
   float: right;
+}
+
+.wds_slide_dublicate {
+  background-image: url("../images/duplicate.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  vertical-align: middle;
 }
 
 .wds_layer_depth {

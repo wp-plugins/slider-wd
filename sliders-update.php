@@ -26,6 +26,15 @@ function wds_update($version) {
     // Whether to display bullets by image or not.
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `bull_butt_img_or_not` varchar(8) NOT NULL DEFAULT 'style'");
   }
+  if (version_compare($version, '1.0.6') == -1) {
+    // Add play/pause button image/hover image url.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `play_butt_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/button/button4/1/1.png' . "'");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `paus_butt_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/button/button4/1/3.png' . "'");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `play_butt_hov_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/button/button4/1/2.png' . "'");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `paus_butt_hov_url` varchar(255) NOT NULL DEFAULT '" . WD_S_URL . '/images/button/button4/1/4.png' . "'");
+    // Whether to display play/pause buttons by image or not.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `play_paus_butt_img_or_not` varchar(8) NOT NULL DEFAULT 'style'");
+  }
   return;
 }
 

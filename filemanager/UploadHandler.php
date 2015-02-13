@@ -20,7 +20,7 @@ else {
 }
 
 $upload_handler = new UploadHandler(array(
-    'upload_dir' => $_GET['dir'],
+    'upload_dir' => (isset($_GET['dir']) ? esc_html($_GET['dir']) : ''),
     'accept_file_types' => '/\.(gif|jpe?g|png|bmp|mp4|flv|webm|ogg|mp3|wav|pdf|zip)$/i'
 ));
 

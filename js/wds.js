@@ -57,6 +57,11 @@ function spider_ajax_save(form_id, event) {
   post_data["nav_border_radius"] = jQuery("#nav_border_radius").val();
   post_data["nav_bg_color"] = jQuery("#nav_bg_color").val();
   post_data["butts_transparent"] = jQuery("#butts_transparent").val();
+  post_data["play_paus_butt_img_or_not"] = jQuery("input[name=play_paus_butt_img_or_not]:checked").val();
+  post_data["play_butt_url"] = jQuery("#play_butt_url").val();
+  post_data["play_butt_hov_url"] = jQuery("#play_butt_hov_url").val();
+  post_data["paus_butt_url"] = jQuery("#paus_butt_url").val();
+  post_data["paus_butt_hov_url"] = jQuery("#paus_butt_hov_url").val();
 
   /* Bullets.*/
   post_data["enable_bullets"] = jQuery("input[name=enable_bullets]:checked").val();
@@ -163,6 +168,20 @@ function spider_ajax_save(form_id, event) {
                 json_data["link"] = jQuery("#" + prefix + "_link").val();
                 json_data["target_attr_layer"] = jQuery("input[name=" + prefix + "_target_attr_layer]:checked").val();
                 json_data["imgtransparent"] = jQuery("#" + prefix + "_imgtransparent").val();
+                json_data["border_width"] = jQuery("#" + prefix + "_border_width").val();
+                json_data["border_style"] = jQuery("#" + prefix + "_border_style").val();
+                json_data["border_color"] = jQuery("#" + prefix + "_border_color").val();
+                json_data["border_radius"] = jQuery("#" + prefix + "_border_radius").val();
+                json_data["shadow"] = jQuery("#" + prefix + "_shadow").val();
+                break;
+              }
+              case "video": {
+                json_data["image_url"] = jQuery("#" + prefix + "_image_url").val();
+                json_data["image_width"] = jQuery("#" + prefix + "_image_width").val();
+                json_data["image_height"] = jQuery("#" + prefix + "_image_height").val();
+                json_data["image_scale"] = jQuery("input[name=slide" + slide_id + "_layer" + layer_id + "_image_scale]:checked").val();
+                json_data["link"] = jQuery("#" + prefix + "_link").val();
+                json_data["alt"] = jQuery("#" + prefix + "_alt").val();
                 json_data["border_width"] = jQuery("#" + prefix + "_border_width").val();
                 json_data["border_style"] = jQuery("#" + prefix + "_border_style").val();
                 json_data["border_color"] = jQuery("#" + prefix + "_border_color").val();
@@ -338,7 +357,33 @@ function wds_onload() {
     jQuery(this).find('.src_col_top_right').attr('src', src_col_top_right);
     jQuery(this).find('.src_col_bottom_left').attr('src', src_col_bottom_left);
     jQuery(this).find('.src_col_bottom_right').attr('src', src_col_bottom_right);	 
-  }); 
+  });
+
+  jQuery('.wds_pp_butt_groups').each(function(i) {
+    var pp_type_key = jQuery(this).attr('value');
+    var pp_src_top_left	= pp_butt_dir + wds_pp_butt_type[pp_type_key]["type_name"] + '/1/1.png';
+    var pp_src_top_right	= pp_butt_dir + wds_pp_butt_type[pp_type_key]["type_name"] + '/1/2.png';
+    var pp_src_bottom_left	= pp_butt_dir + wds_pp_butt_type[pp_type_key]["type_name"] + '/1/3.png';
+    var pp_src_bottom_right  	= pp_butt_dir + wds_pp_butt_type[pp_type_key]["type_name"] + '/1/4.png';
+   
+    jQuery(this).find('.pp_src_top_left').attr('src', pp_src_top_left);
+    jQuery(this).find('.pp_src_top_right').attr('src', pp_src_top_right);
+    jQuery(this).find('.pp_src_bottom_left').attr('src', pp_src_bottom_left);
+    jQuery(this).find('.pp_src_bottom_right').attr('src', pp_src_bottom_right);	 
+  });
+
+  jQuery('.wds_pp_butt_col_groups').each(function(i) {
+    var pp_color_key = jQuery(this).attr('value');	 
+    var pp_src_col_top_left	= pp_butt_dir + wds_pp_butt_type[pp_type_cur_fold]["type_name"] + '/' + wds_pp_butt_type[pp_type_cur_fold][pp_color_key] + '/1.png';
+    var pp_src_col_top_right = pp_butt_dir + wds_pp_butt_type[pp_type_cur_fold]["type_name"] + '/' + wds_pp_butt_type[pp_type_cur_fold][pp_color_key] + '/2.png';
+    var pp_src_col_bottom_left = pp_butt_dir + wds_pp_butt_type[pp_type_cur_fold]["type_name"] + '/' + wds_pp_butt_type[pp_type_cur_fold][pp_color_key] + '/3.png';
+    var pp_src_col_bottom_right = pp_butt_dir + wds_pp_butt_type[pp_type_cur_fold]["type_name"] + '/' + wds_pp_butt_type[pp_type_cur_fold][pp_color_key] + '/4.png';
+   
+    jQuery(this).find('.pp_src_col_top_left').attr('src', pp_src_col_top_left);	
+    jQuery(this).find('.pp_src_col_top_right').attr('src', pp_src_col_top_right);
+    jQuery(this).find('.pp_src_col_bottom_left').attr('src', pp_src_col_bottom_left);
+    jQuery(this).find('.pp_src_col_bottom_right').attr('src', pp_src_col_bottom_right);	 
+  });
 
   jQuery('.wds_bull_butt_groups').each(function(i) {
     bull_type_key = jQuery(this).attr('value');
@@ -823,9 +868,44 @@ function change_rl_butt_type(that) {
   jQuery('#left_butt_hov_url').val(rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/3.png');
   jQuery('#right_butt_hov_url').val(rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/1/4.png');
 }
-				  
+
+function change_play_paus_butt_type(that) {
+  var type_key = jQuery(that).attr('value');
+  var src	= pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/1.png';
+  var options = '';
+  var divs = '';
+  for (var i = 0; i < wds_pp_butt_type[type_key].length; i++) {
+    var num = i + 1;
+    divs += '<div class="spider_option_cont" value="' + i + '" onclick="change_play_paus_butt_color(this, ' + type_key + ')" > ' +
+			  '<div  class="spider_option_cont_title" >' +
+			    'Color-'+ num +
+			  '</div>' +
+			  '<div class="spider_option_cont_img" >' + 
+			    '<img  src="' + pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/'+wds_pp_butt_type[type_key][i]+'/1.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			    '<img  src="' + pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/'+wds_pp_butt_type[type_key][i]+'/2.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			    '<img  src="' + pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/'+wds_pp_butt_type[type_key][i]+'/3.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			    '<img  src="' + pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/'+wds_pp_butt_type[type_key][i]+'/4.png" style="display:inline-block; width: 14px; height: 14px;" />' + 
+			  '</div>' +
+		    '</div>';
+  }
+  jQuery(".spider_pp_options_cont .spider_option_cont").css({backgroundColor: ""});
+  jQuery(that).css({backgroundColor: "#3399FF"});
+  jQuery('.spider_pp_options_color_cont').html(divs);
+  jQuery('#pp_butt_img_play').attr("src", pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/1.png');
+  jQuery('#pp_butt_img_paus').attr("src", pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/3.png');
+  jQuery('#pp_butt_hov_img_play').attr("src", pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/2.png');
+  jQuery('#pp_butt_hov_img_paus').attr("src", pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/4.png');
+
+  jQuery('#play_butt_url').val(pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/1.png');
+  jQuery('#paus_butt_url').val(pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/3.png');
+  jQuery('#play_butt_hov_url').val(pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/2.png');
+  jQuery('#paus_butt_hov_url').val(pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/1/4.png');
+}
+
 function change_rl_butt_color(that, type_key) {
   var color_key = jQuery(that).attr('value');
+  jQuery(".spider_options_color_cont .spider_option_cont").css({backgroundColor: ""});
+  jQuery(that).css({backgroundColor: "#3399FF"});
   var src = rl_butt_dir + wds_rl_butt_type[type_key]["type_name"] + '/' + wds_rl_butt_type[type_key][color_key];
   jQuery('#rl_butt_img_l').attr("src", src + '/1.png');
   jQuery('#rl_butt_img_r').attr("src", src + '/2.png');
@@ -836,8 +916,22 @@ function change_rl_butt_color(that, type_key) {
   jQuery('#right_butt_url').val(src + '/2.png');
   jQuery('#left_butt_hov_url').val(src + '/3.png');
   jQuery('#right_butt_hov_url').val(src + '/4.png');
-  jQuery(".spider_options_color_cont .spider_option_cont").css({backgroundColor: ""});
+}
+
+function change_play_paus_butt_color(that, type_key) {
+  var color_key = jQuery(that).attr('value');
+  jQuery(".spider_pp_options_color_cont .spider_option_cont").css({backgroundColor: ""});
   jQuery(that).css({backgroundColor: "#3399FF"});
+  var src = pp_butt_dir + wds_pp_butt_type[type_key]["type_name"] + '/' + wds_pp_butt_type[type_key][color_key];
+  jQuery('#pp_butt_img_play').attr("src", src + '/1.png');
+  jQuery('#pp_butt_img_paus').attr("src", src + '/3.png');
+  jQuery('#pp_butt_hov_img_play').attr("src", src + '/2.png');
+  jQuery('#pp_butt_hov_img_paus').attr("src", src + '/4.png');
+
+  jQuery('#play_butt_url').val(src + '/1.png');
+  jQuery('#paus_butt_url').val(src + '/3.png');
+  jQuery('#play_butt_hov_url').val(src + '/2.png');
+  jQuery('#paus_butt_hov_url').val(src + '/4.png');
 }
 
 function change_src() {
@@ -863,8 +957,28 @@ function wds_choose_option(that) {
   jQuery(that).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
 }
 
+function wds_choose_option_color(that) {
+  jQuery('.spider_options_color_cont').toggle(1, function() {});
+  jQuery(that).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+}
+
+function wds_choose_pp_option(that) {
+  jQuery('.spider_pp_options_cont').toggle(1, function() {});
+  jQuery(that).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+}
+
+function wds_choose_pp_option_color(that) {
+  jQuery('.spider_pp_options_color_cont').toggle(1, function() {});
+  jQuery(that).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+}
+
 function wds_choose_bull_option(that) {
   jQuery('.spider_bull_options_cont').toggle(1, function() {});
+  jQuery(that).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+}
+
+function wds_choose_bull_option_color(that) {
+  jQuery('.spider_bull_options_color_cont').toggle(1, function() {});
   jQuery(that).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
 }
 
@@ -884,6 +998,43 @@ function wds_change_custom_src() {
   jQuery('#right_butt_url').val(src_h_r);
   jQuery('#left_butt_hov_url').val(src_l);
   jQuery('#right_butt_hov_url').val(src_r);
+}
+
+function wds_change_play_paus_custom_src() {
+  var src_l = jQuery('#play_butt_img').attr("src");
+  var src_r = jQuery('#paus_butt_img').attr("src");
+
+  var src_h_l = jQuery('#play_butt_hov_img').attr("src");
+  var src_h_r = jQuery('#paus_butt_hov_img').attr("src");
+
+  jQuery('#play_butt_img').attr("src", src_h_l);
+  jQuery('#paus_butt_img').attr("src", src_h_r);
+  jQuery('#play_butt_hov_img').attr("src", src_l);
+  jQuery('#paus_butt_hov_img').attr("src", src_r);
+
+  jQuery('#play_butt_url').val(src_h_l);
+  jQuery('#paus_butt_url').val(src_h_r);
+  jQuery('#play_butt_hov_url').val(src_l);
+  jQuery('#paus_butt_hov_url').val(src_r);
+}
+
+
+function change_play_paus_src() {
+  var src_l = jQuery('#pp_butt_img_play').attr("src");
+  var src_r = jQuery('#pp_butt_img_paus').attr("src");
+
+  var src_h_l = jQuery('#pp_butt_hov_img_play').attr("src");
+  var src_h_r = jQuery('#pp_butt_hov_img_paus').attr("src");
+
+  jQuery('#pp_butt_img_play').attr("src", src_h_l);
+  jQuery('#pp_butt_img_paus').attr("src", src_h_r);
+  jQuery('#pp_butt_hov_img_play').attr("src", src_l);
+  jQuery('#pp_butt_hov_img_paus').attr("src", src_r);
+
+  jQuery('#play_butt_url').val(src_h_l);
+  jQuery('#paus_butt_url').val(src_h_r);
+  jQuery('#play_butt_hov_url').val(src_l);
+  jQuery('#paus_butt_hov_url').val(src_r);
 }
 
 function wds_change_bullets_custom_src() {
@@ -1022,6 +1173,41 @@ function image_for_bull_butt(display) {
   }
 }
 
+function image_for_play_pause_butt(display) {
+  switch (display) {
+    case 'our' : {
+      jQuery("#play_pause_butt_img_or_not_our").attr('checked', 'checked');
+      jQuery("#play_pause_butt_style").css('display', 'none');
+      jQuery("#play_pause_butt_cust").css('display', 'none');
+      jQuery("#play_pause_butt_select").css('display', '');
+      jQuery("#tr_butts_color").css('display', 'none');
+      jQuery("#tr_hover_color").css('display', 'none');
+      break;
+    }
+    case 'custom' : {
+      jQuery("#play_pause_butt_img_or_not_cust").attr('checked', 'checked');
+      jQuery("#play_pause_butt_cust").css('display', '');
+      jQuery("#play_pause_butt_select").css('display', 'none');
+      jQuery("#play_pause_butt_style").css('display', 'none');
+      jQuery("#tr_butts_color").css('display', 'none');
+      jQuery("#tr_hover_color").css('display', 'none');
+      break;
+    }
+    case 'style' : {
+      jQuery("#play_pause_butt_img_or_not_style").attr('checked', 'checked');
+      jQuery("#play_pause_butt_cust").css('display', 'none');
+      jQuery("#play_pause_butt_select").css('display', 'none');
+      jQuery("#play_pause_butt_style").css('display', '');
+      jQuery("#tr_butts_color").css('display', '');
+      jQuery("#tr_hover_color").css('display', '');
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+}
+
 function bwg_change_album_view_type(type) {
   if (type == 'thumbnail') {
     jQuery("#album_thumb_dimensions").html('Album thumb dimensions: ');
@@ -1142,8 +1328,33 @@ function spider_media_uploader(id, e) {
         jQuery("#bullets_img_hov_url").val(image_url);
         break;
       }
-	  
-	  
+
+	    case 'play_but': {
+        /* Add image for play button.*/
+        jQuery("#play_butt_img").attr("src", image_url);
+        jQuery("#play_butt_url").val(image_url);
+        break;
+      }
+      case 'play_hov_but': {
+        /* Add image for pause button.*/
+        jQuery("#play_butt_hov_img").attr("src", image_url);
+        jQuery("#play_butt_hov_url").val(image_url);
+        break;
+      }
+	
+	  case 'paus_but': {
+        /* Add hover image for play button.*/
+        jQuery("#paus_butt_img").attr("src", image_url);
+        jQuery("#paus_butt_url").val(image_url);
+        break;
+      }
+	  case 'paus_hov_but': {
+        /* Add hover image for pause button.*/
+        jQuery("#paus_butt_hov_img").attr("src", image_url);
+        jQuery("#paus_butt_hov_url").val(image_url);
+        break;
+      }
+
       default: {
         jQuery("#image_url" + id).val(image_url);
         jQuery("#thumb_url" + id).val(thumb_url);
@@ -1186,7 +1397,7 @@ function wds_add_image(files, image_for, slide_id, layer_id) {
     }
     case 'add_layer': {
       /* Add image layer to current slide.*/
-      wds_add_layer('image', slide_id, '', '', '', files);
+      wds_add_layer('image', slide_id, '', '', files);
       break;
     }
     case 'add_update_layer': {
@@ -1253,6 +1464,32 @@ function wds_add_image(files, image_for, slide_id, layer_id) {
       document.getElementById("bull_img_hov").src = files[0]['url'];
       break;
     }
+
+	case 'play_but': {
+      /* Add hover image for right buttons.*/
+      document.getElementById("play_butt_url").value = files[0]['url']; 
+      document.getElementById("play_butt_img").src = files[0]['url'];
+      break;
+    }
+    case 'play_hov_but': {
+      /* Add hover image for left button.*/
+      document.getElementById("play_butt_hov_url").value = files[0]['url']; 
+      document.getElementById("play_butt_hov_img").src = files[0]['url'];
+      break;
+    }
+	
+	 case 'paus_but': {
+      /* Add image for main button.*/
+      document.getElementById("paus_butt_url").value = files[0]['url']; 
+      document.getElementById("paus_butt_img").src = files[0]['url'];
+      break;
+    }
+	case 'paus_hov_but': {
+      /* Add image for hover button.*/
+      document.getElementById("paus_butt_hov_url").value = files[0]['url']; 
+      document.getElementById("paus_butt_hov_img").src = files[0]['url'];
+      break;
+    }
     default: {
       break;
     }
@@ -1313,15 +1550,24 @@ function wds_delete_layer(id, layerID) {
   }
 }
 
-function wds_duplicate_layer(type, id, layerID) {
+function wds_duplicate_layer(type, id, layerID, new_id) {
   var prefix = "slide" + id + "_layer" + layerID;
   var new_layerID = "pr_" + wds_layerID;
   var new_prefix = "slide" + id + "_layer" + new_layerID;
-  var new_tbodyID = new_prefix + "_tbody";
+  if (typeof new_id != 'undefined') {
+    /* From slide duplication.*/
+    new_prefix = "slide" + new_id + "_layer" + new_layerID;
+    id = new_id;
+    jQuery("#" + new_prefix + "_left").val(jQuery("#" + prefix + "_left").val());
+    jQuery("#" + new_prefix + "_top").val(jQuery("#" + prefix + "_top").val());
+  }
+  else {
+    /* From layer duplication.*/
+    jQuery("#" + new_prefix + "_left").val(0);
+    jQuery("#" + new_prefix + "_top").val(0);
+  }
   jQuery("#" + new_prefix + "_text").val(jQuery("#" + prefix + "_text").val());
   jQuery("#" + new_prefix + "_link").val(jQuery("#" + prefix + "_link").val());
-  jQuery("#" + new_prefix + "_left").val(0);
-  jQuery("#" + new_prefix + "_top").val(0);
   jQuery("#" + new_prefix + "_start").val(jQuery("#" + prefix + "_start").val());
   jQuery("#" + new_prefix + "_end").val(jQuery("#" + prefix + "_end").val());
   jQuery("#" + new_prefix + "_delay").val(jQuery("#" + prefix + "_delay").val());
@@ -1349,8 +1595,18 @@ function wds_duplicate_layer(type, id, layerID) {
   else if (jQuery("#" + prefix + "_published0").is(":checked")) {
     jQuery("#" + new_prefix + "_published0").attr("checked", "checked");
   }
-  if (jQuery("#" + prefix + "_image_scale").is(":checked")) {
-    jQuery("#" + new_prefix + "_image_scale").attr("checked", "checked");
+  if (type == "video") {
+    if (jQuery("#" + prefix + "_image_scale1").is(":checked")) {
+      jQuery("#" + new_prefix + "_image_scale1").attr("checked", "checked");
+    }
+    else if (jQuery("#" + prefix + "_image_scale0").is(":checked")) {
+      jQuery("#" + new_prefix + "_image_scale0").attr("checked", "checked");
+    }
+  }
+  else {
+    if (jQuery("#" + prefix + "_image_scale").is(":checked")) {
+      jQuery("#" + new_prefix + "_image_scale").attr("checked", "checked");
+    }
   }
   jQuery("#" + new_prefix + "_transition option").each(function() {
     if (jQuery(this).val() == jQuery("#" + prefix + "_transition").val()) {
@@ -1392,8 +1648,10 @@ function wds_duplicate_layer(type, id, layerID) {
     jQuery("#" + new_prefix).attr({
       id: new_prefix,
       onclick: "wds_showhide_layer('" + new_prefix + "_tbody', 1)",
-      style: "z-index: " + jQuery("#" + new_prefix + "_depth").val() +
-             "left: 0; top: 0; display: inline-block;" +
+      style: "z-index: " + jQuery("#" + new_prefix + "_depth").val() + ";" +
+             "left: " + jQuery("#" + new_prefix + "_left").val() + "px;" +
+             "top: " + jQuery("#" + new_prefix + "_top").val() + "px;" +
+             "display: inline-block;" +
              "color: #" + jQuery("#" + prefix + "_color").val() + "; " +
              "font-size: " + jQuery("#" + prefix + "_size").val() + "px; " +
              "line-height: 1.25em; " +
@@ -1416,7 +1674,8 @@ function wds_duplicate_layer(type, id, layerID) {
       "class": "wds_draggable_" + id + " wds_draggable",
       onclick: "wds_showhide_layer('" + new_prefix + "_tbody', 1)",
       style: "z-index: " + jQuery("#" + new_prefix + "_depth").val() + "; " +
-             "left: 0; top: 0; " +
+             "left: " + jQuery("#" + new_prefix + "_left").val() + "px;" +
+             "top: " + jQuery("#" + new_prefix + "_top").val() + "px;" +
              "opacity: " + (100 - jQuery("#" + prefix + "_imgtransparent").val()) / 100 + "; filter: Alpha(opacity=" + (100 - jQuery("#" + prefix+ "_imgtransparent").val()) + "); " +
              "border: " + jQuery("#" + prefix + "_border_width").val() + "px " + jQuery("#" + prefix+ "_border_style").val() + " #" + jQuery("#" + prefix+ "_border_color").val() + "; " +
              "border-radius: " + jQuery("#" + prefix + "_border_radius").val() + "; " +
@@ -1429,8 +1688,43 @@ function wds_duplicate_layer(type, id, layerID) {
   wds_drag_layer(id);
 }
 
+function wds_duplicate_slide(slide_id) {
+  var new_slide_id = wds_add_slide();
+  var type;
+  var prefix;
+  var layer_id;
+  jQuery("input[name=published" + new_slide_id + "]:checked").val(jQuery("input[name=published" + slide_id + "]:checked").val());
+  jQuery("#link" + new_slide_id).val(jQuery("#link" + slide_id).val());
+  jQuery("input[name=target_attr_slide" + new_slide_id +" ]:checked").val(jQuery("input[name=target_attr_slide" + slide_id +" ]:checked").val());
+  jQuery("#type" + new_slide_id).val(jQuery("#type" + slide_id).val());
+  jQuery("#image_url" + new_slide_id).val(jQuery("#image_url" + slide_id).val());
+  jQuery("#thumb_url" + new_slide_id).val(jQuery("#thumb_url" + slide_id).val());		  
+  /*If type is video*/
+  if (jQuery("#type" + new_slide_id).val() == 'YOUTUBE' || jQuery("#type" + new_slide_id).val() == 'VIMEO') {
+    jQuery("#wds_preview_image" + new_slide_id).css("background-image", 'url("' + jQuery("#thumb_url" + slide_id).val() + '")');
+    jQuery("#trlink" + new_slide_id).hide();
+  }
+  else {
+    jQuery("#wds_preview_image" + new_slide_id).css("background-image", 'url("' + jQuery("#image_url" + slide_id).val() + '")');
+    jQuery("#trlink" + new_slide_id).show();
+  }
+  var layer_ids_string = jQuery("#slide" + slide_id + "_layer_ids_string").val();
+  if (layer_ids_string) {
+    var layer_ids_array = layer_ids_string.split(",");
+    for (var i in layer_ids_array) {
+      if (layer_ids_array.hasOwnProperty(i) && layer_ids_array[i] && layer_ids_array[i] != ",") {
+      layer_id = layer_ids_array[i];
+      prefix = "slide" + slide_id + "_layer" + layer_id;
+      type = jQuery("#" + prefix + "_type").val();		
+      wds_add_layer(type, new_slide_id, '', 1);
+      wds_duplicate_layer(type, slide_id, layer_id, new_slide_id);
+      }
+    }
+  }
+}
+
 var wds_layerID = 0;
-function wds_add_layer(type, id, layerID, event, duplicate, files, edit) {
+function wds_add_layer(type, id, layerID, duplicate, files, edit) {
   var layers_count = jQuery(".wds_slide" + id + " tbody").length;
   wds_layerID = layers_count;
   if (typeof layerID == "undefined" || layerID == "") {
@@ -1578,7 +1872,7 @@ function wds_add_layer(type, id, layerID, event, duplicate, files, edit) {
                   '<div class="handle connectedSortable" title="Drag to re-order"></div>' +
                   '<span class="wds_layer_label" onclick="wds_showhide_layer(\'' + tbodyID + '\', 0)"><input id="' + prefix + '_title" name="' + prefix + '_title" type="text" class="wds_layer_title" style="width: 80px;" value="Layer ' + wds_layerID + '" title="Layer title" /></span>' +
                   '<span class="wds_layer_remove" title="Delete layer" onclick="wds_delete_layer(\'' + id + '\', \'' + layerID + '\')"></span>' +
-                  '<span class="wds_layer_dublicate" title="Duplicate layer" onclick="wds_add_layer(\'' + type + '\', \'' + id + '\', \'\', event, 1); wds_duplicate_layer(\'' + type + '\', \'' + id + '\', \'' + layerID + '\');"></span>' +
+                  '<span class="wds_layer_dublicate" title="Duplicate layer" onclick="wds_add_layer(\'' + type + '\', \'' + id + '\', \'\', 1); wds_duplicate_layer(\'' + type + '\', \'' + id + '\', \'' + layerID + '\');"></span>' +
                   '<input type="text" name="' + prefix + '_depth" id="' + prefix + '_depth" prefix="' + prefix + '" value="' + wds_layerID + '" class="wds_layer_depth spider_int_input" onkeypress="return spider_check_isnum(event)" onchange="jQuery(\'#' + prefix + '\').css({zIndex: jQuery(this).val()})" title="z-index" /></td>' +
               '</tr>';
   var text = '<td class="spider_label"><label for="' + prefix + '_text">Text: </label></td>' +
@@ -1626,7 +1920,7 @@ function wds_add_layer(type, id, layerID, event, duplicate, files, edit) {
   var border_radius = '<td class="spider_label"><label for="' + prefix + '_border_radius">Radius: </label></td>' +
                       '<td><input type="text" name="' + prefix + '_border_radius" id="' + prefix + '_border_radius" value="2px" class="spider_char_input" onchange="jQuery(\'#' + prefix + '\').css({borderRadius: jQuery(this).val()})" /><div class="spider_description">Use CSS type values.</div></td>';
   var shadow = '<td class="spider_label"><label for="' + prefix + '_shadow">Shadow: </label></td>' +
-               '<td><input type="text" name="' + prefix + '_shadow" id="' + prefix + '_shadow" value="" class="spider_char_input" onchange="jQuery(\'#' + prefix + '\').css({boxShadow: jQuery(this).val()})" /><div class="spider_description">Use CSS type values.</div></td>';
+               '<td><input type="text" name="' + prefix + '_shadow" id="' + prefix + '_shadow" value="" class="spider_char_input" onchange="jQuery(\'#' + prefix + '\').css({boxShadow: jQuery(this).val()})" /><div class="spider_description">Use CSS type values (e.g. 10px 10px 5px #888888).</div></td>';
   var dimensions = '<td class="spider_label"><label>Dimensions: </label></td>' +
                    '<td>' +
                      '<input type="hidden" name="' + prefix + '_image_url" id="' + prefix + '_image_url" />' +
@@ -1753,7 +2047,7 @@ function wds_add_layer(type, id, layerID, event, duplicate, files, edit) {
           wds_add_image_layer_by_spider_uploader(prefix, files, tbodyID, id, layerID, tbody_html);
         }
         else { // Add image layer by media uploader.
-          image_escape = wds_add_image_layer(prefix, event, tbodyID, id, layerID, tbody_html, edit);
+          image_escape = wds_add_image_layer(prefix, tbodyID, id, layerID, tbody_html, edit);
         }
       }
       else {
@@ -1781,7 +2075,7 @@ function wds_scale(that, prefix) {
   var width = jQuery("#" + prefix + "_image_width").val();
   var height = jQuery("#" + prefix + "_image_height").val();
   jQuery("#" + prefix).css({maxWidth: width + "px", maxHeight: height + "px", width: "", height: ""});
-  if (!jQuery(that).is(':checked')) {
+  if (!jQuery(that).is(':checked') || !jQuery(that).val()) {
     jQuery("#" + prefix).css({width: width + "px", height: height + "px"});
   }
   else if (wds_origWidth <= width || wds_origHeight <= height) {
@@ -1842,9 +2136,9 @@ function wds_slide_weights() {
   jQuery(".aui-sortable").disableSelection();
 }
 
-function wds_add_image_layer(prefix, e, tbodyID, id, layerID, tbody_html, edit) {
+function wds_add_image_layer(prefix, tbodyID, id, layerID, tbody_html, edit) {
   var custom_uploader;
-  e.preventDefault();
+  /*event.preventDefault();*/
   // If the uploader object has already been created, reopen the dialog.
   if (custom_uploader) {
     custom_uploader.open();
@@ -1980,6 +2274,7 @@ function wds_add_slide() {
     '<a id="wbs_subtab' + slideID + '" class="connectedSortable wds_sub_active" href="#">' +
       '<div class="handle" title="Drag to re-order"></div>' +
       ' <input type="text" id="title' + slideID + '" name="title' + slideID + '" value="Slide ' + slides_count + '" class="wds_tab_title" tab_type="slide' + slideID + '" onclick="wds_change_sub_tab(this, \'wds_slide' + slideID + '\')" />' +
+      ' <span class="wds_slide_dublicate" onclick="wds_duplicate_slide(\'' + slideID + '\');" title="Duplicate slide"></span>' +
       ' <span class="wds_tab_remove" title="Delete slide" onclick="wds_remove_slide(\'' + slideID + '\')"></span>' +
       ' <input type="hidden" name="order' + slideID + '" id="order' + slideID + '" value="' + slides_count + '" /></a>').insertBefore(".wds_add_layer");
   wds_change_sub_tab(jQuery('#title' + slideID), 'wds_slide' + slideID);
@@ -2007,10 +2302,10 @@ function wds_add_slide() {
                         'background-repeat: no-repeat; ' +
                         'background-size: ' + jQuery('input[name=bg_fit]:radio:checked').val() + '; ' +
                         'border-width: ' + jQuery('#glb_border_width').val() + 'px; ' +
-                        'border-style: ' + jQuery('#glb_border_style').val() + '; ' +
+                        /*'border-style: ' + jQuery('#glb_border_style').val() + '; ' +
                         'border-color: #' + jQuery('#glb_border_color').val() + '; ' +
                         'border-radius: ' + jQuery('#glb_border_radius').val() + '; ' +
-                        'box-shadow: ' + jQuery('#glb_box_shadow').val() + '; ' +
+                        'box-shadow: ' + jQuery('#glb_box_shadow').val() + '; ' +*/
                         'width: inherit; height: inherit;"> </div></div></div></td>' +
           '</tr><tr><td class="spider_label"><label>Published: </label></td>' +
               '<td><input id="published' + slideID + '1" type="radio" value="1" checked="checked" name="published' + slideID + '">' +
@@ -2024,6 +2319,7 @@ function wds_add_slide() {
           '</tr><tr><td colspan="4">' +
             ' <input class="button-' + (!fv ? "primary" : "secondary wds_free_button") + ' button button-small" type="button" value="Add Text Layer" onclick="' + (!fv ? "wds_add_layer(\'text\', \'' + slideID + '\')" : "alert('This functionality is disabled in free version.')") + '; return false;">' +
             img_layer_upload_by +
+            ' <input class="button-secondary button button-small wds_free_button" type="button" value="Add Video Layer" onclick="alert(\'This functionality is disabled in free version.\'); return false;" />' +
             ' <input class="button-secondary button button-small wds_free_button" type="button" value="Add Social Buttons Layer" onclick="alert(\'This functionality is disabled in free version.\'); return false;"></td>' +
           '</tr></tbody></table>' +
           '<input id="slide' + slideID + '_layer_ids_string" name="slide' + slideID + '_layer_ids_string" type="hidden" value="" />' +
@@ -2154,7 +2450,7 @@ function wds_text_width(that, prefix) {
   }
   else {
     jQuery("#" + prefix).css({width: ""});
-    jQuery(that).val("");
+    jQuery(that).val("0");
   }
 }
 
@@ -2180,7 +2476,7 @@ function wds_text_height(that, prefix) {
   }
   else {
     jQuery("#" + prefix).css({height: ""});
-    jQuery(that).val("");
+    jQuery(that).val("0");
   }
 }
 

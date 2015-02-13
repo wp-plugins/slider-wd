@@ -148,7 +148,7 @@ class WDSViewSlider {
         width: 100%;
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_image_container_<?php echo $wds; ?> {
-        display: table;
+        display: /*table*/block;
         position: absolute;
         text-align: center;
         <?php echo $filmstrip_position; ?>: <?php echo ($filmstrip_direction == 'horizontal' ? $filmstrip_height . 'px' : $filmstrip_width_in_percent . '%'); ?>;
@@ -220,6 +220,68 @@ class WDSViewSlider {
         color: #<?php echo $slider_row->hover_color; ?>;
         cursor: pointer;
       }
+      <?php
+      if ($slider_row->play_paus_butt_img_or_not != 'style') {
+        ?>
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_play_pause_<?php echo $wds; ?>.fa-pause:before,
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_play_pause_<?php echo $wds; ?>.fa-play:before {
+          content: "";
+      }
+	    #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> #wds_slideshow_play_pause_<?php echo $wds; ?>.fa-play {
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode ($slider_row->play_butt_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: background-image 0.2s ease-out;
+        -ms-transition: background-image 0.2s ease-out;
+        -moz-transition: background-image 0.2s ease-out;
+        -webkit-transition: background-image 0.2s ease-out;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> #wds_slideshow_play_pause_<?php echo $wds; ?>.fa-play:before {
+        content: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->play_butt_hov_url, ENT_QUOTES)); ?>');
+        width: 0;
+        height: 0;
+        visibility: hidden;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> #wds_slideshow_play_pause_<?php echo $wds; ?>.fa-play:hover {
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode ($slider_row->play_butt_hov_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover; 
+        transition: background-image 0.2s ease-in;
+        -ms-transition: background-image 0.2s ease-in;
+        -moz-transition: background-image 0.2s ease-in;
+        -webkit-transition: background-image 0.2s ease-in;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> #wds_slideshow_play_pause_<?php echo $wds; ?>.fa-pause{
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode ($slider_row->paus_butt_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: background-image 0.2s ease-out;
+        -ms-transition: background-image 0.2s ease-out;
+        -moz-transition: background-image 0.2s ease-out;
+        -webkit-transition: background-image 0.2s ease-out;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> #wds_slideshow_play_pause_<?php echo $wds; ?>.fa-pause:before {
+        content: url('<?php echo addslashes(htmlspecialchars_decode($slider_row->paus_butt_hov_url, ENT_QUOTES)); ?>');
+        width: 0;
+        height: 0;
+        visibility: hidden;
+      }
+	    #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> #wds_slideshow_play_pause_<?php echo $wds; ?>.fa-pause:hover {
+        background-image: url('<?php echo addslashes(htmlspecialchars_decode ($slider_row->paus_butt_hov_url, ENT_QUOTES)); ?>');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: background-image 0.2s ease-in;
+        -ms-transition: background-image 0.2s ease-in;
+        -moz-transition: background-image 0.2s ease-in;
+        -webkit-transition: background-image 0.2s ease-in;
+      }
+        <?php
+      }
+      ?>
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_left-ico_<?php echo $wds; ?>,
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_right-ico_<?php echo $wds; ?> {
         background-color: <?php echo WDW_S_Library::spider_hex2rgba($slider_row->nav_bg_color, (100 - $slider_row->butts_transparent) / 100); ?>;
@@ -623,7 +685,24 @@ class WDSViewSlider {
                                     }
                                   </style>
                                 <span class="wds_layer_<?php echo $layer->id; ?>" id="<?php echo $prefix; ?>" wds_fsize="<?php echo $layer->size; ?>"
-                                      style="<?php echo $layer->image_width ? 'width: ' . $layer->image_width . '%; ' : ''; ?><?php echo $layer->image_height ? 'height: ' . $layer->image_height . '%; ' : ''; ?>word-break: <?php echo ($layer->image_scale ? 'keep-all' : 'break-all'); ?>; text-align: initial; <?php echo $layer->link ? 'cursor: pointer; ' : ''; ?>opacity: 1; filter: 'Alpha(opacity=100)'; display: inline-block; position: absolute; left: <?php echo $left_percent; ?>%; top: <?php echo $top_percent; ?>%; z-index: <?php echo $layer->depth; ?>; color: #<?php echo $layer->color; ?>; font-family: <?php echo $layer->ffamily; ?>; font-weight: <?php echo $layer->fweight; ?>; background-color: <?php echo WDW_S_Library::spider_hex2rgba($layer->fbgcolor, (100 - $layer->transparent) / 100); ?>; border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>; border-radius: <?php echo $layer->border_radius; ?>; box-shadow: <?php echo $layer->shadow; ?>"
+                                      style="<?php echo $layer->image_width ? 'width: ' . $layer->image_width . '%; ' : ''; ?>
+				             <?php echo $layer->image_height ? 'height: ' . $layer->image_height . '%; ' : ''; ?>
+					     word-break: <?php echo ($layer->image_scale ? 'keep-all' : 'break-all'); ?>;
+					     text-align: initial; <?php echo $layer->link ? 'cursor: pointer; ' : ''; ?>
+					     opacity: 1;
+					     filter: 'Alpha(opacity=100)';
+					     display: inline-block;
+					     position: absolute;
+					     left: <?php echo $left_percent; ?>%;
+					     top: <?php echo $top_percent; ?>%;
+					     z-index: <?php echo $layer->depth; ?>;
+					     color: #<?php echo $layer->color; ?>;
+					     font-family: <?php echo $layer->ffamily; ?>;
+					     font-weight: <?php echo $layer->fweight; ?>;
+					     background-color: <?php echo WDW_S_Library::spider_hex2rgba($layer->fbgcolor, (100 - $layer->transparent) / 100); ?>;
+					     border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>;
+					     border-radius: <?php echo $layer->border_radius; ?>;
+					     box-shadow: <?php echo $layer->shadow; ?>"
                                       onclick="<?php echo $layer->link ? 'window.open(\'' . $layer->link . '\', \'' . ($layer->target_attr_layer ? '_blank' : '_self') . '\');' : ''; ?>event.stopPropagation();"><?php echo str_replace(array("\r\n", "\r", "\n"), "<br>", $layer->text); ?></span>
                                   <?php
                                   break;
@@ -637,7 +716,16 @@ class WDSViewSlider {
                                     }
                                   </style>
                                 <img class="wds_layer_<?php echo $layer->id; ?>" id="<?php echo $prefix; ?>" src="<?php echo $layer->image_url; ?>"
-                                     style="<?php echo $layer->link ? 'cursor: pointer; ' : ''; ?>opacity: <?php echo number_format((100 - $layer->imgtransparent) / 100, 2, ".", ""); ?>; filter: Alpha(opacity=<?php echo 100 - $layer->imgtransparent; ?>); position: absolute; left: <?php echo $left_percent; ?>%; top: <?php echo $top_percent; ?>%; z-index: <?php echo $layer->depth; ?>; border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>; border-radius: <?php echo $layer->border_radius; ?>; box-shadow: <?php echo $layer->shadow; ?>"
+                                     style="<?php echo $layer->link ? 'cursor: pointer; ' : ''; ?>
+				            opacity: <?php echo number_format((100 - $layer->imgtransparent) / 100, 2, ".", ""); ?>;
+					    filter: Alpha(opacity=<?php echo 100 - $layer->imgtransparent; ?>);
+					    position: absolute;
+					    left: <?php echo $left_percent; ?>%;
+					    top: <?php echo $top_percent; ?>%;
+					    z-index: <?php echo $layer->depth; ?>;
+					    border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>;
+					    border-radius: <?php echo $layer->border_radius; ?>;
+					    box-shadow: <?php echo $layer->shadow; ?>"
                                      onclick="<?php echo $layer->link ? 'window.open(\'' . $layer->link . '\', \'' . ($layer->target_attr_layer ? '_blank' : '_self') . '\');' : ''; ?>event.stopPropagation();"
                                      wds_scale="<?php echo $layer->image_scale; ?>"
                                      wds_image_width="<?php echo $layer->image_width; ?>"
@@ -708,8 +796,14 @@ class WDSViewSlider {
                 <div class="wds_btn_cont wds_contTable">
                   <span class="wds_btn_cont wds_contTableCell" style="position: relative; text-align: center;">
                     <span class="wds_pp_btn_cont">
-                      <span id="wds_slideshow_play_pause_<?php echo $wds; ?>" style="display: <?php echo $play_pause_button_display; ?>;">
+                      <span id="wds_slideshow_play_pause_<?php echo $wds; ?>" style="display: <?php echo $play_pause_button_display; ?>;" <?php echo ($slider_row->play_paus_butt_img_or_not != 'style') ? 'class="wds_ctrl_btn_' . $wds . ' wds_slideshow_play_pause_' . $wds . ' fa fa-play"' : ''; ?>>
+                        <?php
+                        if ($slider_row->play_paus_butt_img_or_not == 'style') {
+                          ?>
                         <i class="wds_ctrl_btn_<?php echo $wds; ?> wds_slideshow_play_pause_<?php echo $wds; ?> fa fa-play"></i>
+                          <?php
+                        }
+                        ?>
                       </span>
                     </span>
                   </span>
@@ -805,7 +899,8 @@ class WDSViewSlider {
         function wds_gridlet(width, height, top, img_top, left, img_left, src, imgWidth, imgHeight, c, r) {
           var delay = random ? Math.floor((cols + rows) * count * Math.random()) : (c + r) * count;
           /* Return a gridlet elem with styles for specific transition.*/
-          var grid_div = jQuery('<div class="wds_gridlet_<?php echo $wds; ?>" />').css({
+          var grid_div = jQuery('<span class="wds_gridlet_<?php echo $wds; ?>" />').css({
+            display: "block",
             width : imgWidth,/*"100%"*/
             height : jQuery(".wds_slideshow_image_spun_<?php echo $wds; ?>").height() + "px",
             top : -top,
@@ -816,7 +911,8 @@ class WDSViewSlider {
             /*backgroundColor: jQuery(".wds_slideshow_image_wrap_<?php echo $wds; ?>").css("background-color"),*/
             backgroundRepeat: 'no-repeat'
           });
-          return jQuery('<div class="wds_gridlet_<?php echo $wds; ?>" />').css({
+          return jQuery('<span class="wds_gridlet_<?php echo $wds; ?>" />').css({
+            display: "block",
             width : width,/*"100%"*/
             height : height,
             top : top,
@@ -832,7 +928,7 @@ class WDSViewSlider {
         /* Get the current slide's image.*/
         var cur_img = jQuery(current_image_class).find('div');
         /* Create a grid to hold the gridlets.*/
-        var grid = jQuery('<div />').addClass('wds_grid_<?php echo $wds; ?>');
+        var grid = jQuery('<span style="display: block;" />').addClass('wds_grid_<?php echo $wds; ?>');
         /* Prepend the grid to the next slide (i.e. so it's above the slide image).*/
         jQuery(current_image_class).prepend(grid);
         /* vars to calculate positioning/size of gridlets*/
@@ -993,6 +1089,11 @@ class WDSViewSlider {
         ?>
         /* Pause videos.*/
         jQuery("#wds_slideshow_image_container_<?php echo $wds; ?>").find("iframe").each(function () {
+          jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+          jQuery(this)[0].contentWindow.postMessage('{ "method": "pause" }', "*");
+        });
+        /* Pause layer videos.*/
+        jQuery(".wds_video_layer_frame_<?php echo $wds; ?>").each(function () {
           jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
           jQuery(this)[0].contentWindow.postMessage('{ "method": "pause" }', "*");
         });
@@ -1428,6 +1529,13 @@ class WDSViewSlider {
           else {
             jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_duration_eff_out"] / 1000 + 's');	
             jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_layer_effect_in"] + ' fa fa-' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_social_button"] + ' animated');
+          }
+          /* Play video on layer in.*/
+          if ((wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_type"] == "video") && (wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_video_autoplay"] == "on")) {
+            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_id"]).find("iframe").each(function () {
+              jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+              jQuery(this)[0].contentWindow.postMessage('{ "method": "play" }', "*");
+            });
           }
 		    }, wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_start"]);
 		  }

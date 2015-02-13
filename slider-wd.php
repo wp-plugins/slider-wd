@@ -4,7 +4,7 @@
  * Plugin Name: Slider WD
  * Plugin URI: http://web-dorado.com/products/wordpress-slider-plugin.html
  * Description: This is a responsive plugin, which allows adding sliders to your posts/pages and to custom location. It uses large number of transition effects and supports various types of layers.
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: WebDorado
  * Author URI: http://web-dorado.com/
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -23,8 +23,9 @@ else {
 
 // Plugin menu.
 function wds_options_panel() {
-  $sliders_page = add_menu_page('Slider WD', 'Slider WD', 'manage_options', 'sliders_wds', 'wd_sliders', WD_S_URL . '/images/wd_slider.png');
+  add_menu_page('Slider WD', 'Slider WD', 'manage_options', 'sliders_wds', 'wd_sliders', WD_S_URL . '/images/wd_slider.png');
 
+  $sliders_page = add_submenu_page('sliders_wds', 'Sliders', 'Sliders', 'manage_options', 'sliders_wds', 'wd_sliders');
   add_action('admin_print_styles-' . $sliders_page, 'wds_styles');
   add_action('admin_print_scripts-' . $sliders_page, 'wds_scripts');
 
@@ -298,6 +299,11 @@ function wds_activate() {
         'bullets_img_main_url' => WD_S_URL . '/images/bullet/bullet1/1/1.png',
         'bullets_img_hov_url' => WD_S_URL . '/images/bullet/bullet1/1/2.png',
         'bull_butt_img_or_not' => 'style',
+        'play_butt_url' => WD_S_URL . '/images/button/button4/1/1.png',
+        'paus_butt_url' => WD_S_URL . '/images/button/button4/1/3.png',
+        'play_butt_hov_url' => WD_S_URL . '/images/button/button4/1/2.png',
+        'paus_butt_hov_url' => WD_S_URL . '/images/button/button4/1/4.png',
+        'play_paus_butt_img_or_not' => 'style',
       )
     );
   }
@@ -311,7 +317,7 @@ register_activation_hook(__FILE__, 'wds_activate');
 
 function wds_install() {
   $version = get_option("wds_version");
-  $new_version = '1.0.5';
+  $new_version = '1.0.6';
   if ($version && version_compare($version, $new_version, '<')) {
     require_once WD_S_DIR . "/sliders-update.php";
     wds_update($version);
