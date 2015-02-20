@@ -130,6 +130,10 @@ After downloading the ZIP file of the slider plugin,
 
 == Changelog ==
 
+= 1.0.6 =
+custom play/pause buttons
+slide duplication
+
 = 1.0.5 =
 Image for Next / Previous buttons (Default, Custom, Styled)
 Image for bullets (Default, Custom, Styled)
