@@ -163,7 +163,7 @@ class WDSControllerSliders_wds {
       $timer_bar_type = 'none';
     }
     $timer_bar_size = (isset($_POST['timer_bar_size']) ? esc_html(stripslashes($_POST['timer_bar_size'])) : 5);
-    $timer_bar_color = (isset($_POST['timer_bar_color']) ? esc_html(stripslashes($_POST['timer_bar_color'])) : 'FFFFFF');
+    $timer_bar_color = (isset($_POST['timer_bar_color']) ? esc_html(stripslashes($_POST['timer_bar_color'])) : 'BBBBBB');
     $timer_bar_transparent = (isset($_POST['timer_bar_transparent']) ? esc_html(stripslashes($_POST['timer_bar_transparent'])) : 50);
     $stop_animation = ((isset($_POST['stop_animation'])) ? (int) esc_html(stripslashes($_POST['stop_animation'])) : 0);
     $right_butt_url = (isset($_POST['right_butt_url']) ? esc_html(stripslashes($_POST['right_butt_url'])) : '');
@@ -788,6 +788,320 @@ class WDSControllerSliders_wds {
     $view = new WDSViewSliders_wds($model);
     echo WDW_S_Library::message('Changes must be saved.', 'error');
     $view->edit($slider_id, TRUE);
+  }
+  public function duplicate() {
+    $slider_id = WDW_S_Library::get('current_id', 0);
+    $new_slider_id = $this->duplicate_tabels($slider_id);
+    require_once WD_S_DIR . "/admin/models/WDSModelSliders_wds.php";
+    $model = new WDSModelSliders_wds();
+    require_once WD_S_DIR . "/admin/views/WDSViewSliders_wds.php";
+    $view = new WDSViewSliders_wds($model);
+    echo WDW_S_Library::message('Item Succesfully Duplicated.', 'updated');
+    $view->edit($new_slider_id);
+  }
+
+  public function duplicate_all($id) {
+    global $wpdb;
+    $sliders_ids_col = $wpdb->get_col('SELECT id FROM ' . $wpdb->prefix . 'wdsslider');
+    foreach ($sliders_ids_col as $slider_id) {
+      if (isset($_POST['check_' . $slider_id])) {
+        $this->duplicate_tabels($slider_id);
+      }
+    }
+    echo WDW_S_Library::message('Items Succesfully Duplicated.', 'updated');
+    $this->display();
+  }
+
+  public function duplicate_tabels($slider_id) {
+    global $wpdb;
+    if ($slider_id) {
+      $slider_row = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'wdsslider where id="%d"', $slider_id));    
+    }      
+    if ($slider_row) {
+      $save = $wpdb->insert($wpdb->prefix . 'wdsslider', array(
+        'name' => $slider_row->name,
+        'published' => $slider_row->published,
+        'full_width' => $slider_row->full_width,
+        'width' => $slider_row->width,
+        'height' => $slider_row->height,
+        'bg_fit' => $slider_row->bg_fit,
+        'align' => $slider_row->align,
+        'effect' => $slider_row->effect,
+        'time_intervval' => $slider_row->time_intervval,
+        'autoplay' => $slider_row->autoplay,
+        'shuffle' => $slider_row->shuffle,
+        'music' => $slider_row->music,
+        'music_url' => $slider_row->music_url,
+        'preload_images' => $slider_row->preload_images,
+        'background_color' => $slider_row->background_color,
+        'background_transparent' =>$slider_row-> background_transparent,
+        'glb_border_width' => $slider_row->glb_border_width,
+        'glb_border_style' => $slider_row->glb_border_style,
+        'glb_border_color' => $slider_row->glb_border_color,
+        'glb_border_radius' => $slider_row->glb_border_radius,
+        'glb_margin' => $slider_row->glb_margin,
+        'glb_box_shadow' => $slider_row->glb_box_shadow,
+        'image_right_click' => $slider_row->image_right_click,
+        'prev_next_butt' => $slider_row->prev_next_butt,	
+        'play_paus_butt' => $slider_row->play_paus_butt,
+        'navigation' => $slider_row->navigation,
+        'rl_butt_style' => $slider_row->rl_butt_style,
+        'rl_butt_size' => $slider_row->rl_butt_size,
+        'pp_butt_size' => $slider_row->pp_butt_size,	
+        'butts_color' => $slider_row->butts_color,
+        'butts_transparent' => $slider_row->butts_transparent,
+        'hover_color' => $slider_row->hover_color,
+        'nav_border_width' => $slider_row->nav_border_width,
+        'nav_border_style' => $slider_row->nav_border_style,
+        'nav_border_color' => $slider_row->nav_border_color,
+        'nav_border_radius' => $slider_row->nav_border_radius,
+        'nav_bg_color' => $slider_row->nav_bg_color,
+        'bull_position' => $slider_row->bull_position,
+        'bull_style' => $slider_row->bull_style,
+        'bull_size' => $slider_row->bull_size,
+        'bull_color' => $slider_row->bull_color,
+        'bull_act_color' => $slider_row->bull_act_color,
+        'bull_margin' => $slider_row->bull_margin,
+        'film_pos' => $slider_row->film_pos,
+        'film_thumb_width' => $slider_row->film_thumb_width,
+        'film_thumb_height' => $slider_row->film_thumb_height,
+        'film_bg_color' => $slider_row->film_bg_color,
+        'film_tmb_margin' => $slider_row->film_tmb_margin,
+        'film_act_border_width' => $slider_row->film_act_border_width,
+        'film_act_border_style' => $slider_row->film_act_border_style,
+        'film_act_border_color' => $slider_row->film_act_border_color,
+        'film_dac_transparent' => $slider_row->film_dac_transparent,	
+        'built_in_watermark_type' => $slider_row->built_in_watermark_type,
+        'built_in_watermark_position' => $slider_row->built_in_watermark_position,
+        'built_in_watermark_size' => $slider_row->built_in_watermark_size,
+        'built_in_watermark_url' => $slider_row->built_in_watermark_url,
+        'built_in_watermark_text' => $slider_row->built_in_watermark_text,
+        'built_in_watermark_opacity' => $slider_row->built_in_watermark_opacity,		
+        'built_in_watermark_font_size' => $slider_row->built_in_watermark_font_size,
+        'built_in_watermark_font' => $slider_row->built_in_watermark_font,
+        'built_in_watermark_color' => $slider_row->built_in_watermark_color,
+        'css' => $slider_row->css,
+        'timer_bar_type' => $slider_row->timer_bar_type,
+        'timer_bar_size' => $slider_row->timer_bar_size,
+        'timer_bar_color' => $slider_row->timer_bar_color,
+        'timer_bar_transparent' => $slider_row->timer_bar_transparent,
+        'layer_out_next' => $slider_row->layer_out_next,
+        'spider_uploader' => $slider_row->spider_uploader,
+        'stop_animation' => $slider_row->stop_animation,
+        'right_butt_url' => $slider_row->right_butt_url,
+        'left_butt_url' => $slider_row->left_butt_url,
+        'right_butt_hov_url' => $slider_row->right_butt_hov_url,
+        'left_butt_hov_url' => $slider_row->left_butt_hov_url,
+        'rl_butt_img_or_not' => $slider_row->rl_butt_img_or_not,
+        'bullets_img_main_url' => $slider_row->bullets_img_main_url,
+        'bullets_img_hov_url' => $slider_row->bullets_img_hov_url,
+        'bull_butt_img_or_not' => $slider_row->bull_butt_img_or_not,
+        'play_paus_butt_img_or_not' => $slider_row->play_paus_butt_img_or_not,
+        'play_butt_url' => $slider_row->play_butt_url,
+        'play_butt_hov_url' => $slider_row->play_butt_hov_url,
+        'paus_butt_url' => $slider_row->paus_butt_url,
+        'paus_butt_hov_url' => $slider_row->paus_butt_hov_url,
+        
+      ), array(
+        '%s',
+        '%d',
+        '%d',
+        '%d',
+        '%d',
+        '%s',
+        '%s',
+        '%s',
+        '%d',
+        '%d',
+        '%d',
+        '%d',
+        '%s',
+        '%d',
+        '%s',
+        '%d',
+        '%d',
+        '%s',
+        '%s',
+        '%s',
+        '%d',
+        '%s',
+        '%d',
+        '%d',
+        '%d',
+        '%s',
+        '%s',
+        '%d',
+        '%d',
+        '%s',
+        '%d',
+        '%s',
+        '%d',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%d',
+        '%s',
+        '%s',
+        '%d',
+        '%s',
+        '%d',
+        '%d',
+        '%s',
+        '%d',
+        '%d',
+        '%s',
+        '%s',
+        '%d',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%d',
+        '%s',
+        '%d',
+        '%d',
+        '%d',
+        '%d',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+        '%s',
+      ));
+      $new_slider_id = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . 'wdsslider');
+
+      $slider_slides = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'wdsslide where slider_id="%d"', $slider_id));
+      if ($slider_slides) {
+        foreach ($slider_slides as $single_slide) {
+          $save = $wpdb->insert($wpdb->prefix . 'wdsslide', array(
+            'slider_id' => $new_slider_id,
+            'title' => $single_slide->title,
+            'type' => $single_slide->type,
+            'order' => $single_slide->order,
+            'published' => $single_slide->published,
+            'link' => $single_slide->link,
+            'image_url' => $single_slide->image_url,
+            'thumb_url' => $single_slide->thumb_url,
+            'target_attr_slide' => $single_slide->target_attr_slide,
+          ), array(
+            '%d',
+            '%s',
+            '%s',
+            '%d',
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+            '%d',
+          ));
+          $new_slide_id = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . 'wdsslide');
+          $slider_layer = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'wdslayer where slide_id="%d"', $single_slide->id));
+          if ($slider_layer){
+            foreach ($slider_layer as $layer_id) {
+              if ($layer_id) {            
+                $save = $wpdb->insert($wpdb->prefix . 'wdslayer', array(
+                'slide_id' => $new_slide_id,
+                'title' => $layer_id->title,
+                'type' => $layer_id->type,
+                'depth' => $layer_id->depth,
+                'text' => $layer_id->text,
+                'link' => $layer_id->link,
+                'left' => $layer_id->left,
+                'top' => $layer_id->top,
+                'start' => $layer_id->start,
+                'end' => $layer_id->end,
+                'published' => $layer_id->published,
+                'color' => $layer_id->color,
+                'size' => $layer_id->size,
+                'ffamily' => $layer_id->ffamily,
+                'fweight' => $layer_id->fweight,
+                'padding' => $layer_id->padding,
+                'fbgcolor' => $layer_id->fbgcolor,
+                'transparent' => $layer_id->transparent,
+                'border_width' => $layer_id->border_width,
+                'border_style' => $layer_id->border_style,
+                'border_color' => $layer_id->border_color,
+                'border_radius' => $layer_id->border_radius,
+                'shadow' => $layer_id->shadow,
+                'image_url' => $layer_id->image_url,
+                'image_width' => $layer_id->image_width,
+                'image_height' => $layer_id->image_height,
+                'image_scale' => $layer_id->image_scale,
+                'alt' => $layer_id->alt,
+                'imgtransparent' => $layer_id->imgtransparent,
+                'social_button' => $layer_id->social_button,
+                'hover_color' => $layer_id->hover_color,
+                'layer_effect_in' => $layer_id->layer_effect_in,
+                'layer_effect_out' => $layer_id->layer_effect_out,
+                'duration_eff_in' => $layer_id->duration_eff_in,
+                'duration_eff_out' => $layer_id->duration_eff_out,
+                'target_attr_layer' => $layer_id->target_attr_layer,
+              ), array(
+                '%d',
+                '%s',
+                '%s',
+                '%d',
+                '%s',
+                '%s',
+                '%d',
+                '%d',
+                '%d',
+                '%d',
+                '%d',
+                '%s',
+                '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%d',
+                '%s',
+                '%s',
+                '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%d',
+                '%d',
+              ));
+                         
+            }
+          }
+          }
+        }
+      }
+      
+    }
+    return $new_slider_id;
   }
 
   function bwg_hex2rgb($hex) {

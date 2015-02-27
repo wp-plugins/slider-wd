@@ -81,11 +81,11 @@ function wds_insert() {
     `bullets_img_main_url` varchar(255) NOT NULL,
     `bullets_img_hov_url` varchar(255) NOT NULL,
     `bull_butt_img_or_not` varchar(8) NOT NULL,
-	`play_paus_butt_img_or_not` varchar(8) NOT NULL,
-	`play_butt_url` varchar(255) NOT NULL,
-	`play_butt_hov_url` varchar(255) NOT NULL,
-	`paus_butt_url` varchar(255) NOT NULL,
-	`paus_butt_hov_url` varchar(255) NOT NULL,
+    `play_paus_butt_img_or_not` varchar(8) NOT NULL,
+    `play_butt_url` varchar(255) NOT NULL,
+    `play_butt_hov_url` varchar(255) NOT NULL,
+    `paus_butt_url` varchar(255) NOT NULL,
+    `paus_butt_hov_url` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdsslider);

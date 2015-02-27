@@ -49,6 +49,8 @@ class WDSViewSlider {
     $slideshow_effect = $slider_row->effect == 'zoomFade' ? 'fade' : $slider_row->effect;
     $slideshow_interval = $slider_row->time_intervval;
 
+    $circle_timer_size = (2 * $slider_row->timer_bar_size - 2) * 2;
+
     $enable_slideshow_shuffle = $slider_row->shuffle;
     $enable_prev_next_butt = $slider_row->prev_next_butt;
     $enable_play_paus_butt = $slider_row->play_paus_butt;
@@ -104,7 +106,17 @@ class WDSViewSlider {
       $outerWidth_or_outerHeight = 'outerHeight';
     }
 
-    $current_image_id = (isset($_GET['image_id']) ? esc_html($_GET['image_id']) : ($slide_rows ? $slide_rows[0]->id : 0));
+    if ($enable_slideshow_shuffle) {
+      $slide_ids = array();
+      foreach ($slide_rows as $slide_row) {
+        $slide_ids[] += $slide_row->id;
+      }
+      $current_image_id = $slide_ids[array_rand($slide_ids)];
+    }
+    else {
+      $current_image_id = ($slide_rows ? $slide_rows[0]->id : 0);
+    }
+
     global $wp;
     $current_url = add_query_arg($wp->query_string, '', home_url($wp->request));
 
@@ -497,7 +509,10 @@ class WDSViewSlider {
         ?>
       }
 
-      /* Timer.*/
+      <?php
+      if ($slider_row->timer_bar_type == 'top' || $slider_row->timer_bar_type == 'bottom') {
+        ?>
+      /* Line timer.*/
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_line_timer_container_<?php echo $wds; ?> {
         display: block;
         position: absolute;
@@ -515,6 +530,92 @@ class WDSViewSlider {
         opacity: <?php echo number_format((100 - $slider_row->timer_bar_transparent) / 100, 2, ".", ""); ?>;
         filter: alpha(opacity=<?php echo 100 - $slider_row->timer_bar_transparent; ?>);
       }
+        <?php
+      }
+      elseif ($slider_row->timer_bar_type != 'none') {
+        ?>
+      /* Circle timer.*/
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_line_timer_container_<?php echo $wds; ?> {
+        display: block;
+        position: absolute;
+        overflow: hidden;
+        <?php echo $slider_row->timer_bar_type; ?>: 0;
+        z-index: 16;
+        width: 100%;
+        height: <?php echo $circle_timer_size; ?>px;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_circle_timer_container_<?php echo $wds; ?> {
+        display: block;
+        position: absolute;
+        overflow: hidden;
+        z-index: 16;
+        width: 100%;
+        <?php switch ($slider_row->timer_bar_type) { 
+        case 'circle_top_right': echo 'top: 0px; text-align:right;'; break;
+        case 'circle_top_left': echo 'top: 0px; text-align:left;'; break;
+        case 'circle_bot_right': echo 'bottom: 0px; text-align:right;'; break;
+        case 'circle_bot_left': echo 'bottom: 0px; text-align:left;'; break;
+        default: 'top: 0px; text-align:right;';
+         } ?>
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_circle_timer_container_<?php echo $wds; ?> .wds_circle_timer_<?php echo $wds; ?> {
+        display: inline-block;
+        width: <?php echo $circle_timer_size; ?>px;
+        height: <?php echo $circle_timer_size; ?>px;
+        position: relative;
+        opacity: <?php echo number_format((100 - $slider_row->timer_bar_transparent) / 100, 2, ".", ""); ?>;
+        filter: alpha(opacity=<?php echo 100 - $slider_row->timer_bar_transparent; ?>);
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_circle_timer_container_<?php echo $wds; ?> .wds_circle_timer_<?php echo $wds; ?> .wds_circle_timer_parts_<?php echo $wds; ?> {
+        display: table;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        position: relative;
+      }
+      .wds_circle_timer_part_<?php echo $wds; ?> {
+        display: table-cell;
+        width: 50%;
+        height: 100%;
+        overflow: hidden !important;
+      }
+      .wds_circle_timer_small_parts_<?php echo $wds; ?> {
+        display: block;
+        width: 100%;
+        height: 50%;
+        background: #<?php echo $slider_row->timer_bar_color; ?>;
+        position: relative;
+      }
+      .wds_circle_timer_center_cont_<?php echo $wds; ?> {
+        display: table;
+        width: <?php echo $circle_timer_size; ?>px;
+        height: <?php echo $circle_timer_size; ?>px;
+        position: absolute;
+        text-align: center;
+        top:0px;
+        vertical-align:middle;
+      }
+      .wds_circle_timer_center_<?php echo $wds; ?> {
+        display: table-cell;
+        width: 100%; 
+        height: 100%;
+        text-align: center;
+        line-height: 0px !important;
+        vertical-align: middle;
+      }
+      .wds_circle_timer_center_<?php echo $wds; ?> div {
+        display: inline-block;
+        width: <?php echo $circle_timer_size / 2 - 2; ?>px;
+        height: <?php echo $circle_timer_size / 2 - 2; ?>px;		
+        background-color: #FFFFFF;
+        border-radius: 100%;
+        z-index: 300;
+        position: relative;
+      }
+
+        <?php
+      }
+      ?>
 
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_image_spun1_<?php echo $wds; ?> {
         display: table; 
@@ -617,9 +718,32 @@ class WDSViewSlider {
             </div>
               <?php
             }
-            if ($slider_row->timer_bar_type != 'none') {
+            if ($slider_row->timer_bar_type == 'top' ||  $slider_row->timer_bar_type == 'bottom') {
               ?>
-            <div class="wds_line_timer_container_<?php echo $wds; ?>"><div class="wds_line_timer_<?php echo $wds; ?>"></div></div>
+              <div class="wds_line_timer_container_<?php echo $wds; ?>"><div class="wds_line_timer_<?php echo $wds; ?>"></div></div>			
+              <?php
+            }
+            elseif ($slider_row->timer_bar_type != 'none') {
+              ?>
+              <div class="wds_circle_timer_container_<?php echo $wds; ?>">
+                <div class="wds_circle_timer_<?php echo $wds; ?>">
+                  <div class="wds_circle_timer_parts_<?php echo $wds; ?>">
+                    <div class="wds_circle_timer_part_<?php echo $wds; ?>">
+                      <div class="wds_circle_timer_small_parts_<?php echo $wds; ?> animated" style="border-radius:100% 0% 0% 0%;" id="top_left_<?php echo $wds; ?>"></div>
+                      <div class="wds_circle_timer_small_parts_<?php echo $wds; ?> animated" style="border-radius:0% 0% 0% 100%;z-index:150;" id="bottom_left_<?php echo $wds; ?>"></div>
+                    </div>
+                    <div class="wds_circle_timer_part_<?php echo $wds; ?>">
+                      <div class="wds_circle_timer_small_parts_<?php echo $wds; ?> animated" style="border-radius:0% 100% 0% 0%;" id="top_right_<?php echo $wds; ?>"></div>
+                      <div class="wds_circle_timer_small_parts_<?php echo $wds; ?> animated" style="border-radius:0% 0% 100% 0%;" id="bottom_right_<?php echo $wds; ?>"></div>
+                    </div>
+                  </div>
+                  <div class="wds_circle_timer_center_cont_<?php echo $wds; ?>">
+                     <div class="wds_circle_timer_center_<?php echo $wds; ?>">
+                      <div></div>
+                     </div> 
+                  </div>					
+                </div>
+              </div>
               <?php
             }
             ?>
@@ -829,6 +953,78 @@ class WDSViewSlider {
       var wds_transition_duration_<?php echo $wds; ?> = <?php echo (($slideshow_interval < 4) && ($slideshow_interval != 0)) ? ($slideshow_interval * 1000) / 4 : 800; ?>;
       var wds_playInterval_<?php echo $wds; ?>;
       var progress = 0;
+      var bottom_right_deggree_<?php echo $wds; ?>;
+      var bottom_left_deggree_<?php echo $wds; ?>;
+      var top_left_deggree_<?php echo $wds; ?>;
+      var curent_time_deggree_<?php echo $wds; ?> = 0;
+      var circle_timer_animate_<?php echo $wds; ?>;
+      function circle_timer_<?php echo $wds; ?>(angle) {
+        circle_timer_animate_<?php echo $wds; ?> = jQuery({deg: angle}).animate({deg: 360}, {
+          duration: <?php echo $slideshow_interval * 1000; ?>,
+          step: function(now) {
+            curent_time_deggree_<?php echo $wds; ?> = now;
+            if (now >= 0 && now <= 270) {
+              jQuery('#top_right_<?php echo $wds; ?>').css({
+                '-moz-transform':'rotate('+now+'deg)',
+                '-webkit-transform':'rotate('+now+'deg)',
+                '-o-transform':'rotate('+now+'deg)',
+                '-ms-transform':'rotate('+now+'deg)',
+                'transform':'rotate('+now+'deg)',
+
+                '-webkit-transform-origin': 'left bottom',
+                '-ms-transform-origin': 'left bottom',
+                '-moz-transform-origin': 'left bottom',
+                'transform-origin': 'left bottom'
+              });
+            }
+            if (now >= 90 && now <= 270) {
+              bottom_right_deggree_<?php echo $wds; ?> = now - 90;
+              jQuery('#bottom_right_<?php echo $wds; ?>').css({
+                '-moz-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+              '-webkit-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+              '-o-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+              '-ms-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+              'transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+
+              '-webkit-transform-origin': 'left top',
+              '-ms-transform-origin': 'left top',
+              '-moz-transform-origin': 'left top',
+              'transform-origin': 'left top'
+              });
+            }
+            if (now >= 180 && now <= 360) {
+              bottom_left_deggree_<?php echo $wds; ?> = now - 180;
+              jQuery('#bottom_left_<?php echo $wds; ?>').css({
+                '-moz-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+                '-webkit-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+                '-o-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+                '-ms-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+                'transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+
+                '-webkit-transform-origin': 'right top',
+                '-ms-transform-origin': 'right top',
+                '-moz-transform-origin': 'right top',
+                'transform-origin': 'right top'
+              });
+            }
+            if (now >= 270 && now <= 360) {
+              top_left_deggree_<?php echo $wds; ?>  = now - 270;
+              jQuery('#top_left_<?php echo $wds; ?>').css({
+                '-moz-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+                '-webkit-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+                '-o-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+                '-ms-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+                'transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+
+                '-webkit-transform-origin': 'right bottom',
+                '-ms-transform-origin': 'right bottom',
+                '-moz-transform-origin': 'right bottom',
+                'transform-origin': 'right bottom'
+              });
+            }
+          }
+        });
+      }
       /* Stop autoplay.*/
       window.clearInterval(wds_playInterval_<?php echo $wds; ?>);
       var wds_current_key_<?php echo $wds; ?> = '<?php echo (isset($current_key) ? $current_key : ''); ?>';
@@ -1217,13 +1413,75 @@ class WDSViewSlider {
             jQuery(".wds_line_timer_<?php echo $wds; ?>").css({width: 0});
             wds_<?php echo $slideshow_effect; ?>_<?php echo $wds; ?>(current_image_class, next_image_class, direction);
             if (('<?php echo $slider_row->timer_bar_type; ?>' != 'none') && (<?php echo $enable_slideshow_autoplay; ?> || jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause'))) {
-              if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
-                jQuery(".wds_line_timer_<?php echo $wds; ?>").animate({
-                  width: "100%"
-                }, {
-                  duration: <?php echo $slideshow_interval * 1000; ?>,
-                  specialEasing: {width: "linear"}
+              if('<?php echo $slider_row->timer_bar_type; ?>' == 'top' || '<?php echo $slider_row->timer_bar_type; ?>' == 'bottom') {
+                if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
+                  jQuery(".wds_line_timer_<?php echo $wds; ?>").animate({
+                    width: "100%"
+                  }, {
+                    duration: <?php echo $slideshow_interval * 1000; ?>,
+                    specialEasing: {width: "linear"}
+                  });             
+                }
+              }
+              else if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+                if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
+                  circle_timer_animate_<?php echo $wds; ?>.stop();
+                }
+                jQuery('#top_right_<?php echo $wds; ?>').css({
+                  '-moz-transform':'rotate(0deg)',
+                  '-webkit-transform':'rotate(0deg)',
+                  '-o-transform':'rotate(0deg)',
+                  '-ms-transform':'rotate(0deg)',
+                  'transform':'rotate(0deg)',
+                   
+                  '-webkit-transform-origin': 'left bottom',
+                  '-ms-transform-origin': 'left bottom',
+                  '-moz-transform-origin': 'left bottom',
+                  'transform-origin': 'left bottom'
                 });
+                jQuery('#bottom_right_<?php echo $wds; ?>').css({
+                  '-moz-transform':'rotate(0deg)',
+                  '-webkit-transform':'rotate(0deg)',
+                  '-o-transform':'rotate(0deg)',
+                  '-ms-transform':'rotate(0deg)',
+                  'transform':'rotate(0deg)',
+                 
+                  '-webkit-transform-origin': 'left top',
+                  '-ms-transform-origin': 'left top',
+                  '-moz-transform-origin': 'left top',
+                  'transform-origin': 'left top'
+                });
+                jQuery('#bottom_left_<?php echo $wds; ?>').css({
+                  '-moz-transform':'rotate(0deg)',
+                  '-webkit-transform':'rotate(0deg)',
+                  '-o-transform':'rotate(0deg)',
+                  '-ms-transform':'rotate(0deg)',
+                  'transform':'rotate(0deg)',
+                 
+                  '-webkit-transform-origin': 'right top',
+                  '-ms-transform-origin': 'right top',
+                  '-moz-transform-origin': 'right top',
+                  'transform-origin': 'right top'
+                });
+                jQuery('#top_left_<?php echo $wds; ?>').css({
+                  '-moz-transform':'rotate(0deg)',
+                  '-webkit-transform':'rotate(0deg)',
+                  '-o-transform':'rotate(0deg)',
+                  '-ms-transform':'rotate(0deg)',
+                  'transform':'rotate(0deg)',
+                 
+                  '-webkit-transform-origin': 'right bottom',
+                  '-ms-transform-origin': 'right bottom',
+                  '-moz-transform-origin': 'right bottom',
+                  'transform-origin': 'right bottom'
+                });	
+                if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
+                  /* Begin circle timer on next.*/				  		
+                  circle_timer_<?php echo $wds; ?>(0);
+                }
+                else {
+                  curent_time_deggree_<?php echo $wds; ?> = 0;
+                }
               }
             }
 	    <?php
@@ -1406,20 +1664,22 @@ class WDSViewSlider {
           <?php
         }
         ?>
-        if (typeof jQuery().swiperight !== 'undefined') {
-          if (jQuery.isFunction(jQuery().swiperight)) {
-            jQuery('#wds_container1_<?php echo $wds; ?>').swiperight(function () {
-              wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) - iterator_<?php echo $wds; ?>()) >= 0 ? (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) - iterator_<?php echo $wds; ?>()) % wds_data_<?php echo $wds; ?>.length : wds_data_<?php echo $wds; ?>.length - 1, wds_data_<?php echo $wds; ?>);
-              return false;
-            });
+        if (<?php echo $enable_prev_next_butt; ?>) {
+          if (typeof jQuery().swiperight !== 'undefined') {
+            if (jQuery.isFunction(jQuery().swiperight)) {
+              jQuery('#wds_container1_<?php echo $wds; ?>').swiperight(function () {
+                wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) - iterator_<?php echo $wds; ?>()) >= 0 ? (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) - iterator_<?php echo $wds; ?>()) % wds_data_<?php echo $wds; ?>.length : wds_data_<?php echo $wds; ?>.length - 1, wds_data_<?php echo $wds; ?>);
+                return false;
+              });
+            }
           }
-        }
-        if (typeof jQuery().swipeleft !== 'undefined') {
-          if (jQuery.isFunction(jQuery().swipeleft)) {
-            jQuery('#wds_container1_<?php echo $wds; ?>').swipeleft(function () {
-              wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) + iterator_<?php echo $wds; ?>()) % wds_data_<?php echo $wds; ?>.length, wds_data_<?php echo $wds; ?>);
-              return false;
-            });
+          if (typeof jQuery().swipeleft !== 'undefined') {
+            if (jQuery.isFunction(jQuery().swipeleft)) {
+              jQuery('#wds_container1_<?php echo $wds; ?>').swipeleft(function () {
+                wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) + iterator_<?php echo $wds; ?>()) % wds_data_<?php echo $wds; ?>.length, wds_data_<?php echo $wds; ?>);
+                return false;
+              });
+            }
           }
         }
 
@@ -1433,6 +1693,14 @@ class WDSViewSlider {
             /* Play.*/
             jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("title", "<?php echo __('Pause', 'bwg'); ?>");
             jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("class", "wds_ctrl_btn_<?php echo $wds; ?> wds_slideshow_play_pause_<?php echo $wds; ?> fa fa-pause");
+
+            /* Finish current animation and begin the other.*/
+            if (<?php echo $enable_slideshow_autoplay; ?> && ('<?php echo $slider_row->timer_bar_type; ?>' != 'top' && '<?php echo $slider_row->timer_bar_type; ?>' != 'bottom')) {
+              if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
+                circle_timer_animate_<?php echo $wds; ?>.stop();
+              }
+              circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
+            }
             play_<?php echo $wds; ?>();
             if (<?php echo $enable_slideshow_music ?>) {
               document.getElementById("wds_audio_<?php echo $wds; ?>").play();
@@ -1457,7 +1725,21 @@ class WDSViewSlider {
             }
             if (typeof jQuery().stop !== 'undefined') {
               if (jQuery.isFunction(jQuery().stop)) {
-                jQuery(".wds_line_timer_<?php echo $wds; ?>").stop();
+                <?php
+                if ($slider_row->timer_bar_type == 'top' ||  $slider_row->timer_bar_type == 'bottom') {
+                  ?>
+                  jQuery(".wds_line_timer_<?php echo $wds; ?>").stop();
+                  <?php
+                }
+                elseif ($slider_row->timer_bar_type != 'none') {
+                  ?>
+                  /* Pause circle timer.*/
+                  if (typeof circle_timer_animate_<?php echo $wds; ?>.stop !== 'undefined') {
+                    circle_timer_animate_<?php echo $wds; ?>.stop();
+                  }
+                  <?php
+                }
+                ?>
               }
             }
           }
@@ -1468,6 +1750,9 @@ class WDSViewSlider {
           jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("class", "wds_ctrl_btn_<?php echo $wds; ?> wds_slideshow_play_pause_<?php echo $wds; ?> fa fa-pause");
           if (<?php echo $enable_slideshow_music ?>) {
             document.getElementById("wds_audio_<?php echo $wds; ?>").play();
+          }
+          if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none' && '<?php echo $slider_row->timer_bar_type; ?>' != 'top' && '<?php echo $slider_row->timer_bar_type; ?>' != 'bottom') {
+            circle_timer_<?php echo $wds; ?>(0);		  
           }
         }
         <?php if ($slider_row->preload_images) { ?>
@@ -1506,15 +1791,26 @@ class WDSViewSlider {
         }
         if (typeof jQuery().stop !== 'undefined') {
           if (jQuery.isFunction(jQuery().stop)) {
-            jQuery(".wds_line_timer_<?php echo $wds; ?>").stop();
+            if ('<?php echo $slider_row->timer_bar_type; ?>' == 'top' || '<?php echo $slider_row->timer_bar_type; ?>' == 'bottom') {
+              jQuery(".wds_line_timer_<?php echo $wds; ?>").stop();
+            }
+            else if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+              circle_timer_animate_<?php echo $wds; ?>.stop();
+            }
           }
         }
-			}
+      }
       function wds_play_animation_<?php echo $wds; ?>() {
         if (jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
           return;
         }
-		    play_<?php echo $wds; ?>();
+        play_<?php echo $wds; ?>();
+        if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none' && '<?php echo $slider_row->timer_bar_type; ?>' != 'bottom' && '<?php echo $slider_row->timer_bar_type; ?>' != 'top') {
+          if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
+            circle_timer_animate_<?php echo $wds; ?>.stop();
+          }
+          circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
+        }
         if (<?php echo $enable_slideshow_music ?>) {
           document.getElementById("wds_audio_<?php echo $wds; ?>").play();
         }	 
@@ -1577,6 +1873,12 @@ class WDSViewSlider {
         if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
           if (<?php echo $enable_slideshow_autoplay; ?>) {
             play_<?php echo $wds; ?>();
+            if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none' && '<?php echo $slider_row->timer_bar_type; ?>' != 'top' && '<?php echo $slider_row->timer_bar_type; ?>' != 'bottom') {
+              if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
+                circle_timer_animate_<?php echo $wds; ?>.stop();
+              }
+              circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
+            }
           }
         }
         var i_<?php echo $wds; ?> = 0;
@@ -1592,7 +1894,12 @@ class WDSViewSlider {
         window.clearInterval(wds_playInterval_<?php echo $wds; ?>);
         if (typeof jQuery().stop !== 'undefined') {
           if (jQuery.isFunction(jQuery().stop)) {
-            jQuery(".wds_line_timer_<?php echo $wds; ?>").stop();
+            if ('<?php echo $slider_row->timer_bar_type; ?>' == 'top' || '<?php echo $slider_row->timer_bar_type; ?>' == 'bottom') {
+              jQuery(".wds_line_timer_<?php echo $wds; ?>").stop();
+            }
+            else if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+              circle_timer_animate_<?php echo $wds; ?>.stop();
+            }
           }
         }
       });

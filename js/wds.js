@@ -293,7 +293,8 @@ function wds_success(form_id, end) {
       }
       break;
     }
-    case "reset": {
+    case "reset":
+    case "duplicate":    {
       jQuery("#" + form_id).submit();
       break;
     }
@@ -1405,7 +1406,6 @@ function wds_add_image(files, image_for, slide_id, layer_id) {
       if (typeof layer_id == "undefined") {
         var layer_id = "";
       }
-      console.log(layer_id);
       jQuery("#slide" + slide_id + "_layer" + layer_id).attr('src', files[0]['url']);
       jQuery("#slide" + slide_id + "_layer" + layer_id+"_image_url").val(files[0]['url']);  
       break;

@@ -150,7 +150,7 @@ class WDSModelSliders_wds {
       $row->enable_time_bar = 1;
       $row->timer_bar_type = 'top';
       $row->timer_bar_size = 5;
-      $row->timer_bar_color = 'FFFFFF';
+      $row->timer_bar_color = 'BBBBBB';
       $row->timer_bar_transparent = 50;
       $row->built_in_watermark_type = 'none';
       $row->built_in_watermark_position = 'middle-center';

@@ -57,6 +57,7 @@ class WDSViewSliders_wds {
         </span>
         <input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'publish_all')" value="Publish" />
         <input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'unpublish_all')" value="Unpublish" />
+        <input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'duplicate_all')" value="Duplicate" />
         <input class="button-secondary" type="submit" onclick="if (confirm('Do you want to delete selected items?')) {
                                                        spider_set_input_value('task', 'delete_all');
                                                      } else {
@@ -401,7 +402,10 @@ class WDSViewSliders_wds {
         <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
                                                                    spider_set_input_value('task', 'apply');
                                                                    spider_ajax_save('sliders_form', event);" value="Apply" />
-        <?php
+        <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                               spider_set_input_value('task', 'duplicate');
+                                                               spider_ajax_save('sliders_form', event);" value="Save as Copy" />
+	<?php
         if ($row->spider_uploader) {
           ?>
         <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_slides', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" title="Add Images" onclick="return false;">
@@ -1425,6 +1429,10 @@ class WDSViewSliders_wds {
                       <select name="timer_bar_type" id="timer_bar_type">
                         <option value="top" <?php echo (($row->timer_bar_type == "top") ? 'selected="selected"' : ''); ?>>Line top</option>
                         <option value="bottom" <?php echo (($row->timer_bar_type == "bottom") ? 'selected="selected"' : ''); ?>>Line Bottom</option>
+                        <option value="circle_top_left" <?php echo (($row->timer_bar_type == "circle_top_left") ? 'selected="selected"' : ''); ?>>Circle top left</option>
+                        <option value="circle_top_right" <?php echo (($row->timer_bar_type == "circle_top_right") ? 'selected="selected"' : ''); ?>>Circle top right</option>
+                        <option value="circle_bot_left" <?php echo (($row->timer_bar_type == "circle_bot_left") ? 'selected="selected"' : ''); ?>>Circle bottom left</option>
+                        <option value="circle_bot_right" <?php echo (($row->timer_bar_type == "circle_bot_right") ? 'selected="selected"' : ''); ?>>Circle bottom right</option>
                       </select>
                       <div class="spider_description">Choose the type of the timer bar to be used within the slider.</div>
                     </td>
