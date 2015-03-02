@@ -131,6 +131,12 @@ After downloading the ZIP file of the slider plugin,
 
 == Changelog ==
 
+= 1.0.7 =
+New: Circle timer.
+New: Slider duplication.
+Fixed: Disable swipe on navigation off.
+Fixed: Layer click on 3D animations.
+
 = 1.0.6 =
 custom play/pause buttons
 slide duplication
