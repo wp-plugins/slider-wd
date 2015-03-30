@@ -11,8 +11,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Slider WD is a great tool for creating responsive sliders. It uses various transition effects.
 
 == Description ==
-Create responsive, highly configurable slides with various effects for your WordPress site. Download for FREE!
-   
+Create responsive, highly configurable slides with various effects for your WordPress site. Download for FREE!   
+    
 [WordPress Slider Plugin](http://web-dorado.com/products/wordpress-slider-plugin.html)  
 [User Manual](http://web-dorado.com/wordpress-slider-wd-guide-step-1.html)  
 [Support Forum](http://web-dorado.com/forum/slider-plugin.html)  
