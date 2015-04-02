@@ -132,6 +132,10 @@ After downloading the ZIP file of the slider plugin,
 
 == Changelog ==
 
+= 1.0.8 =
+New: Start with slide option.
+New: Effect duration option.
+
 = 1.0.7 =
 New: Circle timer.
 New: Slider duplication.
