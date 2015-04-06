@@ -55,6 +55,10 @@ Upgrade to [WordPress Slider Pro](http://web-dorado.com/products/wordpress-slide
 *   Navigation button/bullet styles   
 *   Support for Vimeo and YouTube videos   
 
+###IMPORTANT:    
+If you think you found a bug in Slider WD or have any problem/question concerning the plugin, please check out [WordPress Slider Support Forum](http://web-dorado.com/forum/slider-plugin.html) in our website. If you do not find a solution here, do not hesitate to contact us at [info@web-dorado.com](mailto:info@web-dorado.com).
+
+
 ### Supported languages 
 
  *If you need language of Slider WD which is not included in this list, please contact us and we will do the translation of Slider WD within 3 days. If you find any mistakes in the translation, please contact us and we will make relevant corrections within 3 days. *  
