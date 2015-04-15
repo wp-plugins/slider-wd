@@ -112,9 +112,10 @@ class WDSViewSlider {
         $slide_ids[] += $slide_row->id;
       }
       $current_image_id = $slide_ids[array_rand($slide_ids)];
+      $start_slide_num = array_search($current_image_id, $slide_ids);
     }
     else {
-      if ($slider_row->start_slide_num > 0 && $slider_row->start_slide_num <= count($slide_rows)) {
+      if ($slider_row->start_slide_num > 0 && $slider_row->start_slide_num <= $slides_count) {
         $start_slide_num = $slider_row->start_slide_num - 1;
       }
       else {
@@ -969,7 +970,7 @@ class WDSViewSlider {
           duration: <?php echo $slideshow_interval * 1000; ?>,
           step: function(now) {
             curent_time_deggree_<?php echo $wds; ?> = now;
-            if (now >= 0 && now <= 270) {
+            if (now >= 0 && now < 271) {
               jQuery('#top_right_<?php echo $wds; ?>').css({
                 '-moz-transform':'rotate('+now+'deg)',
                 '-webkit-transform':'rotate('+now+'deg)',
@@ -983,7 +984,7 @@ class WDSViewSlider {
                 'transform-origin': 'left bottom'
               });
             }
-            if (now >= 90 && now <= 270) {
+            if (now >= 90 && now < 271) {
               bottom_right_deggree_<?php echo $wds; ?> = now - 90;
               jQuery('#bottom_right_<?php echo $wds; ?>').css({
                 '-moz-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
@@ -998,7 +999,7 @@ class WDSViewSlider {
               'transform-origin': 'left top'
               });
             }
-            if (now >= 180 && now <= 360) {
+            if (now >= 180 && now < 361) {
               bottom_left_deggree_<?php echo $wds; ?> = now - 180;
               jQuery('#bottom_left_<?php echo $wds; ?>').css({
                 '-moz-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
@@ -1013,7 +1014,7 @@ class WDSViewSlider {
                 'transform-origin': 'right top'
               });
             }
-            if (now >= 270 && now <= 360) {
+            if (now >= 270 && now < 361) {
               top_left_deggree_<?php echo $wds; ?>  = now - 270;
               jQuery('#top_left_<?php echo $wds; ?>').css({
                 '-moz-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
@@ -1318,10 +1319,10 @@ class WDSViewSlider {
             return;
           }
           var direction = 'right';
-          if (wds_current_key_<?php echo $wds; ?> > key) {
+          if (parseInt(wds_current_key_<?php echo $wds; ?>) > parseInt(key)) {
             var direction = 'left';
           }
-          else if (wds_current_key_<?php echo $wds; ?> == key) {
+          else if (parseInt(wds_current_key_<?php echo $wds; ?>) == parseInt(key)) {
             return;
           }
           /* Set active thumbnail position.*/
@@ -1372,43 +1373,13 @@ class WDSViewSlider {
               }
             }
           }, wds_duration_for_clear_effects_<?php echo $wds; ?>);
-          /* Effects out part.*/
-          function set_layer_effect_out(i) {
-            wds_clear_layers_effects_out_<?php echo $wds; ?>[key][i] = setTimeout(function() {
-              if (wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_layer_effect_out"] != 'none') {
-                if (wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_type"] != 'social') {	
-                  jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_duration_eff_out"] / 1000 + 's');				 
-                  jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_layer_effect_out"] + ' animated');
-                }
-                else {
-                  jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_duration_eff_out"] / 1000 + 's');
-                  jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_layer_effect_out"] + ' fa fa-' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_social_button"] + ' animated');
-                }
-              }
-            }, wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_end"]);
-          }
-          /* Effects in part.*/
-          function set_layer_effect_in(j) {
-            wds_clear_layers_effects_in_<?php echo $wds; ?>[key][j] = setTimeout(function() {
-              if (wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_type"] != 'social') {
-                jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_duration_eff_out"] / 1000 + 's');			 
-                jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_layer_effect_in"] + ' animated');
-              }
-              else {
-                jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_duration_eff_out"] / 1000 + 's');
-                jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_layer_effect_in"] + ' fa fa-' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_social_button"] + ' animated');
-              }
-            }, wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_start"]);
-          }
           /* Loop through layers in.*/
           for (var j = 0; j < next_slide_layers_count; j++) {
-            set_layer_effect_in(j);
+            wds_set_layer_effect_in_<?php echo $wds; ?>(j, key);
           }
           /* Loop through layers out if pause button not pressed.*/
-          if (jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-pause")) {
-            for (var i = 0; i < next_slide_layers_count; i++) {
-              set_layer_effect_out(i);
-            }
+          for (var i = 0; i < next_slide_layers_count; i++) {
+            wds_set_layer_effect_out_<?php echo $wds; ?>(i, key);
           }
           setTimeout(function() {
             if (typeof jQuery().finish !== 'undefined') {
@@ -1543,11 +1514,11 @@ class WDSViewSlider {
           var wds_imageWidth = jQuery(this).attr("wds_image_width");
           var wds_imageHeight = jQuery(this).attr("wds_image_height");
           var wds_width = wds_imageWidth;
-          if (wds_origWidth <= wds_imageWidth) {
+          if (wds_imageWidth > wds_origWidth) {
             wds_width = wds_origWidth;
           }
           var wds_height = wds_imageHeight;
-          if (wds_origHeight <= wds_imageHeight) {
+          if (wds_imageHeight > wds_origHeight) {
             wds_height = wds_origHeight;
           }
           jQuery(this).css({
@@ -1560,7 +1531,7 @@ class WDSViewSlider {
               height: (parseFloat(wds_imageHeight) * ratio) + "px"
             });
           }
-          else if (wds_origWidth <= wds_imageWidth || wds_origHeight <= wds_imageHeight) {
+          else if (wds_imageWidth > wds_origWidth || wds_imageHeight > wds_origHeight) {
             if (wds_origWidth / wds_imageWidth > wds_origHeight / wds_imageHeight) {
               jQuery(this).css({
                 width: (parseFloat(wds_imageWidth) * ratio) + "px"
@@ -1585,6 +1556,7 @@ class WDSViewSlider {
           })
         });
       }
+      /* Generate background position for Zoom Fade effect.*/
       function wds_genBgPos_<?php echo $wds; ?>() {
         var bgSizeArray = [0, 70];
         var bgSize = bgSizeArray[Math.floor(Math.random() * bgSizeArray.length)];
@@ -1613,8 +1585,9 @@ class WDSViewSlider {
         });
       }
       jQuery(window).load(function () {
-        <?php if ($enable_slideshow_autoplay && $slider_row->stop_animation) {
-        ?>
+        <?php
+        if ($enable_slideshow_autoplay && $slider_row->stop_animation) {
+          ?>
         jQuery("#wds_container1_<?php echo $wds; ?>").mouseover(function(e) {
           wds_stop_animation_<?php echo $wds; ?>();
         });
@@ -1631,8 +1604,9 @@ class WDSViewSlider {
           }
           wds_play_animation_<?php echo $wds; ?>();
         });
-        <?php
-        } ?>
+          <?php
+        }
+        ?>
         jQuery(".wds_slideshow_image_<?php echo $wds; ?> span, .wds_slideshow_image_<?php echo $wds; ?> i").each(function () {
           jQuery(this).attr("wds_fpaddingl", jQuery(this).css("paddingLeft"));
           jQuery(this).attr("wds_fpaddingr", jQuery(this).css("paddingRight"));
@@ -1770,15 +1744,15 @@ class WDSViewSlider {
         }
         wds_preload_<?php echo $wds; ?>(0);
         <?php } ?>
-        var first_slide_layers_count_<?php echo $wds; ?> = wds_data_<?php echo $wds; ?>[0]["slide_layers_count"];
+        var first_slide_layers_count_<?php echo $wds; ?> = wds_data_<?php echo $wds; ?>[<?php echo $start_slide_num; ?>]["slide_layers_count"];
         if (first_slide_layers_count_<?php echo $wds; ?>) {
           /* Loop through layers in.*/
           for (var j = 0; j < first_slide_layers_count_<?php echo $wds; ?>; j++) {
-            set_layer_effect_in_onload_<?php echo $wds; ?>(j);
+            wds_set_layer_effect_in_<?php echo $wds; ?>(j, <?php echo $start_slide_num; ?>);
           }
           /* Loop through layers out.*/
           for (var i = 0; i < first_slide_layers_count_<?php echo $wds; ?>; i++) {
-            set_layer_effect_out_onload_<?php echo $wds; ?>(i);
+            wds_set_layer_effect_out_<?php echo $wds; ?>(i, <?php echo $start_slide_num; ?>);
           }
         }
       });
@@ -1822,39 +1796,39 @@ class WDSViewSlider {
         }	 
       }
       /* Effects in part.*/		
-		  function set_layer_effect_in_onload_<?php echo $wds; ?>(j) {
-		    wds_clear_layers_effects_in_<?php echo $wds; ?>[0][j] = setTimeout(function(){
-          if (wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_type"] != 'social') {
-            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_duration_eff_out"] / 1000 + 's');			 
-		        jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_layer_effect_in"] + ' animated');
+		  function wds_set_layer_effect_in_<?php echo $wds; ?>(j, key) {
+		    wds_clear_layers_effects_in_<?php echo $wds; ?>[key][j] = setTimeout(function(){
+          if (wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_type"] != 'social') {
+            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_duration_eff_out"] / 1000 + 's');			 
+		        jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_layer_effect_in"] + ' animated');
 		      }
           else {
-            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_duration_eff_out"] / 1000 + 's');	
-            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_layer_effect_in"] + ' fa fa-' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_social_button"] + ' animated');
+            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_duration_eff_out"] / 1000 + 's');	
+            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_layer_effect_in"] + ' fa fa-' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_social_button"] + ' animated');
           }
           /* Play video on layer in.*/
-          if ((wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_type"] == "video") && (wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_video_autoplay"] == "on")) {
-            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_id"]).find("iframe").each(function () {
+          if ((wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_type"] == "video") && (wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_video_autoplay"] == "on")) {
+            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).find("iframe").each(function () {
               jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
               jQuery(this)[0].contentWindow.postMessage('{ "method": "play" }', "*");
             });
           }
-		    }, wds_data_<?php echo $wds; ?>[0]["layer_" + j + "_start"]);
+		    }, wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_start"]);
 		  }
       /* Effects out part.*/
-		  function set_layer_effect_out_onload_<?php echo $wds; ?>(i) {
-			  wds_clear_layers_effects_out_<?php echo $wds; ?>[0][i] = setTimeout(function() {
-          if (wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_layer_effect_out"] != 'none') {
-            if (wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_type"] != 'social') {
-              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_duration_eff_out"] / 1000 + 's');				 
-              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_layer_effect_out"] + ' animated');
+		  function wds_set_layer_effect_out_<?php echo $wds; ?>(i, key) {
+			  wds_clear_layers_effects_out_<?php echo $wds; ?>[key][i] = setTimeout(function() {
+          if (wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_layer_effect_out"] != 'none') {
+            if (wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_type"] != 'social') {
+              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_duration_eff_out"] / 1000 + 's');				 
+              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_layer_effect_out"] + ' animated');
             }
             else {
-              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_duration_eff_out"] / 1000 + 's');
-              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[0]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_layer_effect_out"] + ' fa fa-' + wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_social_button"] + ' animated');
+              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_id"]).css('-webkit-animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_duration_eff_out"] / 1000 + 's').css('animation-duration' , wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_duration_eff_out"] / 1000 + 's');
+              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_layer_effect_out"] + ' fa fa-' + wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_social_button"] + ' animated');
             }
           }
-		    }, wds_data_<?php echo $wds; ?>[0]["layer_" + i + "_end"]);
+		    }, wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_end"]);
 		  }
       function play_<?php echo $wds; ?>() {
         if (('<?php echo $slider_row->timer_bar_type; ?>' != 'none') && (<?php echo $enable_slideshow_autoplay; ?> || jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause'))) {
