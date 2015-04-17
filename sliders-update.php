@@ -41,6 +41,14 @@ function wds_update($version) {
     // Transition effect duration.
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `effect_duration` int(6) NOT NULL DEFAULT 800");
   }
+  if (version_compare($version, '1.0.11') == -1) {
+    // Carousel view options.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `carousel` tinyint(1) NOT NULL DEFAULT 0");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `carousel_image_counts` int(4) NOT NULL DEFAULT 7");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `carousel_image_parameters` varchar(8) NOT NULL DEFAULT 0.85");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `carousel_fit_containerWidth` tinyint(1) NOT NULL DEFAULT 0");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `carousel_width` int(4) NOT NULL DEFAULT 1000");
+  }
   return;
 }
 

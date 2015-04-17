@@ -88,6 +88,11 @@ function wds_insert() {
     `paus_butt_hov_url` varchar(255) NOT NULL,
     `start_slide_num` int(4) NOT NULL,
     `effect_duration` int(6) NOT NULL,
+    `carousel` tinyint(1) NOT NULL,
+    `carousel_image_counts` int(4) NOT NULL,
+    `carousel_image_parameters` varchar(8) NOT NULL,
+    `carousel_fit_containerWidth` tinyint(1) NOT NULL,
+    `carousel_width` int(4) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdsslider);

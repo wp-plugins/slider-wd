@@ -182,6 +182,11 @@ class WDSControllerSliders_wds {
     $paus_butt_hov_url = (isset($_POST['paus_butt_hov_url']) ? esc_html(stripslashes($_POST['paus_butt_hov_url'])) : '');
     $start_slide_num = ((isset($_POST['start_slide_num'])) ? (int) stripslashes($_POST['start_slide_num']) : 1);
     $effect_duration = ((isset($_POST['effect_duration'])) ? (int) stripslashes($_POST['effect_duration']) : 800);
+    $carousel = 0;
+    $carousel_image_counts = 7;
+    $carousel_image_parameters = 0.85;
+    $carousel_fit_containerWidth = 0;
+    $carousel_width = 1000;
 
     if (!$slider_id) {
       $save = $wpdb->insert($wpdb->prefix . 'wdsslider', array(			
@@ -269,6 +274,11 @@ class WDSControllerSliders_wds {
         'paus_butt_hov_url' => $paus_butt_hov_url,
         'start_slide_num' => $start_slide_num,
         'effect_duration' => $effect_duration,
+        'carousel' => $carousel,
+        'carousel_image_counts' => $carousel_image_counts,
+        'carousel_image_parameters' => $carousel_image_parameters,
+        'carousel_fit_containerWidth' => $carousel_fit_containerWidth,
+        'carousel_width' => $carousel_width
       ), array(
         '%s',
         '%d',
@@ -351,6 +361,11 @@ class WDSControllerSliders_wds {
         '%s',
         '%s',
         '%s',
+        '%s',
+        '%d',
+        '%d',
+        '%d',
+        '%d',
         '%s',
         '%d',
         '%d',
@@ -443,6 +458,11 @@ class WDSControllerSliders_wds {
         'paus_butt_hov_url' => $paus_butt_hov_url,
         'start_slide_num' => $start_slide_num,
         'effect_duration' => $effect_duration,
+        'carousel' => $carousel,
+        'carousel_image_counts' => $carousel_image_counts,
+        'carousel_image_parameters' => $carousel_image_parameters,
+        'carousel_fit_containerWidth' => $carousel_fit_containerWidth,
+        'carousel_width' => $carousel_width,
         ), array('id' => $slider_id));
     }
     if ($save !== FALSE) {
@@ -911,6 +931,11 @@ class WDSControllerSliders_wds {
         'paus_butt_hov_url' => $slider_row->paus_butt_hov_url,
         'start_slide_num' => $slider_row->start_slide_num,
         'effect_duration' => $slider_row->effect_duration,
+        'carousel' => $slider_row->carousel,
+        'carousel_image_counts' => $slider_row->carousel_image_counts,
+        'carousel_image_parameters' => $slider_row->carousel_image_parameters,
+        'carousel_fit_containerWidth' => $slider_row->carousel_fit_containerWidth,
+        'carousel_width' => $slider_row->carousel_width,
       ), array(
         '%s',
         '%d',
@@ -993,6 +1018,11 @@ class WDSControllerSliders_wds {
         '%s',
         '%s',
         '%s',
+        '%s',
+        '%d',
+        '%d',
+        '%d',
+        '%d',
         '%s',
         '%d',
         '%d',

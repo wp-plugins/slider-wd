@@ -407,7 +407,7 @@ class WDSViewSliders_wds {
         <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
                                                                spider_set_input_value('task', 'duplicate');
                                                                spider_ajax_save('sliders_form', event);" value="Save as Copy" />
-	<?php
+        <?php
         if ($row->spider_uploader) {
           ?>
         <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_slides', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" title="Add Images" onclick="return false;">
@@ -440,6 +440,9 @@ class WDSViewSliders_wds {
             <ul>
               <li tab_type="global" onclick="wds_change_nav(this, 'wds_nav_global_box')">
                 <a href="#">Global</a>
+              </li>
+              <li tab_type="carousel" onclick="wds_change_nav(this, 'wds_nav_carousel_box')">
+                <a href="#">Carousel</a>
               </li>
               <li tab_type="navigation" onclick="wds_change_nav(this, 'wds_nav_navigation_box')" >
                 <a href="#">Navigation</a>
@@ -678,6 +681,54 @@ class WDSViewSliders_wds {
                 </tbody>
               </table>
             </div>
+            <div class="wds_nav_box wds_nav_carousel_box spider_free_version_label" title="This functionality is disabled in free version.">
+              <table>
+                <tbody>
+                  <tr>
+                    <td colspan="2">
+                      <div class="error" style="padding: 5px; font-size: 14px; color: #000000 !important;">Carousel is disabled in free version.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="spider_label"><label>Carousel: </label></td>
+                    <td>
+                      <input disabled="disabled" type="radio" id="carousel1" name="carousel" <?php echo (($row->carousel) ? 'checked="checked"' : ''); ?> value="1" /><label for="carousel1">Yes</label>
+                      <input disabled="disabled" type="radio" id="carousel0" name="carousel" <?php echo (($row->carousel) ? '' : 'checked="checked"'); ?> value="0" /><label for="carousel0">No</label>
+                      <div class="spider_description"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="spider_label"><label for="carousel_image_counts">Number of images for carousel: </label></td>
+                    <td>
+                      <input disabled="disabled" type="text" id="carousel_image_counts" name="carousel_image_counts" value="<?php echo $row->carousel_image_counts; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" />
+                      <div class="spider_description"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="spider_label"><label for="carousel_image_parameters">Carousel image ratio: </label></td>
+                    <td>
+                      <input disabled="disabled" type="text" id="carousel_image_parameters" name="carousel_image_parameters" value="<?php echo $row->carousel_image_parameters; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" />
+                      <div class="spider_description">The value must be between 0 and 1.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="spider_label"><label>Container fit: </label></td>
+                    <td>
+                      <input disabled="disabled" type="radio" id="carousel_fit_containerWidth1" name="carousel_fit_containerWidth" <?php echo (($row->carousel_fit_containerWidth) ? 'checked="checked"' : ''); ?> value="1" /><label for="carousel_fit_containerWidth1">Yes</label>
+                      <input disabled="disabled" type="radio" id="carousel_fit_containerWidth0" name="carousel_fit_containerWidth" <?php echo (($row->carousel_fit_containerWidth) ? '' : 'checked="checked"'); ?> value="0" /><label for="carousel_fit_containerWidth0">No</label>
+                      <div class="spider_description"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="spider_label"><label for="carousel_width">Fixed width: </label></td>
+                    <td>
+                      <input disabled="disabled" type="text" id="carousel_width" name="carousel_width" value="<?php echo $row->carousel_width; ?>" class="spider_int_input" onkeypress="return spider_check_isnum(event)" /> px
+                      <div class="spider_description"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <div class="wds_nav_box wds_nav_navigation_box">
               <table>
                 <tbody>
@@ -817,7 +868,9 @@ class WDSViewSliders_wds {
                         }
                       }
                       else {
-                        echo $folder_name . " is not a directory.";
+                        ?>
+                        console.log('<?php echo $folder_name . " is not a directory."; ?>');
+                        <?php
                       }
                     }
                     ?> 
@@ -1004,7 +1057,9 @@ class WDSViewSliders_wds {
                         }
                       }
                       else {
-                        echo $folder_name . " is not a directory.";
+                        ?>
+                        console.log('<?php echo $folder_name . " is not a directory."; ?>');
+                        <?php
                       }
                     }
                     ?> 
@@ -1235,7 +1290,9 @@ class WDSViewSliders_wds {
                         }
                       }
                       else {
-                        echo $folder_name . " is not a directory";
+                        ?>
+                        console.log('<?php echo $folder_name . " is not a directory."; ?>');
+                        <?php
                       }
                     }
                     ?> 
@@ -1696,7 +1753,7 @@ class WDSViewSliders_wds {
                             ?>
                             <input type="button" class="button-primary" onclick="wds_add_image_url('<?php echo $slide_row->id; ?>')" value="Add Image by URL" />
                             <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Add Video" />
-			    <input class="button-secondary wds_free_button" type="button" value="Add Post" onclick="alert('This functionality is disabled in free version.')" />
+                            <input class="button-secondary wds_free_button" type="button" value="Add Post" onclick="alert('This functionality is disabled in free version.')" />
                             <input type="button" class="button-secondary" id="delete_image_url<?php echo $slide_row->id; ?>" onclick="spider_remove_url('image_url<?php echo $slide_row->id; ?>', 'wds_preview_image<?php echo $slide_row->id; ?>')" value="Remove" />
                             <input type="hidden" id="image_url<?php echo $slide_row->id; ?>" name="image_url<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->image_url; ?>" />
                             <input type="hidden" id="thumb_url<?php echo $slide_row->id; ?>" name="thumb_url<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->thumb_url; ?>" />

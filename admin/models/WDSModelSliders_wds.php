@@ -178,6 +178,11 @@ class WDSModelSliders_wds {
       $row->paus_butt_hov_url = WD_S_URL . '/images/button/button4/1/4.png';
       $row->start_slide_num = 1;
       $row->effect_duration = 800;
+      $row->carousel = 0;
+      $row->carousel_image_counts = 7;
+      $row->carousel_image_parameters = 0.85;
+      $row->carousel_fit_containerWidth = 0;
+      $row->carousel_width = 1000;
     }
     return $row;
   }

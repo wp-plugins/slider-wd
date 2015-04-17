@@ -462,7 +462,7 @@ class WDSViewSlider {
         overflow: hidden;
         position: absolute;
         width: 100%;
-        <?php echo $bull_position; ?>: <?php echo ($bull_position == $filmstrip_position) ? $filmstrip_height : 0; ?>px;
+        <?php echo $bull_position; ?>: 0;
         /*z-index: 17;*/
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_dots_thumbnails_<?php echo $wds; ?> {
@@ -524,7 +524,7 @@ class WDSViewSlider {
         display: block;
         position: absolute;
         overflow: hidden;
-        <?php echo $slider_row->timer_bar_type; ?>: <?php echo ($filmstrip_position == $slider_row->timer_bar_type) ? $filmstrip_height : 0; ?>px;
+        <?php echo $slider_row->timer_bar_type; ?>: 0;
         z-index: 16;
         width: 100%;
         height: <?php echo $slider_row->timer_bar_size; ?>px;
@@ -1847,7 +1847,7 @@ class WDSViewSlider {
             iterator = Math.floor((wds_data_<?php echo $wds; ?>.length - 1) * Math.random() + 1);
           }
           wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) + iterator) % wds_data_<?php echo $wds; ?>.length, wds_data_<?php echo $wds; ?>)
-        }, '<?php echo $slideshow_interval * 1000; ?>');
+        }, parseInt('<?php echo ($slideshow_interval * 1000); ?>') + wds_duration_for_change_<?php echo $wds; ?>);
       }
       jQuery(window).focus(function() {
         if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {

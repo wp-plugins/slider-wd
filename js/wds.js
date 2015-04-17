@@ -39,6 +39,11 @@ function spider_ajax_save(form_id, event) {
   post_data["published"] = jQuery("input[name=published]:checked").val();
   post_data["start_slide_num"] = jQuery("#start_slide_num").val();
   post_data["effect_duration"] = jQuery("#effect_duration").val();
+  post_data["carousel"] = jQuery("input[name=carousel]:checked").val();
+  post_data["carousel_image_counts"] = jQuery("#carousel_image_counts").val();
+  post_data["carousel_image_parameters"] = jQuery("#carousel_image_parameters").val();
+  post_data["carousel_fit_containerWidth"] = jQuery("input[name=carousel_fit_containerWidth]:checked").val();
+  post_data["carousel_width"] = jQuery("#carousel_width").val();
 
   /* Navigation.*/
   post_data["prev_next_butt"] = jQuery("input[name=prev_next_butt]:checked").val();
@@ -250,6 +255,7 @@ function wds_action_after_save(form_id) {
   var post_data = {};
   post_data["task"] = jQuery("#task").val();
   post_data["current_id"] = jQuery("#current_id").val();
+  post_data["nonce_wd"] = jQuery("#nonce_wd").val();
   jQuery.post(
     jQuery("#" + form_id).attr("action"),
     post_data,
