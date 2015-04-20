@@ -137,55 +137,55 @@ After downloading the ZIP file of the slider plugin,
 == Changelog ==
 
 = 1.0.11 =
-Fixed: Timer bar and bullets postion with horizontal filmstrip.
-Fixed: Set watermark.
+Fixed: Timer bar and bullets postion with horizontal filmstrip.   
+Fixed: Set watermark.   
   
 = 1.0.10 =
-Fixed: Slide change direction from 9 to 10.
-Fixed: Layers with "Start with slide" option.
+Fixed: Slide change direction from 9 to 10.   
+Fixed: Layers with "Start with slide" option.   
 
 = 1.0.9 =
 Update licensing page
 
 = 1.0.8 =
-New: Start with slide option.
-New: Effect duration option.
+New: Start with slide option.   
+New: Effect duration option.   
 
 = 1.0.7 =
-New: Circle timer.
-New: Slider duplication.
-Fixed: Disable swipe on navigation off.
-Fixed: Layer click on 3D animations.
+New: Circle timer.  
+New: Slider duplication.  
+Fixed: Disable swipe on navigation off.   
+Fixed: Layer click on 3D animations.  
 
 = 1.0.6 =
-custom play/pause buttons
-slide duplication
+custom play/pause buttons  
+slide duplication  
 
 = 1.0.5 =
-Image for Next / Previous buttons (Default, Custom, Styled)
-Image for bullets (Default, Custom, Styled)
+Image for Next / Previous buttons (Default, Custom, Styled)  
+Image for bullets (Default, Custom, Styled)  
 
 = 1.0.4 =
-stop on hover option
-slide, text layer, image layer link open in a new window option
+stop on hover option  
+slide, text layer, image layer link open in a new window option  
 
 = 1.0.3 =
-single quota in image name (bug fixed)
+single quota in image name (bug fixed)  
 
 = 1.0.2 =
 
-*  Turn SliderWD Media Upload
-*  Ajax save
-*  Images Bulk Add
-*  Timer bar bug fixed
-*  change shortcode button
-*  fullwidth slider margin bug fixed
+*  Turn SliderWD Media Upload  
+*  Ajax save  
+*  Images Bulk Add  
+*  Timer bar bug fixed  
+*  change shortcode button  
+*  fullwidth slider margin bug fixed  
 
 = 1.0.1 =
-*  User manual links added.
+*  User manual links added.  
 
 = 1.0.0 =
-*  Initial version.
+*  Initial version.  
 
 ==Wordpress Slider WD Step by step guide==   
 
