@@ -21,6 +21,7 @@
     <span>Social sharing buttons layer</span>
     <span>Navigation buttons and bullet styles</span>
     <span>Filmstrip support</span>
+    <span>Carousel effect</span>
   </div>
   <div id="featurs_table2">
     <span>Free</span>
@@ -37,6 +38,7 @@
     <span class="yes"></span>
     <span class="yes"></span>
     <span>5</span>
+    <span class="no"></span>
     <span class="no"></span>
     <span class="no"></span>
     <span class="no"></span>
@@ -61,6 +63,7 @@
     <span class="yes"></span>
     <span>26</span>
     <span>38</span>
+    <span class="yes"></span>
     <span class="yes"></span>
     <span class="yes"></span>
     <span class="yes"></span>
