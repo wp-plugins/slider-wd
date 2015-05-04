@@ -2429,7 +2429,7 @@ function wds_trans_effect_out(slider_id, prefix, social) {
 
 function wds_break_word(that, prefix) {
   if (jQuery(that).is(':checked')) {
-    jQuery("#" + prefix).css({wordBreak: "keep-all"});
+    jQuery("#" + prefix).css({wordBreak: "normal"});
   }
   else {
     jQuery("#" + prefix).css({wordBreak: "break-all"});  
