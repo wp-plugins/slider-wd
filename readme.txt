@@ -13,7 +13,7 @@ Slider WD is a great tool for creating responsive sliders. It uses various trans
 == Description ==
 Create responsive, highly configurable sliders with various effects for your WordPress site. Download for FREE!   
  
-https://www.youtube.com/playlist?list=PLnxWPiY5tLFWQf5XaEYYPZj0gdggUrVxP&autoplay=1
+https://www.youtube.com/watch?v=xebpM_-GwG0&index=1&list=PLnxWPiY5tLFWQf5XaEYYPZj0gdggUrVxP
  
 [WordPress Slider Plugin](http://web-dorado.com/products/wordpress-slider-plugin.html)  
 [User Manual](http://web-dorado.com/wordpress-slider-wd-guide-step-1.html)  
