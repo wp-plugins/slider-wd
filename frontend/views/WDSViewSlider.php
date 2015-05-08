@@ -776,7 +776,7 @@ class WDSViewSlider {
                   $share_image_url = urlencode($is_video ? $slide_row->thumb_url : $slide_row->image_url);
                   $share_url = add_query_arg(array('action' => 'WDSShare', 'image_id' => $slide_row->id, 'curr_url' => $current_url), admin_url('admin-ajax.php'));
                   ?>
-                  <span class="wds_slideshow_image<?php echo $image_div_num; ?>_spun_<?php echo $wds; ?>" id="image_id_<?php echo $wds; ?>_<?php echo $slide_row->id; ?>">
+                  <span class="wds_slideshow_image<?php echo $image_div_num; ?>_spun_<?php echo $wds; ?>" id="wds_image_id_<?php echo $wds; ?>_<?php echo $slide_row->id; ?>">
                     <span class="wds_slideshow_image_spun1_<?php echo $wds; ?>">
                       <span class="wds_slideshow_image_spun2_<?php echo $wds; ?>">
                         <?php 
@@ -1330,8 +1330,8 @@ class WDSViewSlider {
           wds_current_key_<?php echo $wds; ?> = key;
           /* Change image id.*/
           jQuery("div[img_id=wds_slideshow_image_<?php echo $wds; ?>]").attr('image_id', wds_data_<?php echo $wds; ?>[key]["id"]);
-          var current_image_class = "#image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[current_key]["id"];
-          var next_image_class = "#image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[key]["id"];
+          var current_image_class = "#wds_image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[current_key]["id"];
+          var next_image_class = "#wds_image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[key]["id"];
           <?php if ($slider_row->preload_images) { ?>
           if (!wds_data_<?php echo $wds; ?>[key]["is_video"]) {
             jQuery(next_image_class).find("div").css("background-image", 'url("' + wds_data_<?php echo $wds; ?>[key]["image_url"] + '")');

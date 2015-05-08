@@ -415,6 +415,11 @@ class WDSViewSliders_wds {
         </a>
           <?php
         }
+	else {
+          ?>
+        <input type="button" class="button-primary" id="button_image_url" onclick="spider_media_uploader('button_image_url', event, true); return false;" value="Add Images" />
+          <?php
+        }
         ?>
         <input class="button-secondary wds_free_button" type="button" value="Add Posts" onclick="alert('This functionality is disabled in free version.')" />
         <input class="button-primary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};

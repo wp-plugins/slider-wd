@@ -1260,7 +1260,10 @@ function spider_set_image_url(id) {
   return true;
 }
 
-function spider_media_uploader(id, e) {
+function spider_media_uploader(id, e, multiple) {
+  if (typeof multiple == "undefined") {
+    var multiple = false;
+  }
   var custom_uploader;
   e.preventDefault();
   // If the uploader object has already been created, reopen the dialog.
@@ -1274,11 +1277,16 @@ function spider_media_uploader(id, e) {
     title: 'Choose ' + library_type,
     library : { type : library_type},
     button: { text: 'Insert'},
-    multiple: false
+    multiple: multiple
   });
   // When a file is selected, grab the URL and set it as the text field's value
   custom_uploader.on('select', function() {
-    attachment = custom_uploader.state().get('selection').first().toJSON();
+    if (multiple == false) {
+      attachment = custom_uploader.state().get('selection').first().toJSON();
+    }
+    else {
+      attachment = custom_uploader.state().get('selection').toJSON();
+    }
     var image_url = attachment.url;
     var thumb_url = (attachment.sizes && attachment.sizes.thumbnail)  ? attachment.sizes.thumbnail.url : image_url;
     switch (id) {
@@ -1325,20 +1333,18 @@ function spider_media_uploader(id, e) {
         jQuery("#right_butt_hov_url").val(image_url);
         break;
       }
-	
-	  case 'bullets_main_but': {
+      case 'bullets_main_but': {
         /* Add image for main button.*/
         jQuery("#bull_img_main").attr("src", image_url);
         jQuery("#bullets_img_main_url").val(image_url);
         break;
       }
-	  case 'bullets_hov_but': {
+      case 'bullets_hov_but': {
         /* Add image for hover button.*/
         jQuery("#bull_img_hov").attr("src", image_url);
         jQuery("#bullets_img_hov_url").val(image_url);
         break;
       }
-
 	    case 'play_but': {
         /* Add image for play button.*/
         jQuery("#play_butt_img").attr("src", image_url);
@@ -1351,20 +1357,42 @@ function spider_media_uploader(id, e) {
         jQuery("#play_butt_hov_url").val(image_url);
         break;
       }
-	
-	  case 'paus_but': {
+      case 'paus_but': {
         /* Add hover image for play button.*/
         jQuery("#paus_butt_img").attr("src", image_url);
         jQuery("#paus_butt_url").val(image_url);
         break;
       }
-	  case 'paus_hov_but': {
+      case 'paus_hov_but': {
         /* Add hover image for pause button.*/
         jQuery("#paus_butt_hov_img").attr("src", image_url);
         jQuery("#paus_butt_hov_url").val(image_url);
         break;
       }
-
+      case 'button_image_url': {
+        /* Delete active slide if it has now image.*/
+        jQuery(".wds_box input[id^='image_url']").each(function () {
+          var slide_id = jQuery(this).attr("id").replace("image_url", "");
+          if (!jQuery("#image_url" + slide_id).val() && !jQuery("#slide" + slide_id + "_layer_ids_string").val()) {
+            wds_remove_slide(slide_id, 0);
+          }
+        });
+        /* Add one or more slides.*/
+        for (var i in attachment) {
+          wds_add_slide();
+          var slides_count = jQuery(".wbs_subtab a[id^='wbs_subtab']").length;
+          var new_slide_id = "pr_" + slides_count;
+          jQuery("#image_url" + new_slide_id).val(attachment[i]['url']);
+          var thumb_url = (attachment[i]['sizes'] && attachment[i]['sizes']['thumbnail'])  ? attachment[i]['sizes']['thumbnail']['url'] : attachment[i]['url'];
+          jQuery("#thumb_url" + new_slide_id).val(thumb_url);
+          jQuery("#wds_preview_image" + new_slide_id).css("background-image", 'url("' + attachment[i]['url'] + '")');
+          jQuery("#delete_image_url" + new_slide_id).css("display", "inline-block");
+          jQuery("#wds_preview_image" + new_slide_id).css("display", "inline-block");
+          jQuery("#type" + new_slide_id).val("image");
+          jQuery("#trlink" + new_slide_id).show();
+        }
+        break;
+      }
       default: {
         jQuery("#image_url" + id).val(image_url);
         jQuery("#thumb_url" + id).val(thumb_url);
@@ -2073,6 +2101,7 @@ function wds_add_layer(type, id, layerID, duplicate, files, edit) {
     jscolor.bind();
   }
   wds_layer_weights(id);
+  wds_onkeypress();
   return layerID;
 }
 
@@ -2341,6 +2370,7 @@ function wds_add_slide() {
           '</script>' +
           '</div>');
   wds_slide_weights();
+  wds_onkeypress();
   return slideID;
 }
 
@@ -2514,3 +2544,24 @@ function wds_whr(forfield) {
   jQuery('.wds_preview_wrapper').width(jQuery("#width").val());
   jQuery('.wds_preview_wrapper').height(jQuery("#height").val());
 }
+
+function wds_onkeypress() {
+  jQuery("input[type='text']").on("keypress", function (event) {
+    if ((jQuery(this).attr("id") != "search_value") && (jQuery(this).attr("id") != "current_page")) {
+      var chCode1 = event.which || event.paramlist_keyCode;
+      if (chCode1 == 13) {
+        if (event.preventDefault) {
+          event.preventDefault();
+        }
+        else {
+          event.returnValue = false;
+        }
+      }
+    }
+    return true;
+  });
+}
+
+jQuery(document).ready(function () {
+  wds_onkeypress();
+});
