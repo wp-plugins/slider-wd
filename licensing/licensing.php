@@ -73,7 +73,7 @@
   </div>
 </div>
 <div style="float: right; text-align: right;">
-  <a style="text-decoration: none;" target="_blank" href="http://web-dorado.com/files/fromslider.php">
+  <a style="text-decoration: none;" target="_blank" href="https://web-dorado.com/files/fromslider.php">
     <img width="215" border="0" alt="web-dorado.com" src="<?php echo WD_S_URL . '/images/wd_logo.png'; ?>" />
   </a>
 </div>
