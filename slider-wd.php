@@ -4,7 +4,7 @@
  * Plugin Name: Slider WD
  * Plugin URI: https://web-dorado.com/products/wordpress-slider-plugin.html
  * Description: This is a responsive plugin, which allows adding sliders to your posts/pages and to custom location. It uses large number of transition effects and supports various types of layers.
- * Version: 1.0.15
+ * Version: 1.0.16
  * Author: WebDorado
  * Author URI: https://web-dorado.com/
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -31,7 +31,7 @@ function wds_options_panel() {
 
   add_submenu_page('sliders_wds', 'Licensing', 'Licensing', 'manage_options', 'licensing_wds', 'wds_licensing');
   add_submenu_page('sliders_wds', 'Featured Plugins', 'Featured Plugins', 'manage_options', 'featured_plugins_wds', 'wds_featured');
-
+  add_submenu_page('sliders_wds', 'Featured Themes', 'Featured Themes', 'manage_options', 'featured_themes_wds', 'wds_featured_themes'); 
   $uninstall_page = add_submenu_page('sliders_wds', 'Uninstall', 'Uninstall', 'manage_options', 'uninstall_wds', 'wd_sliders');
   add_action('admin_print_styles-' . $uninstall_page, 'wds_styles');
   add_action('admin_print_scripts-' . $uninstall_page, 'wds_scripts');
@@ -83,7 +83,22 @@ function wds_featured() {
   require_once(WD_S_DIR . '/featured/featured.php');
   wp_register_style('wds_featured', WD_S_URL . '/featured/style.css', array(), get_option("wds_version"));
   wp_print_styles('wds_featured');
-  spider_featured('slider');
+  spider_featured('slider_wd');
+}
+
+function wds_featured_themes() {
+  if (function_exists('current_user_can')) {
+    if (!current_user_can('manage_options')) {
+      die('Access Denied');
+    }
+  }
+  else {
+    die('Access Denied');
+  }
+  require_once(WD_S_DIR . '/featured/featured_themes.php');
+  wp_register_style('wds_featured_themes', WD_S_URL . '/featured/themes_style.css', array(), get_option("wds_version"));
+  wp_print_styles('wds_featured_themes');
+  spider_featured_themes();
 }
 
 function wds_frontend() {
@@ -324,7 +339,7 @@ register_activation_hook(__FILE__, 'wds_activate');
 
 function wds_install() {
   $version = get_option("wds_version");
-  $new_version = '1.0.15';
+  $new_version = '1.0.16';
   if ($version && version_compare($version, $new_version, '<')) {
     require_once WD_S_DIR . "/sliders-update.php";
     wds_update($version);

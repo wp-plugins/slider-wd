@@ -10,22 +10,22 @@ function spider_featured($current_plugin = '') {
     "photo-gallery" => array(
       'title'    => 'Photo Gallery',
       'text'     => 'WordPress Photo Gallery plugin',
-      'content'  => 'Photo Gallery is a fully responsive WordPress Gallery plugin with advanced functionality. It allows having different image galleries for your posts and pages, as well as different widgets.',
+      'content'  => 'Photo Gallery is a fully responsive WordPress Gallery plugin with advanced functionality.',
       'href'     => 'https://web-dorado.com/products/wordpress-photo-gallery-plugin.html'
     ),
-    "contact-form-builder" => array(
+    "contact_form_bulder" => array(
       'title'    => 'Contact Form Builder',
       'text'     => 'WordPress contact form builder plugin',
-      'content'  => 'WordPress Contact Form Builder is an intuitive tool for creating contact forms.',
+      'content'  => 'Contact Form Builder is the best tool for quickly arranging a contact form for your clients and visitors.',
       'href'     => 'https://web-dorado.com/products/wordpress-contact-form-builder.html'
     ),
-    "slider" => array(
+    "slider_wd" => array(
       'title'    => 'Slider WD',
       'text'     => 'WordPress slider plugin',
-      'content'  => 'Slider WD is a responsive plugin for adding sliders to your site. Slides can use individual effects as well as effects for the layers (textual content, images, social sharing buttons).',
+      'content'  => 'Create responsive, highly configurable sliders with various effects for your WordPress site.',
       'href'     => 'https://web-dorado.com/products/wordpress-slider-plugin.html'
     ),
-    "contact-form-maker" => array(
+    "contact-maker" => array(
       'title'    => 'Contact Form Maker',
       'text'     => 'WordPress contact form maker plugin',
       'content'  => 'WordPress Contact Form Maker is an advanced and easy-to-use tool for creating forms.',
@@ -52,7 +52,7 @@ function spider_featured($current_plugin = '') {
     "player" => array(
       'title'    => 'Video Player',
       'text'     => 'WordPress Video player plugin',
-      'content'  => 'Spider Video Player for WordPress is a Flash & HTML5 video player plugin that allows you to easily add videos to your website with the possibility',
+      'content'  => 'Spider Video Player for WordPress is a Flash & HTML5 video player plugin that allows you to easily add videos to your website with the possibility.',
       'href'     => 'https://web-dorado.com/products/wordpress-player.html'
     ),
     "contacts" => array(
@@ -64,7 +64,7 @@ function spider_featured($current_plugin = '') {
     "facebook" => array(
       'title'    => 'Spider Facebook',
       'text'     => 'WordPress Facebook plugin',
-      'content'  => 'Spider Facebook is a WordPress integration tool for Facebook.It includes all the available Facebook social plugins and widgets to be added to your web',
+      'content'  => 'Spider Facebook is a WordPress integration tool for Facebook.It includes all the available Facebook social plugins and widgets.',
       'href'     => 'https://web-dorado.com/products/wordpress-facebook.html'
     ),
     "twitter-widget" => array(
@@ -90,6 +90,18 @@ function spider_featured($current_plugin = '') {
       'text'     => 'WordPress flash calendar plugin',
       'content'  => 'Spider Flash Calendar is a highly configurable Flash calendar plugin which allows you to have multiple organized events.',
       'href'     => 'https://web-dorado.com/products/wordpress-events-calendar.html'
+    ),
+    "folder_menu" => array(
+      'title'    => 'Folder Menu',
+      'text'     => 'WordPress folder menu plugin',
+      'content'  => 'Folder Menu Vertical is a WordPress Flash menu module for your website, designed to meet your needs and preferences.',
+      'href'     => 'https://web-dorado.com/products/wordpress-random-post.html'
+    ),
+    "random_post" => array(
+      'title'    => 'Random post',
+      'text'     => 'WordPress random post plugin',
+      'content'  => 'Spider Random Post is a small but very smart solution for your WordPress web site.',
+      'href'     => 'https://web-dorado.com/products/wordpress-random-post.html'
     )
   );
   ?>
@@ -101,17 +113,15 @@ function spider_featured($current_plugin = '') {
         if ($current_plugin != $key) {
           ?>
       <li class="<?php echo $key; ?>">
-        <div class="product">
-          <div class="title">
-            <strong class="heading"><?php echo $plugins['title']; ?></strong>
-            <p><?php echo $plugins['text']; ?></p>
-          </div>
-        </div>
-        <div class="description">
-          <p><?php echo $plugins['content']; ?></p>
-          <a target="_blank" href="<?php echo $plugins['href']; ?>" class="download">Download</a>
-        </div>
-      </li>
+				<div class="product"></div>
+				<div class="title">
+					<strong class="heading"><?php echo $plugins['title']; ?></strong>
+				</div>
+				<div class="description">
+					<p><?php echo $plugins['content']; ?></p>
+				</div>
+				<a target="_blank" href="<?php echo $plugins['href']; ?>" class="download">Download</a>
+			</li>
           <?php
         }
       }
