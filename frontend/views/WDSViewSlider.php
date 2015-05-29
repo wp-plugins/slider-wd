@@ -23,9 +23,12 @@ class WDSViewSlider {
   // Public Methods                                                                     //
   ////////////////////////////////////////////////////////////////////////////////////////
   public function display($id, $from_shortcode = 0, $wds = 0) {
-    $resolutions = array(320, 480, 640, 768, 800, 1024, 1366, 1824, 3000);
     require_once(WD_S_DIR . '/framework/WDW_S_Library.php');
     $slider_row = $this->model->get_slider_row_data($id);
+    if (!$slider_row->published) {
+      return;
+    }
+    $resolutions = array(320, 480, 640, 768, 800, 1024, 1366, 1824, 3000);
     if (!$slider_row) {
       echo WDW_S_Library::message(__('There is no slider selected or the slider was deleted.', 'wds'), 'error');
       return;
@@ -754,7 +757,7 @@ class WDSViewSlider {
               <?php
             }
             ?>
-            <div class="wds_slide_container_<?php echo $wds; ?>">
+            <div class="wds_slide_container_<?php echo $wds; ?>" id="wds_slide_container_<?php echo $wds; ?>">
               <div class="wds_slide_bg_<?php echo $wds; ?>">
                 <div class="wds_slider_<?php echo $wds; ?>">
                 <?php
@@ -1846,7 +1849,7 @@ class WDSViewSlider {
           if (<?php echo $enable_slideshow_shuffle; ?>) {
             iterator = Math.floor((wds_data_<?php echo $wds; ?>.length - 1) * Math.random() + 1);
           }
-          wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) + iterator) % wds_data_<?php echo $wds; ?>.length, wds_data_<?php echo $wds; ?>)
+          wds_change_image_<?php echo $wds; ?>(parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()), (parseInt(jQuery('#wds_current_image_key_<?php echo $wds; ?>').val()) + iterator) % wds_data_<?php echo $wds; ?>.length, wds_data_<?php echo $wds; ?>);
         }, parseInt('<?php echo ($slideshow_interval * 1000); ?>') + wds_duration_for_change_<?php echo $wds; ?>);
       }
       jQuery(window).focus(function() {

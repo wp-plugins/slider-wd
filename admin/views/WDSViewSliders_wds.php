@@ -59,6 +59,8 @@ class WDSViewSliders_wds {
         <input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'publish_all')" value="Publish" />
         <input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'unpublish_all')" value="Unpublish" />
         <input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'duplicate_all')" value="Duplicate" />
+        <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Export" />
+        <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Import" />
         <input class="button-secondary" type="submit" onclick="if (confirm('Do you want to delete selected items?')) {
                                                        spider_set_input_value('task', 'delete_all');
                                                      } else {
@@ -397,7 +399,7 @@ class WDSViewSliders_wds {
       <?php wp_nonce_field('nonce_wd', 'nonce_wd'); ?>
       <span class="slider-icon"></span>
       <h2><?php echo $page_title; ?></h2>
-      <div class="wds_buttons" style="float: right; position: absolute; right: 11px; z-index: 50;">
+      <div class="wds_buttons" style="float: right; position: relative; z-index: 50;">
         <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
                                                                    spider_set_input_value('task', 'save');
                                                                    spider_ajax_save('sliders_form', event);" value="Save" />
@@ -406,6 +408,7 @@ class WDSViewSliders_wds {
                                                                    spider_ajax_save('sliders_form', event);" value="Apply" />
         <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
                                                                spider_set_input_value('task', 'duplicate');
+                                                               spider_set_input_value('sub_tab', '');
                                                                spider_ajax_save('sliders_form', event);" value="Save as Copy" />
         <?php
         if ($row->spider_uploader) {
@@ -431,7 +434,8 @@ class WDSViewSliders_wds {
         <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
                                                                spider_set_input_value('task', 'reset');
                                                                spider_ajax_save('sliders_form', event);" value="Reset Settings" />
-        <input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'cancel')" value="Cancel" />
+        <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Export" />
+	<input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'cancel')" value="Cancel" />
       </div>
       <div class="wds_tabs">
         <a href="#"><span tab_type="settings" onclick="wds_change_tab(this, 'wds_settings_box')" class="wds_tab_label">Settings</span></a>
@@ -589,7 +593,7 @@ class WDSViewSliders_wds {
                     </td>
                     <td>
                       <input type="text" id="music_url" name="music_url" size="39" value="<?php echo $row->music_url; ?>" style="display:inline-block;" />
-                      <input id="add_music_url" class="button-primary" type="button" onclick="spider_media_uploader('music', event); return false;" value="Add music" />
+                      <input id="add_music_url" class="button-primary" type="button" onclick="spider_media_uploader('music', event, false); return false;" value="Add music" />
                       <div class="spider_description">Only .aac,.m4a,.f4a,.mp3,.ogg,.oga formats are supported.</div>
                     </td>
                   </tr>
@@ -1570,7 +1574,7 @@ class WDSViewSliders_wds {
                               <?php
                               if (!$row->spider_uploader) {
                                 ?>
-                              <input id="wat_img_add_butt" class="button-primary" type="button" onclick="spider_media_uploader('watermark', event); return false;" value="Add Image" />
+                              <input id="wat_img_add_butt" class="button-primary" type="button" onclick="spider_media_uploader('watermark', event, false); return false;" value="Add Image" />
                                 <?php
                               }
                               else {
@@ -1708,7 +1712,7 @@ class WDSViewSliders_wds {
         <div class="wds_box wds_slides_box">
           <table>
             <thead><tr><td colspan="4">&nbsp;</td></tr></thead>
-            <tbody style="width: 98%; display: block;">
+            <tbody style="display: block;">
               <tr>
                 <td class="spider_label"><label for="name">Slider name: <span style="color:#FF0000;">*</span> </label></td>
                 <td><input type="text" id="name" name="name" value="<?php echo $row->name; ?>" size="39" /></td>
@@ -1745,7 +1749,7 @@ class WDSViewSliders_wds {
                             <?php
                             if (!$row->spider_uploader) {
                               ?>
-                            <input type="button" class="button-primary" id="button_image_url<?php echo $slide_row->id; ?>" onclick="spider_media_uploader('<?php echo $slide_row->id; ?>', event); return false;" value="Add Image from Media Library" />
+                            <input type="button" class="button-primary" id="button_image_url<?php echo $slide_row->id; ?>" onclick="spider_media_uploader('<?php echo $slide_row->id; ?>', event, false); return false;" value="Add Image from Media Library" />
                               <?php
                             }
                             else {
@@ -2290,7 +2294,7 @@ class WDSViewSliders_wds {
                                 <label for="<?php echo $prefix; ?>_social_button">Social button: </label>
                               </td>
                               <td>
-                                <select id="<?php echo $prefix; ?>_social_button" onchange="jQuery('#<?php echo $prefix; ?>').attr('class', 'wds_draggable_<?php echo $slide_row->id; ?> wds_draggable fa fa-' + jQuery(this).val())" name="<?php echo $prefix; ?>_social_button" />
+                                <select id="<?php echo $prefix; ?>_social_button" onchange="jQuery('#<?php echo $prefix; ?>').attr('class', 'wds_draggable_<?php echo $slide_row->id; ?> wds_draggable fa fa-' + jQuery(this).val())" name="<?php echo $prefix; ?>_social_button">
                                   <?php
                                   foreach ($social_buttons as $key => $social_button) {
                                     ?>

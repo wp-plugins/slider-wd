@@ -32,7 +32,7 @@ function spider_featured($current_plugin = '') {
       'href'     => 'https://web-dorado.com/products/wordpress-contact-form-maker-plugin.html'
     ),
     "fm-import" => array(
-      'title'    => 'Form Maker Export/Import',
+      'title'    => 'FM Export/Import',
       'text'     => 'WordPress Form Maker export/import plugin',
       'content'  => 'Form Maker Export/Import is a Form Maker capacity enhancing plugin.',
       'href'     => 'https://web-dorado.com/products/wordpress-form/export-import.html'

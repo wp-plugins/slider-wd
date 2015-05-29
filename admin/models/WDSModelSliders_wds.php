@@ -41,12 +41,25 @@ class WDSModelSliders_wds {
       $rows[0]->order = 1;
       $rows[0]->target_attr_slide = 1;
     }
+    else {
+      foreach ($rows as $row) {
+        if ($row->type == 'image') {
+          $row->image_url = $row->image_url ? $row->image_url : WD_S_URL . '/images/no-image.png';
+          $row->thumb_url = $row->thumb_url ? $row->thumb_url : WD_S_URL . '/images/no-image.png';
+        }
+      }
+    }
     return $rows;
   }
 
   public function get_layers_row_data($slide_id) {
     global $wpdb;
     $rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "wdslayer WHERE slide_id='%d' ORDER BY `depth` ASC", $slide_id));
+    foreach ($rows as $row) {
+      if ($row->type == 'image') {
+        $row->image_url = $row->image_url ? $row->image_url : WD_S_URL . '/images/no-image.png';
+      }
+    }
     return $rows;
   }
 

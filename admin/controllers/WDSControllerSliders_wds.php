@@ -1322,7 +1322,7 @@ class WDSControllerSliders_wds {
     global $wpdb;
     $query = $wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'wdsslider WHERE id="%d"', $id);
     if ($wpdb->query($query)) {
-      $query_image = $wpdb->prepare('DELETE t1.*, t2.* FROM ' . $wpdb->prefix . 'wdsslide as t1 INNER JOIN ' . $wpdb->prefix . 'wdslayer as t2 ON t1.id=t2.slide_id WHERE t1.slider_id="%d"', $id);
+      $query_image = $wpdb->prepare('DELETE t1.*, t2.* FROM ' . $wpdb->prefix . 'wdsslide as t1 LEFT JOIN ' . $wpdb->prefix . 'wdslayer as t2 ON t1.id=t2.slide_id WHERE t1.slider_id="%d"', $id);
       $wpdb->query($query_image);
       echo WDW_S_Library::message('Item Succesfully Deleted.', 'updated');
     }
@@ -1341,7 +1341,7 @@ class WDSControllerSliders_wds {
         $flag = TRUE;
         $query = $wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'wdsslider WHERE id="%d"', $slider_id);
         $wpdb->query($query);
-        $query_image = $wpdb->prepare('DELETE t1.*, t2.* FROM ' . $wpdb->prefix . 'wdsslide as t1 INNER JOIN ' . $wpdb->prefix . 'wdslayer as t2 ON t1.id=t2.slide_id WHERE t1.slider_id="%d"', $slider_id);
+        $query_image = $wpdb->prepare('DELETE t1.*, t2.* FROM ' . $wpdb->prefix . 'wdsslide as t1 LEFT JOIN ' . $wpdb->prefix . 'wdslayer as t2 ON t1.id=t2.slide_id WHERE t1.slider_id="%d"', $slider_id);
         $wpdb->query($query_image);
       }
     }

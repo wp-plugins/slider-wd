@@ -27,7 +27,7 @@ class WDSModelSlider {
   
   public function get_slider_row_data($id) {
     global $wpdb;
-    $row = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'wdsslider WHERE id="%d" AND published=1', $id));
+    $row = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'wdsslider WHERE id="%d"', $id));
     return $row;
   }
 
