@@ -863,7 +863,9 @@ class WDSViewSlider {
                                      onclick="<?php echo $layer->link ? 'window.open(\'' . $layer->link . '\', \'' . ($layer->target_attr_layer ? '_blank' : '_self') . '\');' : ''; ?>event.stopPropagation();"
                                      wds_scale="<?php echo $layer->image_scale; ?>"
                                      wds_image_width="<?php echo $layer->image_width; ?>"
-                                     wds_image_height="<?php echo $layer->image_height; ?>" />
+                                     wds_image_height="<?php echo $layer->image_height; ?>"
+                                     alt="<?php echo $layer->alt; ?>" 
+                                     title="<?php echo $layer->alt; ?>" />
                                   <?php
                                   break;
                                 }
@@ -960,7 +962,12 @@ class WDSViewSlider {
 
     <script>
       var wds_trans_in_progress_<?php echo $wds; ?> = false;
-      var wds_transition_duration_<?php echo $wds; ?> = <?php echo (($slideshow_interval < 4) && ($slideshow_interval != 0)) ? ($slideshow_interval * 1000) / 4 : $slider_row->effect_duration; ?>;
+      var wds_transition_duration_<?php echo $wds; ?> = <?php echo $slider_row->effect_duration; ?>;
+      if (<?php echo $slideshow_interval; ?> < 4) {
+        if (<?php echo $slideshow_interval; ?> != 0) {
+          wds_transition_duration_<?php echo $wds; ?> = (<?php echo $slideshow_interval; ?> * 1000) / 4;
+        }
+      }
       var wds_playInterval_<?php echo $wds; ?>;
       var progress = 0;
       var bottom_right_deggree_<?php echo $wds; ?>;
@@ -973,64 +980,72 @@ class WDSViewSlider {
           duration: <?php echo $slideshow_interval * 1000; ?>,
           step: function(now) {
             curent_time_deggree_<?php echo $wds; ?> = now;
-            if (now >= 0 && now < 271) {
-              jQuery('#top_right_<?php echo $wds; ?>').css({
-                '-moz-transform':'rotate('+now+'deg)',
-                '-webkit-transform':'rotate('+now+'deg)',
-                '-o-transform':'rotate('+now+'deg)',
-                '-ms-transform':'rotate('+now+'deg)',
-                'transform':'rotate('+now+'deg)',
+            if (now >= 0) {
+              if (now < 271) {
+                jQuery('#top_right_<?php echo $wds; ?>').css({
+                  '-moz-transform':'rotate('+now+'deg)',
+                  '-webkit-transform':'rotate('+now+'deg)',
+                  '-o-transform':'rotate('+now+'deg)',
+                  '-ms-transform':'rotate('+now+'deg)',
+                  'transform':'rotate('+now+'deg)',
 
-                '-webkit-transform-origin': 'left bottom',
-                '-ms-transform-origin': 'left bottom',
-                '-moz-transform-origin': 'left bottom',
-                'transform-origin': 'left bottom'
-              });
+                  '-webkit-transform-origin': 'left bottom',
+                  '-ms-transform-origin': 'left bottom',
+                  '-moz-transform-origin': 'left bottom',
+                  'transform-origin': 'left bottom'
+                });
+              }
             }
-            if (now >= 90 && now < 271) {
-              bottom_right_deggree_<?php echo $wds; ?> = now - 90;
-              jQuery('#bottom_right_<?php echo $wds; ?>').css({
-                '-moz-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
-              '-webkit-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
-              '-o-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
-              '-ms-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
-              'transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+            if (now >= 90) {
+              if (now < 271) {
+                bottom_right_deggree_<?php echo $wds; ?> = now - 90;
+                jQuery('#bottom_right_<?php echo $wds; ?>').css({
+                  '-moz-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+                '-webkit-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+                '-o-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+                '-ms-transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
+                'transform':'rotate('+bottom_right_deggree_<?php echo $wds; ?> +'deg)',
 
-              '-webkit-transform-origin': 'left top',
-              '-ms-transform-origin': 'left top',
-              '-moz-transform-origin': 'left top',
-              'transform-origin': 'left top'
-              });
+                '-webkit-transform-origin': 'left top',
+                '-ms-transform-origin': 'left top',
+                '-moz-transform-origin': 'left top',
+                'transform-origin': 'left top'
+                });
+              }
             }
-            if (now >= 180 && now < 361) {
-              bottom_left_deggree_<?php echo $wds; ?> = now - 180;
-              jQuery('#bottom_left_<?php echo $wds; ?>').css({
-                '-moz-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
-                '-webkit-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
-                '-o-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
-                '-ms-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
-                'transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+            if (now >= 180) {
+              if (now < 361) {
+                bottom_left_deggree_<?php echo $wds; ?> = now - 180;
+                jQuery('#bottom_left_<?php echo $wds; ?>').css({
+                  '-moz-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+                  '-webkit-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+                  '-o-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+                  '-ms-transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
+                  'transform':'rotate('+bottom_left_deggree_<?php echo $wds; ?> +'deg)',
 
-                '-webkit-transform-origin': 'right top',
-                '-ms-transform-origin': 'right top',
-                '-moz-transform-origin': 'right top',
-                'transform-origin': 'right top'
-              });
+                  '-webkit-transform-origin': 'right top',
+                  '-ms-transform-origin': 'right top',
+                  '-moz-transform-origin': 'right top',
+                  'transform-origin': 'right top'
+                });
+              }
             }
-            if (now >= 270 && now < 361) {
-              top_left_deggree_<?php echo $wds; ?>  = now - 270;
-              jQuery('#top_left_<?php echo $wds; ?>').css({
-                '-moz-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
-                '-webkit-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
-                '-o-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
-                '-ms-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
-                'transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+            if (now >= 270) {
+              if (now < 361) {
+                top_left_deggree_<?php echo $wds; ?>  = now - 270;
+                jQuery('#top_left_<?php echo $wds; ?>').css({
+                  '-moz-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+                  '-webkit-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+                  '-o-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+                  '-ms-transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
+                  'transform':'rotate('+top_left_deggree_<?php echo $wds; ?> +'deg)',
 
-                '-webkit-transform-origin': 'right bottom',
-                '-ms-transform-origin': 'right bottom',
-                '-moz-transform-origin': 'right bottom',
-                'transform-origin': 'right bottom'
-              });
+                  '-webkit-transform-origin': 'right bottom',
+                  '-ms-transform-origin': 'right bottom',
+                  '-moz-transform-origin': 'right bottom',
+                  'transform-origin': 'right bottom'
+                });
+              }
             }
           }
         });
@@ -1392,75 +1407,77 @@ class WDSViewSlider {
             }
             jQuery(".wds_line_timer_<?php echo $wds; ?>").css({width: 0});
             wds_<?php echo $slideshow_effect; ?>_<?php echo $wds; ?>(current_image_class, next_image_class, direction);
-            if (('<?php echo $slider_row->timer_bar_type; ?>' != 'none') && (<?php echo $enable_slideshow_autoplay; ?> || jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause'))) {
-              if('<?php echo $slider_row->timer_bar_type; ?>' == 'top' || '<?php echo $slider_row->timer_bar_type; ?>' == 'bottom') {
-                if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
-                  jQuery(".wds_line_timer_<?php echo $wds; ?>").animate({
-                    width: "100%"
-                  }, {
-                    duration: <?php echo $slideshow_interval * 1000; ?>,
-                    specialEasing: {width: "linear"}
-                  });             
+            if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+              if (<?php echo $enable_slideshow_autoplay; ?> || jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause')) {
+                if ('<?php echo $slider_row->timer_bar_type; ?>' == 'top' || '<?php echo $slider_row->timer_bar_type; ?>' == 'bottom') {
+                  if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
+                    jQuery(".wds_line_timer_<?php echo $wds; ?>").animate({
+                      width: "100%"
+                    }, {
+                      duration: <?php echo $slideshow_interval * 1000; ?>,
+                      specialEasing: {width: "linear"}
+                    });
+                  }
                 }
-              }
-              else if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
-                if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
-                  circle_timer_animate_<?php echo $wds; ?>.stop();
-                }
-                jQuery('#top_right_<?php echo $wds; ?>').css({
-                  '-moz-transform':'rotate(0deg)',
-                  '-webkit-transform':'rotate(0deg)',
-                  '-o-transform':'rotate(0deg)',
-                  '-ms-transform':'rotate(0deg)',
-                  'transform':'rotate(0deg)',
+                else if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+                  if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
+                    circle_timer_animate_<?php echo $wds; ?>.stop();
+                  }
+                  jQuery('#top_right_<?php echo $wds; ?>').css({
+                    '-moz-transform':'rotate(0deg)',
+                    '-webkit-transform':'rotate(0deg)',
+                    '-o-transform':'rotate(0deg)',
+                    '-ms-transform':'rotate(0deg)',
+                    'transform':'rotate(0deg)',
+                     
+                    '-webkit-transform-origin': 'left bottom',
+                    '-ms-transform-origin': 'left bottom',
+                    '-moz-transform-origin': 'left bottom',
+                    'transform-origin': 'left bottom'
+                  });
+                  jQuery('#bottom_right_<?php echo $wds; ?>').css({
+                    '-moz-transform':'rotate(0deg)',
+                    '-webkit-transform':'rotate(0deg)',
+                    '-o-transform':'rotate(0deg)',
+                    '-ms-transform':'rotate(0deg)',
+                    'transform':'rotate(0deg)',
                    
-                  '-webkit-transform-origin': 'left bottom',
-                  '-ms-transform-origin': 'left bottom',
-                  '-moz-transform-origin': 'left bottom',
-                  'transform-origin': 'left bottom'
-                });
-                jQuery('#bottom_right_<?php echo $wds; ?>').css({
-                  '-moz-transform':'rotate(0deg)',
-                  '-webkit-transform':'rotate(0deg)',
-                  '-o-transform':'rotate(0deg)',
-                  '-ms-transform':'rotate(0deg)',
-                  'transform':'rotate(0deg)',
-                 
-                  '-webkit-transform-origin': 'left top',
-                  '-ms-transform-origin': 'left top',
-                  '-moz-transform-origin': 'left top',
-                  'transform-origin': 'left top'
-                });
-                jQuery('#bottom_left_<?php echo $wds; ?>').css({
-                  '-moz-transform':'rotate(0deg)',
-                  '-webkit-transform':'rotate(0deg)',
-                  '-o-transform':'rotate(0deg)',
-                  '-ms-transform':'rotate(0deg)',
-                  'transform':'rotate(0deg)',
-                 
-                  '-webkit-transform-origin': 'right top',
-                  '-ms-transform-origin': 'right top',
-                  '-moz-transform-origin': 'right top',
-                  'transform-origin': 'right top'
-                });
-                jQuery('#top_left_<?php echo $wds; ?>').css({
-                  '-moz-transform':'rotate(0deg)',
-                  '-webkit-transform':'rotate(0deg)',
-                  '-o-transform':'rotate(0deg)',
-                  '-ms-transform':'rotate(0deg)',
-                  'transform':'rotate(0deg)',
-                 
-                  '-webkit-transform-origin': 'right bottom',
-                  '-ms-transform-origin': 'right bottom',
-                  '-moz-transform-origin': 'right bottom',
-                  'transform-origin': 'right bottom'
-                });	
-                if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
-                  /* Begin circle timer on next.*/				  		
-                  circle_timer_<?php echo $wds; ?>(0);
-                }
-                else {
-                  curent_time_deggree_<?php echo $wds; ?> = 0;
+                    '-webkit-transform-origin': 'left top',
+                    '-ms-transform-origin': 'left top',
+                    '-moz-transform-origin': 'left top',
+                    'transform-origin': 'left top'
+                  });
+                  jQuery('#bottom_left_<?php echo $wds; ?>').css({
+                    '-moz-transform':'rotate(0deg)',
+                    '-webkit-transform':'rotate(0deg)',
+                    '-o-transform':'rotate(0deg)',
+                    '-ms-transform':'rotate(0deg)',
+                    'transform':'rotate(0deg)',
+                   
+                    '-webkit-transform-origin': 'right top',
+                    '-ms-transform-origin': 'right top',
+                    '-moz-transform-origin': 'right top',
+                    'transform-origin': 'right top'
+                  });
+                  jQuery('#top_left_<?php echo $wds; ?>').css({
+                    '-moz-transform':'rotate(0deg)',
+                    '-webkit-transform':'rotate(0deg)',
+                    '-o-transform':'rotate(0deg)',
+                    '-ms-transform':'rotate(0deg)',
+                    'transform':'rotate(0deg)',
+                   
+                    '-webkit-transform-origin': 'right bottom',
+                    '-ms-transform-origin': 'right bottom',
+                    '-moz-transform-origin': 'right bottom',
+                    'transform-origin': 'right bottom'
+                  });	
+                  if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
+                    /* Begin circle timer on next.*/				  		
+                    circle_timer_<?php echo $wds; ?>(0);
+                  }
+                  else {
+                    curent_time_deggree_<?php echo $wds; ?> = 0;
+                  }
                 }
               }
             }
@@ -1484,7 +1501,7 @@ class WDSViewSlider {
         var slide_orig_width = <?php echo $image_width; ?>;
         var slide_orig_height = <?php echo $image_height; ?>;
         var slide_width = jQuery("#wds_container1_<?php echo $wds; ?>").parent().width();
-        if (slide_orig_width <= slide_width) {
+        if (slide_width > slide_orig_width) {
           slide_width = slide_orig_width;
         }
         var ratio = slide_width / slide_orig_width;
@@ -1678,11 +1695,15 @@ class WDSViewSlider {
             jQuery(".wds_slideshow_play_pause_<?php echo $wds; ?>").attr("class", "wds_ctrl_btn_<?php echo $wds; ?> wds_slideshow_play_pause_<?php echo $wds; ?> fa fa-pause");
 
             /* Finish current animation and begin the other.*/
-            if (<?php echo $enable_slideshow_autoplay; ?> && ('<?php echo $slider_row->timer_bar_type; ?>' != 'top' && '<?php echo $slider_row->timer_bar_type; ?>' != 'bottom')) {
-              if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
-                circle_timer_animate_<?php echo $wds; ?>.stop();
+            if (<?php echo $enable_slideshow_autoplay; ?>) {
+              if ('<?php echo $slider_row->timer_bar_type; ?>' != 'top') {
+                if ('<?php echo $slider_row->timer_bar_type; ?>' != 'bottom') {
+                  if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
+                    circle_timer_animate_<?php echo $wds; ?>.stop();
+                  }
+                  circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
+                }
               }
-              circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
             }
             play_<?php echo $wds; ?>();
             if (<?php echo $enable_slideshow_music ?>) {
@@ -1734,8 +1755,12 @@ class WDSViewSlider {
           if (<?php echo $enable_slideshow_music ?>) {
             document.getElementById("wds_audio_<?php echo $wds; ?>").play();
           }
-          if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none' && '<?php echo $slider_row->timer_bar_type; ?>' != 'top' && '<?php echo $slider_row->timer_bar_type; ?>' != 'bottom') {
-            circle_timer_<?php echo $wds; ?>(0);		  
+          if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+            if ('<?php echo $slider_row->timer_bar_type; ?>' != 'top') {
+              if ('<?php echo $slider_row->timer_bar_type; ?>' != 'bottom') {
+                circle_timer_<?php echo $wds; ?>(0);
+              }
+            }
           }
         }
         <?php if ($slider_row->preload_images) { ?>
@@ -1788,11 +1813,15 @@ class WDSViewSlider {
           return;
         }
         play_<?php echo $wds; ?>();
-        if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none' && '<?php echo $slider_row->timer_bar_type; ?>' != 'bottom' && '<?php echo $slider_row->timer_bar_type; ?>' != 'top') {
-          if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
-            circle_timer_animate_<?php echo $wds; ?>.stop();
+        if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+          if ('<?php echo $slider_row->timer_bar_type; ?>' != 'bottom') {
+            if ('<?php echo $slider_row->timer_bar_type; ?>' != 'top') {
+              if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
+                circle_timer_animate_<?php echo $wds; ?>.stop();
+              }
+              circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
+            }
           }
-          circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
         }
         if (<?php echo $enable_slideshow_music ?>) {
           document.getElementById("wds_audio_<?php echo $wds; ?>").play();
@@ -1810,11 +1839,13 @@ class WDSViewSlider {
             jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).removeClass().addClass( wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_layer_effect_in"] + ' fa fa-' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_social_button"] + ' animated');
           }
           /* Play video on layer in.*/
-          if ((wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_type"] == "video") && (wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_video_autoplay"] == "on")) {
-            jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).find("iframe").each(function () {
-              jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-              jQuery(this)[0].contentWindow.postMessage('{ "method": "play" }', "*");
-            });
+          if (wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_type"] == "video") {
+            if (wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_video_autoplay"] == "on") {
+              jQuery('#wds_<?php echo $wds; ?>_slide' + wds_data_<?php echo $wds; ?>[key]["id"] + '_layer' + wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_id"]).find("iframe").each(function () {
+                jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                jQuery(this)[0].contentWindow.postMessage('{ "method": "play" }', "*");
+              });
+            }
           }
 		    }, wds_data_<?php echo $wds; ?>[key]["layer_" + j + "_start"]);
 		  }
@@ -1834,13 +1865,15 @@ class WDSViewSlider {
 		    }, wds_data_<?php echo $wds; ?>[key]["layer_" + i + "_end"]);
 		  }
       function play_<?php echo $wds; ?>() {
-        if (('<?php echo $slider_row->timer_bar_type; ?>' != 'none') && (<?php echo $enable_slideshow_autoplay; ?> || jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause'))) {
-          jQuery(".wds_line_timer_<?php echo $wds; ?>").animate({
-            width: "100%"
-          }, {
-            duration: <?php echo $slideshow_interval * 1000; ?>,
-            specialEasing: {width: "linear"}
-          });
+        if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+          if (<?php echo $enable_slideshow_autoplay; ?> || jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause')) {
+            jQuery(".wds_line_timer_<?php echo $wds; ?>").animate({
+              width: "100%"
+            }, {
+              duration: <?php echo $slideshow_interval * 1000; ?>,
+              specialEasing: {width: "linear"}
+            });
+          }
         }
         window.clearInterval(wds_playInterval_<?php echo $wds; ?>);
         /* Play.*/
@@ -1856,11 +1889,15 @@ class WDSViewSlider {
         if (!jQuery(".wds_ctrl_btn_<?php echo $wds; ?>").hasClass("fa-play")) {
           if (<?php echo $enable_slideshow_autoplay; ?>) {
             play_<?php echo $wds; ?>();
-            if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none' && '<?php echo $slider_row->timer_bar_type; ?>' != 'top' && '<?php echo $slider_row->timer_bar_type; ?>' != 'bottom') {
-              if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
-                circle_timer_animate_<?php echo $wds; ?>.stop();
+            if ('<?php echo $slider_row->timer_bar_type; ?>' != 'none') {
+              if ('<?php echo $slider_row->timer_bar_type; ?>' != 'top') {
+                if ('<?php echo $slider_row->timer_bar_type; ?>' != 'bottom') {
+                  if (typeof circle_timer_animate_<?php echo $wds; ?> !== 'undefined') {
+                    circle_timer_animate_<?php echo $wds; ?>.stop();
+                  }
+                  circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
+                }
               }
-              circle_timer_<?php echo $wds; ?>(curent_time_deggree_<?php echo $wds; ?>);
             }
           }
         }
@@ -1895,7 +1932,7 @@ class WDSViewSlider {
       die();
     }
   }
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////
   // Getters & Setters                                                                  //
   ////////////////////////////////////////////////////////////////////////////////////////
