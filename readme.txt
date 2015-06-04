@@ -18,6 +18,7 @@ https://www.youtube.com/watch?v=xebpM_-GwG0&index=1&list=PLnxWPiY5tLFWQf5XaEYYPZ
 [WordPress Slider Plugin](http://web-dorado.com/products/wordpress-slider-plugin.html)  
 [User Manual](http://web-dorado.com/wordpress-slider-wd-guide-step-1.html)  
 [Support Forum](http://web-dorado.com/forum/slider-plugin.html)  
+[How to change and modify Slider WD Settings](https://www.youtube.com/watch?v=Peny_dkHaMo&list=PLnxWPiY5tLFWQf5XaEYYPZj0gdggUrVxP&index=3)  
 
 Slider WD is an effective tool for adding responsive sliders to your website. The slider plugin can be added both as a widget and plugin, as well as be included in the theme for displaying the slider within the theme using PHP function. Slider WD allows adding both images and videos (currently supporting YouTube and Vimeo to be displayed as slider slides). The numerous transition effects and layer support enhance the functionality of the product.  
 
