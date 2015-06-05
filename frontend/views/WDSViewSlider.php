@@ -176,7 +176,7 @@ class WDSViewSlider {
         <?php echo $filmstrip_position; ?>: <?php echo ($filmstrip_direction == 'horizontal' ? $filmstrip_height . 'px' : $filmstrip_width_in_percent . '%'); ?>;
         vertical-align: middle;
         width: <?php echo 100 - $filmstrip_width_in_percent; ?>%;
-        height: inherit;
+        height: /*inherit*/100%;
       }
 
       <?php
@@ -419,16 +419,16 @@ class WDSViewSlider {
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slide_bg_<?php echo $wds; ?> {
         margin: 0 auto;
-        width: inherit;
-        height: inherit;
+        width: /*inherit*/100%;
+        height: /*inherit*/100%;
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slider_<?php echo $wds; ?> {
-        height: inherit;
-        width: inherit;
+        height: /*inherit*/100%;
+        width: /*inherit*/100%;
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_image_spun_<?php echo $wds; ?> {
-        width: inherit;
-        height: inherit;
+        width: /*inherit*/100%;
+        height: /*inherit*/100%;
         display: table-cell;
         filter: Alpha(opacity=100);
         opacity: 1;
@@ -437,8 +437,8 @@ class WDSViewSlider {
         z-index: 2;
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_image_second_spun_<?php echo $wds; ?> {
-        width: inherit;
-        height: inherit;
+        width: /*inherit*/100%;
+        height: /*inherit*/100%;
         display: table-cell;
         filter: Alpha(opacity=0);
         opacity: 0;
@@ -629,8 +629,8 @@ class WDSViewSlider {
 
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_image_spun1_<?php echo $wds; ?> {
         display: table; 
-        width: inherit; 
-        height: inherit;
+        width: /*inherit*/100%; 
+        height: /*inherit*/100%;
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slideshow_image_spun2_<?php echo $wds; ?> {
         display: table-cell; 
