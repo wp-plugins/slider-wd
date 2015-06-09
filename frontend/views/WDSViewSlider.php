@@ -1337,11 +1337,24 @@ class WDSViewSlider {
             return;
           }
           var direction = 'right';
-          if (parseInt(wds_current_key_<?php echo $wds; ?>) > parseInt(key)) {
-            var direction = 'left';
+          var int_curr_key = parseInt(wds_current_key_<?php echo $wds; ?>);
+          var int_key = parseInt(key);
+          var last_pos = wds_data_<?php echo $wds; ?>.length - 1;
+          if (int_curr_key > int_key) {
+            direction = 'left';
           }
-          else if (parseInt(wds_current_key_<?php echo $wds; ?>) == parseInt(key)) {
+          else if (int_curr_key == int_key) {
             return;
+          }
+          if (int_key == 0) {
+            if (int_curr_key == last_pos) {
+              direction = 'right';
+            }
+          }
+          if (int_key == last_pos) {
+            if (int_curr_key == 0) {
+              direction = 'left';
+            }
           }
           /* Set active thumbnail position.*/
           wds_current_filmstrip_pos_<?php echo $wds; ?> = key * (jQuery(".wds_slideshow_filmstrip_thumbnail_<?php echo $wds; ?>").<?php echo $width_or_height; ?>() + 2 + 2 * 0);
