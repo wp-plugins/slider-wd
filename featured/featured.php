@@ -25,6 +25,12 @@ function spider_featured($current_plugin = '') {
       'content'  => 'Create responsive, highly configurable sliders with various effects for your WordPress site.',
       'href'     => 'https://web-dorado.com/products/wordpress-slider-plugin.html'
     ),
+    "events-wd" => array(
+      'title'    => 'Event Calendar WD',
+      'text'     => 'WordPress calendar plugin',
+      'content'  => 'Organize and publish your events in an easy and elegant way using Event Calendar WD.',
+      'href'     => 'https://web-dorado.com/products/wordpress-event-calendar-wd.html'
+    ),
     "contact-maker" => array(
       'title'    => 'Contact Form Maker',
       'text'     => 'WordPress contact form maker plugin',
