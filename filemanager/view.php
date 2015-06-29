@@ -40,7 +40,6 @@ class FilemanagerView {
         <?php
         $_GET['filemanager_msg'] = '';
       }
-      //$bwg_options = $this->controller->get_options_data();
       $file_manager_data = $this->model->get_file_manager_data();
       $items_view = $file_manager_data['session_data']['items_view'];
       $sort_by = $file_manager_data['session_data']['sort_by'];
@@ -77,6 +76,17 @@ class FilemanagerView {
         var layer_id = "<?php echo (isset($_REQUEST['layer_id']) ? esc_html($_REQUEST['layer_id']) : ''); ?>";
         var sortBy = "<?php echo $sort_by; ?>";
         var sortOrder = "<?php echo $sort_order; ?>";
+        jQuery(document).ready(function () {
+          jQuery("#search_by_name .search_by_name").on("input keyup", function() {
+            var search_by_name = jQuery(this).val();
+            jQuery("#explorer_body .explorer_item").each(function() {
+            jQuery(this).hide();
+            if (jQuery(this).find(".item_name").html().trim().toLowerCase().indexOf(search_by_name) !== -1) {
+              jQuery(this).show();
+            }
+            });
+          });
+        });
       </script>
       <script src="<?php echo WD_S_URL; ?>/filemanager/js/default.js?ver=<?php echo get_option("wd_bwg_version"); ?>"></script>
       <link href="<?php echo WD_S_URL; ?>/filemanager/css/default.css?ver=<?php echo get_option("wd_bwg_version"); ?>" type="text/css" rel="stylesheet">
@@ -117,12 +127,10 @@ class FilemanagerView {
                 <span class="ctrl_bar_btn btn_primary">
                   <a class="ctrl_bar_btn btn_upload_files" onclick="onBtnShowUploaderClick(event, this);"><?php echo 'Upload files'; ?></a>
                 </span>
-                <?php if (/*$bwg_options->enable_ML_import*/FALSE) { ?>
-                <span class="ctrl_bar_divider"></span>
-                <span class="ctrl_bar_btn btn_primary">
-                  <a class="ctrl_bar_btn btn_import_files" onclick="onBtnShowImportClick(event, this);"><?php echo 'Media library'; ?></a>
+		<span class="ctrl_bar_divider"></span>
+                <span id="search_by_name" class="ctrl_bar_btn">
+                  <input type="search" placeholder="Search" class="ctrl_bar_btn search_by_name">
                 </span>
-                <?php } ?>
               </div>
               <div class="ctrls_right">
                 <a class="ctrl_bar_btn btn_view_thumbs" onclick="onBtnViewThumbsClick(event, this);" title="<?php echo 'View thumbs'; ?>"></a>
@@ -257,82 +265,6 @@ class FilemanagerView {
               </div>
             </div>
           </div>
-          <!--<div id="importer" style="display: none;">
-            <div id="importer_bg"></div>
-            <div class="ctrls_bar ctrls_bar_header">
-              <div class="ctrls_left upload_thumb">
-                Thumbnail Maximum Dimensions:
-                <input type="text" class="upload_thumb_dim" name="importer_thumb_width" id="importer_thumb_width" value="<?php echo /*$bwg_options->upload_thumb_width;*/ 300; ?>" /> x 
-                <input type="text" class="upload_thumb_dim" name="importer_thumb_height" id="importer_thumb_height" value="<?php echo /*$bwg_options->upload_thumb_height;*/ 300;?>" /> px
-              </div>
-              <div class="ctrls_right">
-                <a class="ctrl_bar_btn btn_back" onclick="onBtnBackClick(event, this);" title="<?php echo 'Back'; ?>"></a>
-              </div>
-              <div class="ctrls_right_img upload_thumb">
-                Image Maximum Dimensions:
-                <input type="text" class="upload_thumb_dim" name="importer_img_width" id="importer_img_width" value="<?php echo /*$bwg_options->upload_img_width;*/ 1200;?>" /> x 
-                <input type="text" class="upload_thumb_dim" name="importer_img_height" id="importer_img_height" value="<?php echo /*$bwg_options->upload_img_height;*/ 1200;?>" /> px
-              </div>
-            </div>
-            <div id="importer_body_wrapper">
-              <div id="importer_body_container">
-                <div id="importer_body">
-                  <?php
-                  foreach ($file_manager_data['media_library_files'] as $file) {
-                    $file['name'] = esc_html($file['name']);
-                    $file['filename'] = esc_html($file['filename']);
-                    $file['thumb'] = esc_html($file['thumb']);
-                    ?>
-                    <div class="importer_item" draggable="true"
-                         name="<?php echo $file['name']; ?>"
-                         path="<?php echo $file['path']; ?>"
-                         filename="<?php echo $file['filename']; ?>"
-                         filethumb="<?php echo $file['thumb']; ?>"
-                         filesize="<?php echo $file['size']; ?>"
-                         filetype="<?php echo strtoupper($file['type']); ?>"
-                         date_modified="<?php echo $file['date_modified']; ?>"
-                         fileresolution="<?php echo $file['resolution']; ?>"
-                         onmouseover="onFileMOverML(event, this);"
-                         onmouseout="onFileMOutML(event, this);"
-                         onclick="onFileClickML(event, this);"
-                         ondblclick="onFileDblClickML(event, this);"
-                         isDir="<?php echo $file['is_dir'] == true ? 'true' : 'false'; ?>">
-                      <span class="item_numbering"><?php echo ++$i; ?></span>
-                      <span class="item_thumb">
-                        <img src="<?php echo $file['thumb']; ?>"/>
-                      </span>
-                      <span class="item_icon">
-                        <img src="<?php echo $file['icon']; ?>"/>
-                      </span>
-                      <span class="item_name">
-                        <?php echo $file['name']; ?>
-                      </span>
-                      <span class="item_size">
-                        <?php echo $file['size']; ?>
-                      </span>
-                      <span class="item_date_modified">
-                        <?php echo $file['date_modified']; ?>
-                      </span>
-                    </div>
-                    <?php
-                  }
-                  ?>
-                </div>
-              </div>
-            </div>
-            <div class="ctrls_bar ctrls_bar_footer">
-              <div class="ctrls_left">
-                <a class="ctrl_bar_btn btn_open btn_primary none_select" onclick="onBtnSelectAllMediLibraryClick();"><?php echo 'Select All'; ?></a>
-              </div>
-              <div class="ctrls_right">
-                <span id="file_names_span">
-                  <span>
-                  </span>
-                </span>
-                <a class="ctrl_bar_btn btn_open btn_primary none_select" onclick="onBtnImportClick(event, this);">Import selected images</a>
-              </div>
-            </div>
-          </div>-->
           <div id="uploader">
             <div id="uploader_bg"></div>
             <div class="ctrls_bar ctrls_bar_header">
