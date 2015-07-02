@@ -592,6 +592,15 @@ class WDSControllerSliders_wds {
         $layer_effect_out = ((isset($params_array['layer_effect_out'])) ? esc_html(stripslashes($params_array['layer_effect_out'])) : '');
         $duration_eff_in = ((isset($params_array['duration_eff_in'])) ? esc_html(stripslashes($params_array['duration_eff_in'])) : 3);
         $duration_eff_out = ((isset($params_array['duration_eff_out'])) ? esc_html(stripslashes($params_array['duration_eff_out'])) : 3);
+
+		$hotp_width = ((isset($params_array['hotp_width'])) ? esc_html(stripslashes($params_array['hotp_width'])) : '');
+		$hotp_fbgcolor = ((isset($params_array['hotp_fbgcolor'])) ? esc_html(stripslashes($params_array['hotp_fbgcolor'])) : '');
+		$hotp_border_width = ((isset($params_array['hotp_border_width'])) ? esc_html(stripslashes($params_array['hotp_border_width'])) : '');
+		$hotp_border_style = ((isset($params_array['hotp_border_style'])) ? esc_html(stripslashes($params_array['hotp_border_style'])) : '');
+		$hotp_border_color = ((isset($params_array['hotp_border_color'])) ? esc_html(stripslashes($params_array['hotp_border_color'])) : '');
+		$hotp_border_radius = ((isset($params_array['hotp_border_radius'])) ? esc_html(stripslashes($params_array['hotp_border_radius'])) : '');
+        $hotp_text_position = ((isset($params_array['hotp_text_position'])) ? esc_html(stripslashes($params_array['hotp_text_position'])) : '');
+		
         if ($title) {
           if (strpos($layer_id, 'pr_') !== FALSE) {
             $save = $wpdb->insert($wpdb->prefix . 'wdslayer', array(
@@ -631,44 +640,13 @@ class WDSControllerSliders_wds {
               'duration_eff_in' => $duration_eff_in,
               'duration_eff_out' => $duration_eff_out,
               'target_attr_layer' => $target_attr_layer,
-            ), array(
-              '%d',
-              '%s',
-              '%s',
-              '%d',
-              '%s',
-              '%s',
-              '%d',
-              '%d',
-              '%d',
-              '%d',
-              '%d',
-              '%s',
-              '%d',
-              '%s',
-              '%s',
-              '%s',
-              '%s',
-              '%d',
-              '%d',
-              '%s',
-              '%s',
-              '%s',
-              '%s',
-              '%s',
-              '%d',
-              '%d',
-              '%s',
-              '%s',
-              '%d',
-              '%s',
-              '%s',
-              '%s',
-              '%s',
-              '%s',
-              '%d',
-              '%d',
-              '%d',
+			  'hotp_width' => $hotp_width,
+			  'hotp_fbgcolor' => $hotp_fbgcolor,
+			  'hotp_border_width' => $hotp_border_width,
+			  'hotp_border_style' => $hotp_border_style,
+			  'hotp_border_color' => $hotp_border_color,
+			  'hotp_border_radius' => $hotp_border_radius,
+			  'hotp_text_position' => $hotp_text_position,
             ));
           }
           else {
@@ -708,6 +686,13 @@ class WDSControllerSliders_wds {
               'duration_eff_in' => $duration_eff_in,
               'duration_eff_out' => $duration_eff_out,
               'target_attr_layer' => $target_attr_layer,
+			  'hotp_width' => $hotp_width,
+			  'hotp_fbgcolor' => $hotp_fbgcolor,
+			  'hotp_border_width' => $hotp_border_width,
+			  'hotp_border_style' => $hotp_border_style,
+			  'hotp_border_color' => $hotp_border_color,
+			  'hotp_border_radius' => $hotp_border_radius,
+              'hotp_text_position' => $hotp_text_position,
             ), array('id' => $layer_id));
           }
         }
@@ -1095,44 +1080,13 @@ class WDSControllerSliders_wds {
                 'duration_eff_in' => $layer_id->duration_eff_in,
                 'duration_eff_out' => $layer_id->duration_eff_out,
                 'target_attr_layer' => $layer_id->target_attr_layer,
-              ), array(
-                '%d',
-                '%s',
-                '%s',
-                '%d',
-                '%s',
-                '%s',
-                '%d',
-                '%d',
-                '%d',
-                '%d',
-                '%d',
-                '%s',
-                '%d',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-                '%d',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-                '%d',
-                '%s',
-                '%s',
-                '%d',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-                '%d',
-                '%d',
+			        	'hotp_width' => $layer_id->hotp_width,
+			          'hotp_fbgcolor' => $layer_id->hotp_fbgcolor,
+			          'hotp_border_width' => $layer_id->hotp_border_width,
+			          'hotp_border_style' => $layer_id->hotp_border_style,
+			          'hotp_border_color' => $layer_id->hotp_border_color,
+			          'hotp_border_radius' => $layer_id->hotp_border_radius,
+                'hotp_text_position' => $layer_id->hotp_text_position,
               ));
                          
             }

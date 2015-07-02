@@ -49,6 +49,15 @@ function wds_update($version) {
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `carousel_fit_containerWidth` tinyint(1) NOT NULL DEFAULT 0");
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `carousel_width` int(4) NOT NULL DEFAULT 1000");
   }
+   if (version_compare($version, '1.0.23') == -1) {
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_width` int(4) NOT NULL");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_fbgcolor`  varchar(8) NOT NULL");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_border_width` int(4) NOT NULL");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_border_style` varchar(16) NOT NULL");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_border_color` varchar(8) NOT NULL");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_border_radius` varchar(32) NOT NULL");
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_text_position` varchar(6) NOT NULL");
+  }
   return;
 }
 

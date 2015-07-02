@@ -1863,6 +1863,7 @@ class WDSViewSliders_wds {
                             ?>
                             <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Video Layer" />
                             <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Social Button Layer" />
+			    <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Hotspot Layer" />
                           </td>
                         </tr>
                       </tbody>

@@ -4,7 +4,7 @@
  * Plugin Name: Slider WD
  * Plugin URI: https://web-dorado.com/products/wordpress-slider-plugin.html
  * Description: This is a responsive plugin, which allows adding sliders to your posts/pages and to custom location. It uses large number of transition effects and supports various types of layers.
- * Version: 1.0.22
+ * Version: 1.0.23
  * Author: WebDorado
  * Author URI: https://web-dorado.com/
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -12,14 +12,9 @@
 
 define('WD_S_DIR', WP_PLUGIN_DIR . "/" . plugin_basename(dirname(__FILE__)));
 define('WD_S_URL', plugins_url(plugin_basename(dirname(__FILE__))));
-global $wpdb;
-if (/*$wpdb->query("SHOW TABLES LIKE '" . $wpdb->prefix . "bwg_option'")*/ false) {
-  $WD_S_UPLOAD_DIR = $wpdb->get_var($wpdb->prepare('SELECT images_directory FROM ' . $wpdb->prefix . 'bwg_option WHERE id="%d"', 1)) . '/slider-wd';
-}
-else {
-  $upload_dir = wp_upload_dir();
-  $WD_S_UPLOAD_DIR = str_replace(ABSPATH, '', $upload_dir['basedir']) . '/slider-wd';
-}
+
+$upload_dir = wp_upload_dir();
+$WD_S_UPLOAD_DIR = str_replace(ABSPATH, '', $upload_dir['basedir']) . '/slider-wd';
 
 // Plugin menu.
 function wds_options_panel() {
@@ -339,7 +334,7 @@ register_activation_hook(__FILE__, 'wds_activate');
 
 function wds_install() {
   $version = get_option("wds_version");
-  $new_version = '1.0.22';
+  $new_version = '1.0.23';
   if ($version && version_compare($version, $new_version, '<')) {
     require_once WD_S_DIR . "/sliders-update.php";
     wds_update($version);

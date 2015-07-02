@@ -148,6 +148,13 @@ function wds_insert() {
     `layer_effect_out` varchar(16) NOT NULL,	
     `duration_eff_out` bigint(20) NOT NULL,
     `target_attr_layer` tinyint(1) NOT NULL,
+    `hotp_width` int(4) NOT NULL,
+    `hotp_fbgcolor`  varchar(8) NOT NULL,
+    `hotp_border_width` int(4) NOT NULL,
+    `hotp_border_style` varchar(16) NOT NULL,
+    `hotp_border_color` varchar(8) NOT NULL,
+    `hotp_border_radius` varchar(32) NOT NULL,
+    `hotp_text_position` varchar(6) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdslayer);
