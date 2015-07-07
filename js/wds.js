@@ -2325,7 +2325,7 @@ function wds_add_slide() {
           '<tr><td colspan="4">' +
             slide_upload_by +
             ' <input class="button-primary" type="button" value="Add Image by URL" onclick="wds_add_image_url(\'' + slideID + '\')">' +
-            ' <input class="button-secondary wds_free_button" type="button" value="Add Video" onclick="alert(\'This functionality is disabled in free version.\')">' +
+            ' <input class="button-secondary wds_free_button" type="button" value="Embed Media" onclick="alert(\'This functionality is disabled in free version.\')">' +
 	    ' <input class="button-secondary wds_free_button" type="button" value="Add Post" onclick="alert(\'This functionality is disabled in free version.\')">' +
             ' <input id="delete_image_url' + slideID + '" class="button-secondary" type="button" value="Remove" onclick="spider_remove_url(\'image_url' + slideID + '\', \'wds_preview_image' + slideID + '\')" />' +
             ' <input id="image_url' + slideID + '" type="hidden" value="" name="image_url' + slideID + '" />' +
@@ -2357,7 +2357,7 @@ function wds_add_slide() {
           '</tr><tr><td colspan="4">' +
             ' <input class="button-' + (!fv ? "primary" : "secondary wds_free_button") + ' button button-small" type="button" value="Add Text Layer" onclick="' + (!fv ? "wds_add_layer(\'text\', \'' + slideID + '\')" : "alert('This functionality is disabled in free version.')") + '; return false;">' +
             img_layer_upload_by +
-            ' <input class="button-secondary button button-small wds_free_button" type="button" value="Add Video Layer" onclick="alert(\'This functionality is disabled in free version.\'); return false;" />' +
+            ' <input class="button-secondary button button-small wds_free_button" type="button" value="Embed Media Layer" onclick="alert(\'This functionality is disabled in free version.\'); return false;" />' +
             ' <input class="button-secondary button button-small wds_free_button" type="button" value="Add Social Buttons Layer" onclick="alert(\'This functionality is disabled in free version.\'); return false;">' +
 	    ' <input class="button-secondary button button-small wds_free_button" type="button" value="Add Hotspot Layer" onclick="alert(\'This functionality is disabled in free version.\'); return false;"></td>' +
           '</tr></tbody></table>' +

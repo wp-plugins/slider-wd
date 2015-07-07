@@ -1761,7 +1761,7 @@ class WDSViewSliders_wds {
                             }
                             ?>
                             <input type="button" class="button-primary" onclick="wds_add_image_url('<?php echo $slide_row->id; ?>')" value="Add Image by URL" />
-                            <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Add Video" />
+                            <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Embed Media" />
                             <input class="button-secondary wds_free_button" type="button" value="Add Post" onclick="alert('This functionality is disabled in free version.')" />
                             <input type="button" class="button-secondary" id="delete_image_url<?php echo $slide_row->id; ?>" onclick="spider_remove_url('image_url<?php echo $slide_row->id; ?>', 'wds_preview_image<?php echo $slide_row->id; ?>')" value="Remove" />
                             <input type="hidden" id="image_url<?php echo $slide_row->id; ?>" name="image_url<?php echo $slide_row->id; ?>" value="<?php echo $slide_row->image_url; ?>" />
@@ -1861,7 +1861,7 @@ class WDSViewSliders_wds {
                               <?php
                             }
                             ?>
-                            <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Video Layer" />
+                            <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Embed Media Layer" />
                             <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Social Button Layer" />
 			    <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Hotspot Layer" />
                           </td>

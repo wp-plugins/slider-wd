@@ -58,6 +58,9 @@ function wds_update($version) {
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_border_radius` varchar(32) NOT NULL");
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `hotp_text_position` varchar(6) NOT NULL");
   }
+  if (version_compare($version, '1.0.24') == -1) {
+    $wpdb->query("ALTER TABLE `" . $wpdb->prefix . "wdsslide` CHANGE `type` `type` varchar(128)");
+  }
   return;
 }
 

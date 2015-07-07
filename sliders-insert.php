@@ -100,7 +100,7 @@ function wds_insert() {
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `slider_id` bigint(20) NOT NULL,
     `title` varchar(127) NOT NULL,
-    `type` varchar(8) NOT NULL,
+    `type` varchar(128) NOT NULL,
     `image_url` mediumtext NOT NULL,
     `thumb_url` mediumtext NOT NULL,
     `published` tinyint(1) NOT NULL,
