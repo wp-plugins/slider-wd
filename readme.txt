@@ -139,9 +139,9 @@ After downloading the ZIP file of the slider plugin,
 
 == Changelog ==
 
-= 1.2.24 =
-Changed: YouTube, Vimeo embed.
-New: Instagram, Flickr and Dailymotion embed.
+= 1.0.24 =
+Changed: YouTube, Vimeo embed.   
+New: Instagram, Flickr and Dailymotion embed.   
 
 = 1.0.23 =
 New: Hotspot layer (pro version).
@@ -156,43 +156,43 @@ Changed: Featured plugins page.
 Fixed: Slider playback direction.
 
 = 1.0.19 =
-Fixed: Slider width/height problem after Chrome update.
-Fixed: Export.
-Fixed: Carousel slider with one slide.
+Fixed: Slider width/height problem after Chrome update.  
+Fixed: Export.   
+Fixed: Carousel slider with one slide.  
 
 = 1.0.18 =
 Fixed: Conflict with some themes.
 
 = 1.0.17 =
-New: Slider Export/Import.
-Fixed: Delete slides whitout layers on slider delete.
-Fixed: Image change effect in carousel views whith one image.
-Fixed: Removed  "There is no slider selected or the slider was deleted." error message for unpublished sliders.
-Fixed: Carousel view after Chrome update(23.05.15).
-Fixed: Activate first slide tab after slider duplication.
-Fixed: Active bullet and filmstrip thumbnail in carousel view.
+New: Slider Export/Import.   
+Fixed: Delete slides whitout layers on slider delete.   
+Fixed: Image change effect in carousel views whith one image.  
+Fixed: Removed  "There is no slider selected or the slider was deleted." error message for unpublished sliders.   
+Fixed: Carousel view after Chrome update(23.05.15).  
+Fixed: Activate first slide tab after slider duplication.  
+Fixed: Active bullet and filmstrip thumbnail in carousel view.  
 
 = 1.0.16 =
-Changed: Featured plugins page.
-New: Featured themes page.
-
+Changed: Featured plugins page.  
+New: Featured themes page.  
+  
 = 1.0.15 =
 Change links.
 
 = 1.0.14 =
-Fixed: Disable enter key on text inputs.
+Fixed: Disable enter key on text inputs.   
 New: Bulk add images by media uploader.
 
 = 1.0.13 =
-Fixed: Image layer alt.
+Fixed: Image layer alt.   
 Fixed: Word break in Chrome.
 
 = 1.0.11 =
-Fixed: Timer bar and bullets postion with horizontal filmstrip.   
+Fixed: Timer bar and bullets postion with horizontal filmstrip.     
 Fixed: Set watermark.   
   
 = 1.0.10 =
-Fixed: Slide change direction from 9 to 10.   
+Fixed: Slide change direction from 9 to 10.    
 Fixed: Layers with "Start with slide" option.   
 
 = 1.0.9 =
