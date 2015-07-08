@@ -140,7 +140,7 @@ After downloading the ZIP file of the slider plugin,
 == Changelog ==
 
 = 1.0.25 =
-Fixed: security issue.
+Fixed: security issue.   
 Changed: Manage buttons position.
   
 = 1.0.24 =
