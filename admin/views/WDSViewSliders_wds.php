@@ -399,7 +399,7 @@ class WDSViewSliders_wds {
       <?php wp_nonce_field('nonce_wd', 'nonce_wd'); ?>
       <span class="slider-icon"></span>
       <h2><?php echo $page_title; ?></h2>
-      <div class="wds_buttons" style="float: right; position: relative; z-index: 50;">
+      <div class="wds_buttons">
         <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
                                                                    spider_set_input_value('task', 'save');
                                                                    spider_ajax_save('sliders_form', event);" value="Save" />
@@ -410,30 +410,6 @@ class WDSViewSliders_wds {
                                                                spider_set_input_value('task', 'duplicate');
                                                                spider_set_input_value('sub_tab', '');
                                                                spider_ajax_save('sliders_form', event);" value="Save as Copy" />
-        <?php
-        if ($row->spider_uploader) {
-          ?>
-        <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_slides', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" title="Add Images" onclick="return false;">
-          Add Images
-        </a>
-          <?php
-        }
-	else {
-          ?>
-        <input type="button" class="button-primary" id="button_image_url" onclick="spider_media_uploader('button_image_url', event, true); return false;" value="Add Images" />
-          <?php
-        }
-        ?>
-        <input class="button-secondary wds_free_button" type="button" value="Add Posts" onclick="alert('This functionality is disabled in free version.')" />
-        <input class="button-primary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
-                                                               spider_set_input_value('task', 'set_watermark');
-                                                               spider_ajax_save('sliders_form', event);" value="Set Watermark" />
-        <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
-                                                               spider_set_input_value('task', 'reset_watermark');
-                                                               spider_ajax_save('sliders_form', event);" value="Reset Watermark" />
-        <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
-                                                               spider_set_input_value('task', 'reset');
-                                                               spider_ajax_save('sliders_form', event);" value="Reset Settings" />
         <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Export" />
 	<input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'cancel')" value="Cancel" />
       </div>
@@ -443,6 +419,11 @@ class WDSViewSliders_wds {
         <div class="wds_clear"></div>
       </div>
       <div>
+        <div class="wds_reset_button">
+          <input class="button-primary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                                   spider_set_input_value('task', 'reset');
+                                                                   spider_ajax_save('sliders_form', event);" value="Reset Settings" />
+        </div>
         <!--------------Settings tab----------->
         <div class="wds_box wds_settings_box">
           <div class="wds_nav_tabs">
@@ -1711,7 +1692,35 @@ class WDSViewSliders_wds {
         <!--------------Slides tab----------->
         <div class="wds_box wds_slides_box">
           <table>
-            <thead><tr><td colspan="4">&nbsp;</td></tr></thead>
+            <thead>
+              <tr>
+                <td colspan="4">
+                  <div class="wds_buttons">
+                    <?php
+                    if ($row->spider_uploader) {
+                      ?>
+                    <a href="<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_slides', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>" class="button-primary thickbox thickbox-preview" title="Add Images" onclick="return false;">
+                      Add Images
+                    </a>
+                      <?php
+                    }
+                    else {
+                      ?>
+                    <input type="button" class="button-primary" id="button_image_url" onclick="spider_media_uploader('button_image_url', event, true); return false;" value="Add Images" />
+                      <?php
+                    }
+                    ?>
+                    <input class="button-secondary wds_free_button" type="button" value="Add Posts" onclick="alert('This functionality is disabled in free version.')" />
+                    <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                                           spider_set_input_value('task', 'set_watermark');
+                                                                           spider_ajax_save('sliders_form', event);" value="Set Watermark" />
+                    <input class="button-secondary" type="button" onclick="if (wds_check_required('name', 'Name')) {return false;};
+                                                                           spider_set_input_value('task', 'reset_watermark');
+                                                                           spider_ajax_save('sliders_form', event);" value="Reset Watermark" />
+                  </div>
+                </td>
+              </tr>
+            </thead>
             <tbody style="display: block;">
               <tr>
                 <td class="spider_label"><label for="name">Slider name: <span style="color:#FF0000;">*</span> </label></td>

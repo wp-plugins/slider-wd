@@ -16,7 +16,6 @@ class WDW_S_Library {
   public function __construct() {
   }
 
-
   ////////////////////////////////////////////////////////////////////////////////////////
   // Public Methods                                                                     //
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -535,6 +534,7 @@ class WDW_S_Library {
     $b = hexdec($b);
     return 'rgba(' . $r . ', ' . $g . ', ' . $b . ', ' . number_format($transparent, 2, ".", "") . ')';
   }
+
   public static function spider_redirect($url) {
     $url = html_entity_decode(wp_nonce_url($url, 'nonce_wd', 'nonce_wd'));
     ?>

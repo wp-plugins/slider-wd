@@ -911,3 +911,28 @@
   font-weight: inherit !important;
   text-decoration: none;
 }
+
+#add_embed_help {
+  height: 200px;
+  width: 672px;
+  top: 40%;
+}
+
+#add_embed input[type="text"] {
+  width: 500px;
+}
+
+.wds_buttons {
+  float: right;
+  font-weight: normal;
+  position: relative;
+}
+
+.wds_reset_button {
+  display: none;
+  font-weight: normal;
+  margin: 10px 0;
+  position: absolute;
+  right: 40px;
+  z-index: 1;
+}

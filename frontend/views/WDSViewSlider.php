@@ -1365,7 +1365,7 @@ class WDSViewSlider {
           var next_image_class = "#wds_image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[key]["id"];
           <?php if ($slider_row->preload_images) { ?>
           if (!wds_data_<?php echo $wds; ?>[key]["is_video"]) {
-            jQuery(next_image_class).find("div").css("background-image", 'url("' + wds_data_<?php echo $wds; ?>[key]["image_url"] + '")');
+            jQuery(next_image_class).find(".wds_slideshow_image_<?php echo $wds; ?>").css("background-image", 'url("' + wds_data_<?php echo $wds; ?>[key]["image_url"] + '")');
           }
           <?php } ?>
           var current_slide_layers_count = wds_data_<?php echo $wds; ?>[current_key]["slide_layers_count"];

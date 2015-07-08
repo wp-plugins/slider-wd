@@ -1549,6 +1549,12 @@ function wds_change_tab(that, box) {
   jQuery(that).parent().addClass("wds_active");
   jQuery(".wds_box").removeClass("wds_active");
   jQuery("." + box).addClass("wds_active");
+  if (box == "wds_settings_box") {
+    jQuery(".wds_reset_button").show();
+  }
+  else {
+    jQuery(".wds_reset_button").hide();
+  }
 }
 
 function wds_change_nav(that, box) {
