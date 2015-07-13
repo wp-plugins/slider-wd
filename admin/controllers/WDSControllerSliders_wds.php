@@ -187,6 +187,7 @@ class WDSControllerSliders_wds {
     $carousel_image_parameters = 0.85;
     $carousel_fit_containerWidth = 0;
     $carousel_width = 1000;
+    $parallax_effect = 0;
 
     if (!$slider_id) {
       $save = $wpdb->insert($wpdb->prefix . 'wdsslider', array(			
@@ -278,7 +279,8 @@ class WDSControllerSliders_wds {
         'carousel_image_counts' => $carousel_image_counts,
         'carousel_image_parameters' => $carousel_image_parameters,
         'carousel_fit_containerWidth' => $carousel_fit_containerWidth,
-        'carousel_width' => $carousel_width
+        'carousel_width' => $carousel_width,
+	'parallax_effect' => $parallax_effect,
       ), array(
         '%s',
         '%d',
@@ -369,6 +371,7 @@ class WDSControllerSliders_wds {
         '%s',
         '%d',
         '%d',
+	'%d',
       ));
       $_POST['current_id'] = (int) $wpdb->get_var('SELECT MAX(`id`) FROM ' . $wpdb->prefix . 'wdsslider');
     }
@@ -463,6 +466,7 @@ class WDSControllerSliders_wds {
         'carousel_image_parameters' => $carousel_image_parameters,
         'carousel_fit_containerWidth' => $carousel_fit_containerWidth,
         'carousel_width' => $carousel_width,
+	'parallax_effect' => $parallax_effect,
         ), array('id' => $slider_id));
     }
     if ($save !== FALSE) {
@@ -921,6 +925,7 @@ class WDSControllerSliders_wds {
         'carousel_image_parameters' => $slider_row->carousel_image_parameters,
         'carousel_fit_containerWidth' => $slider_row->carousel_fit_containerWidth,
         'carousel_width' => $slider_row->carousel_width,
+	'parallax_effect' => $slider_row->parallax_effect,
       ), array(
         '%s',
         '%d',
@@ -1011,6 +1016,7 @@ class WDSControllerSliders_wds {
         '%s',
         '%d',
         '%d',
+	'%d',
       ));
       $new_slider_id = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . 'wdsslider');
 

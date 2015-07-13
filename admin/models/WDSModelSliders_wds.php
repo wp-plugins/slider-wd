@@ -198,6 +198,7 @@ class WDSModelSliders_wds {
       $row->carousel_image_parameters = 0.85;
       $row->carousel_fit_containerWidth = 0;
       $row->carousel_width = 1000;
+      $row->parallax_effect = 0;
     }
     return $row;
   }

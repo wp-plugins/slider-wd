@@ -39,6 +39,7 @@ function spider_ajax_save(form_id, event) {
   post_data["published"] = jQuery("input[name=published]:checked").val();
   post_data["start_slide_num"] = jQuery("#start_slide_num").val();
   post_data["effect_duration"] = jQuery("#effect_duration").val();
+  post_data["parallax_effect"] = jQuery("input[name=parallax_effect]:checked").val();
   post_data["carousel"] = jQuery("input[name=carousel]:checked").val();
   post_data["carousel_image_counts"] = jQuery("#carousel_image_counts").val();
   post_data["carousel_image_parameters"] = jQuery("#carousel_image_parameters").val();

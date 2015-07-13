@@ -523,6 +523,14 @@ class WDSViewSliders_wds {
                     </td>
                   </tr>
                   <tr>
+                    <td class="spider_label spider_free_version_label"><label>Parallax Effect: </label></td>
+                    <td>
+                      <input disabled="disabled" type="radio" id="parallax_effect1" name="parallax_effect" <?php echo (($row->parallax_effect) ? 'checked="checked"' : ''); ?> value="1" /><label for="parallax_effect1">Yes</label>
+                      <input disabled="disabled" type="radio" id="parallax_effect0" name="parallax_effect" <?php echo (($row->parallax_effect) ? '' : 'checked="checked"'); ?> value="0" /><label for="parallax_effect0">No</label>
+                      <div class="spider_description">The direction of the movement, as well as the layer moving pace depend on the z-index value.</div>
+                    </td>
+                  </tr>
+                  <tr>
                     <td class="spider_label"><label>Autoplay: </label></td>
                     <td>
                       <input type="radio" id="autoplay1" name="autoplay" <?php echo (($row->autoplay) ? 'checked="checked"' : ''); ?> value="1" /><label for="autoplay1">Yes</label>

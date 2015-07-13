@@ -61,6 +61,10 @@ function wds_update($version) {
   if (version_compare($version, '1.0.24') == -1) {
     $wpdb->query("ALTER TABLE `" . $wpdb->prefix . "wdsslide` CHANGE `type` `type` varchar(128)");
   }
+  if (version_compare($version, '1.0.26') == -1) {
+    // Parallax_effect.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `parallax_effect` tinyint(1) NOT NULL DEFAULT 0");
+  }
   return;
 }
 
