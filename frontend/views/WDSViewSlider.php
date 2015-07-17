@@ -25,14 +25,14 @@ class WDSViewSlider {
   public function display($id, $from_shortcode = 0, $wds = 0) {
     require_once(WD_S_DIR . '/framework/WDW_S_Library.php');
     $slider_row = $this->model->get_slider_row_data($id);
-    if (!$slider_row->published) {
-      return;
-    }
-    $resolutions = array(320, 480, 640, 768, 800, 1024, 1366, 1824, 3000);
     if (!$slider_row) {
       echo WDW_S_Library::message(__('There is no slider selected or the slider was deleted.', 'wds'), 'error');
       return;
     }
+    if (!$slider_row->published) {
+      return;
+    }
+    $resolutions = array(320, 480, 640, 768, 800, 1024, 1366, 1824, 3000);
     $image_right_click = $slider_row->image_right_click;
 
     $bull_position = $slider_row->bull_position;
@@ -43,6 +43,7 @@ class WDSViewSlider {
     $slide_rows = $this->model->get_slide_rows_data($id);
     if (!$slide_rows) {
       echo WDW_S_Library::message(__('There are no slides in this slider.', 'wds'), 'error');
+      return;
     }
 
     $image_width = $slider_row->width;
@@ -130,6 +131,7 @@ class WDSViewSlider {
     global $wp;
     $current_url = add_query_arg($wp->query_string, '', home_url($wp->request));
 
+    $current_image_url = '';
     ?>
     <style>
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> {
@@ -664,7 +666,7 @@ class WDSViewSlider {
         wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["id"] = "<?php echo $slide_row->id; ?>";
         wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["image_url"] = "<?php echo addslashes(htmlspecialchars_decode ($slide_row->image_url,ENT_QUOTES)); ?>";
         wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["thumb_url"] = "<?php echo addslashes(htmlspecialchars_decode ($slide_row->thumb_url,ENT_QUOTES)); ?>";
-        wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["is_video"] = "<?php echo $slide_row->type == "YOUTUBE" || $slide_row->type == "VIMEO"; ?>";
+        wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["is_video"] = "<?php echo $slide_row->type ?>";
         wds_data_<?php echo $wds; ?>["<?php echo $key; ?>"]["slide_layers_count"] = 0;
         <?php
         $layers_row = $this->model->get_layers_row_data($slide_row->id);
@@ -762,41 +764,24 @@ class WDSViewSlider {
                 <div class="wds_slider_<?php echo $wds; ?>">
                 <?php
                 foreach ($slide_rows as $key => $slide_row) {
-                  $is_video = $slide_row->type == "YOUTUBE" || $slide_row->type == "VIMEO";
                   if ($slide_row->id == $current_image_id) {
-                    if ($is_video) {
-                      $play_pause_button_display = 'none';
-                    }
-                    else {
-                      $play_pause_button_display = '';
-                    }
+                    $play_pause_button_display = '';
+                    $current_image_url = $slide_row->image_url;
                     $current_key = $key;
                     $image_div_num = '';
                   }
                   else {
                     $image_div_num = '_second';
                   }
-                  $share_image_url = urlencode($is_video ? $slide_row->thumb_url : $slide_row->image_url);
-                  $share_url = add_query_arg(array('action' => 'WDSShare', 'image_id' => $slide_row->id, 'curr_url' => $current_url), admin_url('admin-ajax.php'));
                   ?>
                   <span class="wds_slideshow_image<?php echo $image_div_num; ?>_spun_<?php echo $wds; ?>" id="wds_image_id_<?php echo $wds; ?>_<?php echo $slide_row->id; ?>">
                     <span class="wds_slideshow_image_spun1_<?php echo $wds; ?>">
                       <span class="wds_slideshow_image_spun2_<?php echo $wds; ?>">
-                        <?php 
-                        if (!$is_video) {
-                          ?>
                         <div img_id="wds_slideshow_image<?php echo $image_div_num; ?>_<?php echo $wds; ?>"
                              class="wds_slideshow_image_<?php echo $wds; ?>"
                              onclick="<?php echo $slide_row->link ? 'window.open(\'' . $slide_row->link . '\', \'' . ($slide_row->target_attr_slide ? '_blank' : '_self') . '\')' : ''; ?>"
                              style="<?php echo $slide_row->link ? 'cursor: pointer;' : ''; ?><?php echo ((!$slider_row->preload_images || $image_div_num == '') ? "background-image: url('" . addslashes(htmlspecialchars_decode ($slide_row->image_url,ENT_QUOTES)) . "');" : ""); ?>">
-                          <?php
-                        }
-                        else {
-                          ?>
-                        <div img_id="wds_slideshow_image<?php echo $image_div_num; ?>_<?php echo $wds; ?>" class="wds_slideshow_video_<?php echo $wds; ?>" image_id="<?php echo $slide_row->id; ?>">
-                          <iframe class="wds_video_frame_<?php echo $wds; ?>" src="<?php echo ($slide_row->type == "YOUTUBE" ? "//www.youtube.com/embed/" . $slide_row->image_url . "?enablejsapi=1&wmode=transparent" : "//player.vimeo.com/video/" . $slide_row->image_url . "?api=1"); ?>" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>
-                          <?php
-                        }
+                        <?php
                         $layers_row = $this->model->get_layers_row_data($slide_row->id);
                         if ($layers_row) {
                           foreach ($layers_row as $key => $layer) {
@@ -821,7 +806,7 @@ class WDSViewSlider {
                                 <span class="wds_layer_<?php echo $layer->id; ?>" id="<?php echo $prefix; ?>" wds_fsize="<?php echo $layer->size; ?>"
                                       style="<?php echo $layer->image_width ? 'width: ' . $layer->image_width . '%; ' : ''; ?>
 				             <?php echo $layer->image_height ? 'height: ' . $layer->image_height . '%; ' : ''; ?>
-					     word-break: <?php echo ($layer->image_scale ? 'keep-all' : 'break-all'); ?>;
+					     word-break: <?php echo ($layer->image_scale ? 'normal' : 'break-all'); ?>;
 					     text-align: initial; <?php echo $layer->link ? 'cursor: pointer; ' : ''; ?>
 					     opacity: 1;
 					     filter: 'Alpha(opacity=100)';
@@ -1310,13 +1295,19 @@ class WDSViewSlider {
         ?>
         /* Pause videos.*/
         jQuery("#wds_slideshow_image_container_<?php echo $wds; ?>").find("iframe").each(function () {
-          jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-          jQuery(this)[0].contentWindow.postMessage('{ "method": "pause" }', "*");
+          if (typeof jQuery(this)[0].contentWindow != "undefined") {
+            jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            jQuery(this)[0].contentWindow.postMessage('{ "method": "pause" }', "*");
+            jQuery(this)[0].contentWindow.postMessage('pause', '*');
+          }
         });
         /* Pause layer videos.*/
         jQuery(".wds_video_layer_frame_<?php echo $wds; ?>").each(function () {
-          jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-          jQuery(this)[0].contentWindow.postMessage('{ "method": "pause" }', "*");
+          if (typeof jQuery(this)[0].contentWindow != "undefined") {
+            jQuery(this)[0].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            jQuery(this)[0].contentWindow.postMessage('{ "method": "pause" }', "*");
+            jQuery(this)[0].contentWindow.postMessage('pause', '*');
+          }
         });
         if (wds_data_<?php echo $wds; ?>[key]) {
           if (jQuery('.wds_ctrl_btn_<?php echo $wds; ?>').hasClass('fa-pause') || ('<?php echo $autoplay; ?>')) {
@@ -1364,7 +1355,7 @@ class WDSViewSlider {
           var current_image_class = "#wds_image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[current_key]["id"];
           var next_image_class = "#wds_image_id_<?php echo $wds; ?>_" + wds_data_<?php echo $wds; ?>[key]["id"];
           <?php if ($slider_row->preload_images) { ?>
-          if (!wds_data_<?php echo $wds; ?>[key]["is_video"]) {
+          if (wds_data_<?php echo $wds; ?>[key]["is_video"] == 'image') {
             jQuery(next_image_class).find(".wds_slideshow_image_<?php echo $wds; ?>").css("background-image", 'url("' + wds_data_<?php echo $wds; ?>[key]["image_url"] + '")');
           }
           <?php } ?>
@@ -1494,14 +1485,14 @@ class WDSViewSlider {
                 }
               }
             }
-	    <?php
+            <?php
             if ($bull_position != 'none' && $slides_count > 1) {
               ?>
               wds_move_dots_<?php echo $wds; ?>();
               <?php
             }
             ?>
-            if (wds_data_<?php echo $wds; ?>[key]["is_video"]) {
+            if (wds_data_<?php echo $wds; ?>[key]["is_video"] != 'image') {
               jQuery("#wds_slideshow_play_pause_<?php echo $wds; ?>").css({display: 'none'});
             }
             else {
@@ -1586,7 +1577,7 @@ class WDSViewSlider {
             paddingRight: (parseFloat(jQuery(this).attr("wds_fpaddingr")) * ratio) + "px",
             paddingTop: (parseFloat(jQuery(this).attr("wds_fpaddingt")) * ratio) + "px",
             paddingBottom: (parseFloat(jQuery(this).attr("wds_fpaddingb")) * ratio) + "px",
-          })
+          });
         });
       }
       /* Generate background position for Zoom Fade effect.*/
@@ -1617,7 +1608,8 @@ class WDSViewSlider {
           maxWidth: "none"
         });
       }
-      jQuery(window).load(function () {
+      jQuery("<img/>").attr("src", "<?php echo $current_image_url; ?>").load(function() {
+        jQuery(this).remove();
         <?php
         if ($enable_slideshow_autoplay && $slider_row->stop_animation) {
           ?>
@@ -1781,7 +1773,7 @@ class WDSViewSlider {
           jQuery("<img/>")
             .load(function() { if (preload_key < wds_data_<?php echo $wds; ?>.length - 1) wds_preload_<?php echo $wds; ?>(preload_key + 1); })
             .error(function() { if (preload_key < wds_data_<?php echo $wds; ?>.length - 1) wds_preload_<?php echo $wds; ?>(preload_key + 1); })
-            .attr("src", (!wds_data_<?php echo $wds; ?>[preload_key]["is_video"] ? wds_data_<?php echo $wds; ?>[preload_key]["image_url"] : ""));
+            .attr("src", (wds_data_<?php echo $wds; ?>[preload_key]["is_video"] == 'image' ? wds_data_<?php echo $wds; ?>[preload_key]["image_url"] : ""));
         }
         wds_preload_<?php echo $wds; ?>(0);
         <?php } ?>

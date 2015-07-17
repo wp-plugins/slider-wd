@@ -410,7 +410,9 @@ class WDSViewSliders_wds {
                                                                spider_set_input_value('task', 'duplicate');
                                                                spider_set_input_value('sub_tab', '');
                                                                spider_ajax_save('sliders_form', event);" value="Save as Copy" />
-        <input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Export" />
+        <input type="button" class="button-primary" value="Preview"
+               onclick="if (wds_check_required('name', 'Name')) { return false;}; spider_set_input_value('task', 'preview'); spider_ajax_save('sliders_form', event); return false;" />
+	<input type="button" class="button-secondary wds_free_button" onclick="alert('This functionality is disabled in free version.')" value="Export" />
 	<input class="button-secondary" type="submit" onclick="spider_set_input_value('task', 'cancel')" value="Cancel" />
       </div>
       <div class="wds_tabs">
@@ -1880,7 +1882,7 @@ class WDSViewSliders_wds {
                             ?>
                             <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Embed Media Layer" />
                             <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Social Button Layer" />
-			    <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Hotspot Layer" />
+                            <input type="button" class="button-secondary button button-small wds_free_button" onclick="alert('This functionality is disabled in free version.'); return false;" value="Add Hotspot Layer" />
                           </td>
                         </tr>
                       </tbody>
@@ -2457,6 +2459,7 @@ class WDSViewSliders_wds {
       </div>
       <input id="task" name="task" type="hidden" value="" />
       <script>
+        var wds_preview_url = "<?php echo add_query_arg(array('action' => 'WDSPreview', 'slider_id' => $id ? $id : 'sliderID', 'width' => '700', 'height' => '550', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>";
         var uploader_href = '<?php echo add_query_arg(array('action' => 'addImage', 'width' => '700', 'height' => '550', 'extensions' => 'jpg,jpeg,png,gif', 'callback' => 'wds_add_image', 'image_for' => 'add_update_slide', 'slide_id' => 'slideID', 'layer_id' => 'layerID', 'TB_iframe' => '1'), admin_url('admin-ajax.php')); ?>';		
         var fv = '<?php echo $fv; ?>';
         jQuery(document).ready(function() {

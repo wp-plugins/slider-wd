@@ -70,6 +70,17 @@ div[id^="wds_container"] .wds_right_btn_cont {
   margin-right: 10px;
 }
 
+.wds_preview_cont1 {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.wds_preview_cont2 {
+  display: table-cell;
+  vertical-align: middle;
+}
+
 @-webkit-keyframes wdszoom0 { 100% { background-size: 170%; }}
 @-webkit-keyframes wdszoom70 { 100% { background-size: 100%; }}
 @-moz-keyframes wdszoom0 { 100% { background-size: 170%; }}

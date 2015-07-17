@@ -1166,7 +1166,7 @@ class WDSControllerSliders_wds {
         $left = ($width - $watermark_sizes['width']) / 2;
         break;
     }
-    ini_set('memory_limit', '-1');
+    @ini_set('memory_limit', '-1');
     if ($type == 2) {
       $image = imagecreatefromjpeg($original_filename);
       imagettftext($image, $watermark_font_size, 0, $left, $top, $watermark_color, $watermark_font, $watermark_text);
@@ -1193,7 +1193,7 @@ class WDSControllerSliders_wds {
       imagedestroy($image);
     }
     imagedestroy($watermark_image);
-    ini_restore('memory_limit');
+    @ini_restore('memory_limit');
   }
 
   function set_image_watermark($original_filename, $dest_filename, $watermark_url, $watermark_height, $watermark_width, $watermark_position) {
@@ -1226,7 +1226,7 @@ class WDSControllerSliders_wds {
         $left = ($width - $watermark_width) / 2;
         break;
     }
-    ini_set('memory_limit', '-1');
+    @ini_set('memory_limit', '-1');
     if ($type_watermark == 2) {
       $watermark_image = imagecreatefromjpeg($watermark_url);        
     }
@@ -1275,7 +1275,7 @@ class WDSControllerSliders_wds {
       imagedestroy($tempimage);
     }
     imagedestroy($watermark_image);
-    ini_restore('memory_limit');
+    @ini_restore('memory_limit');
   }
 
   public function delete($id) {

@@ -280,6 +280,15 @@ function wds_success(form_id, end) {
       jQuery("#" + form_id).submit();
       break;
     }
+    case "preview": {
+      if (end) {
+        tb_show("Preview", wds_preview_url.replace("sliderID", jQuery("#current_id").val()));
+      }
+      else {
+        wds_action_after_save(form_id);
+      }
+      break;
+    }
     case "set_watermark": {
       if (end) {
         if (jQuery("input[name=built_in_watermark_type]:checked").val() == 'none') {
@@ -1245,7 +1254,6 @@ function wds_add_image_url(id) {
   jQuery('.opacity_add_image_url').show();
   return false;
 }
-
 function spider_set_image_url(id) {
   if (!jQuery("#image_url_input").val()) {
     return false;
