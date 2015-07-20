@@ -17,10 +17,13 @@
     <span>Layer effects</span>
     <span>Post Slides</span>
     <span>Video Slide support (YouTube and Vimeo)</span>
-    <span>Layers (text, image and videos)</span>
+    <span>Dailymotion, Instagram and Flickr embed</span>
+    <span>Layers (text, image and media embed)</span>
     <span>Social sharing buttons layer</span>
+    <span>Hotspot layer</span>
     <span>Navigation buttons and bullet styles</span>
     <span>Filmstrip support</span>
+    <span>Parallax effect</span>
     <span>Carousel effect</span>
   </div>
   <div id="featurs_table2">
@@ -46,6 +49,9 @@
     <span class="no"></span>
     <span class="no"></span>
     <span class="no"></span>
+    <span class="no"></span>
+    <span class="no"></span>
+    <span class="no"></span>
   </div>
   <div id="featurs_table3">
     <span>Pro Version</span>
@@ -63,6 +69,9 @@
     <span class="yes"></span>
     <span>26</span>
     <span>38</span>
+    <span class="yes"></span>
+    <span class="yes"></span>
+    <span class="yes"></span>
     <span class="yes"></span>
     <span class="yes"></span>
     <span class="yes"></span>

@@ -1608,8 +1608,18 @@ class WDSViewSlider {
           maxWidth: "none"
         });
       }
-      jQuery("<img/>").attr("src", "<?php echo $current_image_url; ?>").load(function() {
-        jQuery(this).remove();
+      if ("<?php echo $current_image_url; ?>" != '') {
+        jQuery("<img/>").attr("src", "<?php echo $current_image_url; ?>").load(function() {
+          jQuery(this).remove();
+          wds_ready();
+        });
+      }
+      else {
+        jQuery(document).ready(function () {
+          wds_ready();
+        });
+      }
+      function wds_ready() {
         <?php
         if ($enable_slideshow_autoplay && $slider_row->stop_animation) {
           ?>
@@ -1788,7 +1798,7 @@ class WDSViewSlider {
             wds_set_layer_effect_out_<?php echo $wds; ?>(i, <?php echo $start_slide_num; ?>);
           }
         }
-      });
+      }
 	    function wds_stop_animation_<?php echo $wds; ?>() {
         window.clearInterval(wds_playInterval_<?php echo $wds; ?>);
         /* Pause layers out effect.*/
