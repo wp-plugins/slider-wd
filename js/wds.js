@@ -2318,7 +2318,7 @@ function wds_add_slide() {
     img_layer_upload_by = ' <a href="' + (!fv ? uploader_href_for_add_layer : "") + '" class="button-' + (!fv ? "primary thickbox thickbox-preview" : "secondary wds_free_button") + ' button button-small" title="Add Image Layer" onclick="' + (!fv ? "" : "alert('This functionality is disabled in free version.')") + '; return false;">Add Image Layer</a>';
   }
   else {
-    slide_upload_by = ' <input id="button_image_url' + slideID + '" class="button-primary" type="button" value="Add Image from Media Library" onclick="spider_media_uploader(\'' + slideID + '\', event); return false;" />';
+    slide_upload_by = ' <input id="button_image_url' + slideID + '" class="button-primary" type="button" value="Add Image" onclick="spider_media_uploader(\'' + slideID + '\', event); return false;" />';
     img_layer_upload_by = ' <input class="button-' + (!fv ? "primary" : "secondary wds_free_button") + ' button button-small" type="button" value="Add Image Layer" onclick="' + (!fv ? "wds_add_layer(\'image\', \'' + slideID + '\', \'\', event)" : "alert('This functionality is disabled in free version.')") + '; return false;" />';
   }
   jQuery("#slide_ids_string").val(jQuery("#slide_ids_string").val() + slideID + ',');

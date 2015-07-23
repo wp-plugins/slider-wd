@@ -803,25 +803,25 @@ class WDSViewSlider {
                                       filter: "Alpha(opacity=<?php echo ($layer->layer_effect_in != 'none') ? '0' : '100'; ?>)" !important;
                                     }
                                   </style>
-                                <span class="wds_layer_<?php echo $layer->id; ?>" id="<?php echo $prefix; ?>" wds_fsize="<?php echo $layer->size; ?>"
+                                <span class="wds_layer_<?php echo $layer->id; ?>" data-type="wds_text_parent" id="<?php echo $prefix; ?>" wds_fsize="<?php echo $layer->size; ?>"
                                       style="<?php echo $layer->image_width ? 'width: ' . $layer->image_width . '%; ' : ''; ?>
-				             <?php echo $layer->image_height ? 'height: ' . $layer->image_height . '%; ' : ''; ?>
-					     word-break: <?php echo ($layer->image_scale ? 'normal' : 'break-all'); ?>;
-					     text-align: initial; <?php echo $layer->link ? 'cursor: pointer; ' : ''; ?>
-					     opacity: 1;
-					     filter: 'Alpha(opacity=100)';
-					     display: inline-block;
-					     position: absolute;
-					     left: <?php echo $left_percent; ?>%;
-					     top: <?php echo $top_percent; ?>%;
-					     z-index: <?php echo $layer->depth; ?>;
-					     color: #<?php echo $layer->color; ?>;
-					     font-family: <?php echo $layer->ffamily; ?>;
-					     font-weight: <?php echo $layer->fweight; ?>;
-					     background-color: <?php echo WDW_S_Library::spider_hex2rgba($layer->fbgcolor, (100 - $layer->transparent) / 100); ?>;
-					     border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>;
-					     border-radius: <?php echo $layer->border_radius; ?>;
-					     box-shadow: <?php echo $layer->shadow; ?>"
+                                             <?php echo $layer->image_height ? 'height: ' . $layer->image_height . '%; ' : ''; ?>
+                                             word-break: <?php echo ($layer->image_scale ? 'normal' : 'break-all'); ?>;
+                                             text-align: initial; <?php echo $layer->link ? 'cursor: pointer; ' : ''; ?>
+                                             opacity: 1;
+                                             filter: 'Alpha(opacity=100)';
+                                             display: inline-block;
+                                             position: absolute;
+                                             left: <?php echo $left_percent; ?>%;
+                                             top: <?php echo $top_percent; ?>%;
+                                             z-index: <?php echo $layer->depth; ?>;
+                                             color: #<?php echo $layer->color; ?>;
+                                             font-family: <?php echo $layer->ffamily; ?>;
+                                             font-weight: <?php echo $layer->fweight; ?>;
+                                             background-color: <?php echo WDW_S_Library::spider_hex2rgba($layer->fbgcolor, (100 - $layer->transparent) / 100); ?>;
+                                             border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>;
+                                             border-radius: <?php echo $layer->border_radius; ?>;
+                                             box-shadow: <?php echo $layer->shadow; ?>"
                                       onclick="<?php echo $layer->link ? 'window.open(\'' . $layer->link . '\', \'' . ($layer->target_attr_layer ? '_blank' : '_self') . '\');' : ''; ?>event.stopPropagation();"><?php echo str_replace(array("\r\n", "\r", "\n"), "<br>", $layer->text); ?></span>
                                   <?php
                                   break;
@@ -1611,15 +1611,15 @@ class WDSViewSlider {
       if ("<?php echo $current_image_url; ?>" != '') {
         jQuery("<img/>").attr("src", "<?php echo $current_image_url; ?>").load(function() {
           jQuery(this).remove();
-          wds_ready();
+          wds_ready_<?php echo $wds; ?>();
         });
       }
       else {
         jQuery(document).ready(function () {
-          wds_ready();
+          wds_ready_<?php echo $wds; ?>();
         });
       }
-      function wds_ready() {
+      function wds_ready_<?php echo $wds; ?>() {
         <?php
         if ($enable_slideshow_autoplay && $slider_row->stop_animation) {
           ?>

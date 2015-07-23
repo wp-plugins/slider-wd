@@ -564,7 +564,8 @@
 .wds_add_video,
 .wds_resize_image,
 .wds_import,
-.wds_exports {
+.wds_exports,
+.wds_editor {
   display: none;
   padding: 10px;
   height: 60px;
@@ -586,6 +587,31 @@
 
 .wds_exports {
   margin-left: -240px;
+}
+
+.wds_editor {
+  background-color: transparent;
+  border: none;
+  margin-left: -247px;
+  margin-top: -110px;
+  width: 465px;
+  height: 225px;
+  resize: vertical;
+}
+
+.wds_editor_btn  {
+  position: absolute;
+  margin-left: 5px !important;
+}
+
+.wds_editor_insert_btn  {
+  background-color: #FFFFFF;
+  padding: 5px;
+  text-align: right;
+}
+
+#wp-template_text-wrap {
+  background-color: #FFFFFF;
 }
 
 .wds_import {
@@ -935,4 +961,11 @@
   position: absolute;
   right: 40px;
   z-index: 1;
+}
+
+span[data-type="wds_text_parent"] * {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  margin: inherit;
 }

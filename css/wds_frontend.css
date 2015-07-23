@@ -1,3 +1,7 @@
+.wds_more {
+  font-size: 12px;
+}
+
 div[id^="wds_container"] * {
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -79,6 +83,14 @@ div[id^="wds_container"] .wds_right_btn_cont {
 .wds_preview_cont2 {
   display: table-cell;
   vertical-align: middle;
+}
+
+span[data-type="wds_text_parent"] * {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  margin: inherit;
+  padding: inherit;
 }
 
 @-webkit-keyframes wdszoom0 { 100% { background-size: 170%; }}

@@ -1768,7 +1768,7 @@ class WDSViewSliders_wds {
                             <?php
                             if (!$row->spider_uploader) {
                               ?>
-                            <input type="button" class="button-primary" id="button_image_url<?php echo $slide_row->id; ?>" onclick="spider_media_uploader('<?php echo $slide_row->id; ?>', event, false); return false;" value="Add Image from Media Library" />
+                            <input type="button" class="button-primary" id="button_image_url<?php echo $slide_row->id; ?>" onclick="spider_media_uploader('<?php echo $slide_row->id; ?>', event, false); return false;" value="Add Image" />
                               <?php
                             }
                             else {
@@ -1808,7 +1808,7 @@ class WDSViewSliders_wds {
                                     switch ($layer->type) {
                                       case 'text': {
                                         ?>
-                                        <span id="<?php echo $prefix; ?>" class="wds_draggable_<?php echo $slide_row->id; ?> wds_draggable ui-draggable" onclick="wds_showhide_layer('<?php echo $prefix; ?>_tbody', 1)"
+                                        <span id="<?php echo $prefix; ?>" class="wds_draggable_<?php echo $slide_row->id; ?> wds_draggable ui-draggable" data-type="wds_text_parent" onclick="wds_showhide_layer('<?php echo $prefix; ?>_tbody', 1)"
                                               style="<?php echo $layer->image_width ? 'width: ' . $layer->image_width . '%; ' : ''; ?><?php echo $layer->image_height ? 'height: ' . $layer->image_height . '%; ' : ''; ?>word-break: <?php echo ($layer->image_scale ? 'keep-all' : 'break-all'); ?>; display: inline-block; position: absolute; left: <?php echo $layer->left; ?>px; top: <?php echo $layer->top; ?>px; z-index: <?php echo $layer->depth; ?>; color: #<?php echo $layer->color; ?>; font-size: <?php echo $layer->size; ?>px; line-height: 1.25em; font-family: <?php echo $layer->ffamily; ?>; font-weight: <?php echo $layer->fweight; ?>; padding: <?php echo $layer->padding; ?>; background-color: <?php echo WDW_S_Library::spider_hex2rgba($layer->fbgcolor, (100 - $layer->transparent) / 100); ?>; border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>; border-radius: <?php echo $layer->border_radius; ?>; box-shadow: <?php echo $layer->shadow; ?>"><?php echo str_replace(array("\r\n", "\r", "\n"), "<br>", $layer->text); ?></span>
                                         <?php
                                         break;
@@ -1913,6 +1913,7 @@ class WDSViewSliders_wds {
                               </td>
                               <td>
                                 <textarea id="<?php echo $prefix; ?>_text" name="<?php echo $prefix; ?>_text" style="width: 222px; height: 60px; resize: vertical;" onkeyup="wds_new_line('<?php echo $prefix; ?>');"><?php echo $layer->text; ?></textarea>
+                                <input type="button" class="wds_editor_btn button-secondary" onclick="alert('This functionality is disabled in free version.')" value="Editor" />
                                 <div class="spider_description"></div>
                               </td>							  
                               <td class="spider_label">
