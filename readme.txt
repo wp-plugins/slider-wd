@@ -4,7 +4,7 @@ Donate link: https://web-dorado.com/products/wordpress-slider-plugin.html
 Tags: best slider plugin, carousel, carousel slider, coin slider, content slider, content slideshow, custom video slider, flex slider, free video slider, free video slideshow, Horizontal slider, Image Rotator, image slider, image slideshow, javascript slider, javascript slideshow, jquery slider, jquery slideshow, Photo Slider, posts slider, responsive slider, responsive slideshow, sidebar, slide, slide show, slider, slider plugin, slider widget, slides, slideshow,slideshow manager, slideshow plugin, vertical slider, video slider, video slideshow,vimeo slideshow, vimeo slider, widget slider, widget slideshow, wordpress slider, wordpress slideshow, wp slider, youtube slider, youtube slideshow, post slider, fullscreen Slider, css3 slider, responsive image slider, banner slider, social slider, cycle slider, text slider, revolution slider, thumbnail slider, touch slider, sliders, parallax slider, 3D slider, coinslider, featured-content-slider, image, images, picture, pictures, picture slider, responsive, shortcode, widget, vertical slides, autoplay, auto, jquery, rotate, flexslider, gallery, photo gallery, javascript, rotator, wordpress picture slider, wordpress responsive slider, animation, best slider, fullwidth slider, mobile slider, swipe, layer, layer slider, product slider
 Requires at least: 3.4
 Tested up to: 4.2
-Stable tag: 1.0.29
+Stable tag: 1.0.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,8 @@ Create responsive, highly configurable sliders with various effects for your Wor
 https://www.youtube.com/watch?v=xebpM_-GwG0&index=1&list=PLnxWPiY5tLFWQf5XaEYYPZj0gdggUrVxP
  
 [WordPress Slider Plugin](http://web-dorado.com/products/wordpress-slider-plugin.html)  
+[Demo](http://wpdemo.web-dorado.com/slider/)  
+[Demo Admin](http://wpdemo.web-dorado.com/wp-admin/admin.php?page=sliders_wds)   
 [User Manual](http://web-dorado.com/wordpress-slider-wd-guide-step-1.html)  
 [Support Forum](http://web-dorado.com/forum/slider-plugin.html)  
 [How to change and modify Slider WD Settings](https://www.youtube.com/watch?v=Peny_dkHaMo&list=PLnxWPiY5tLFWQf5XaEYYPZj0gdggUrVxP&index=3)  
@@ -139,6 +141,10 @@ After downloading the ZIP file of the slider plugin,
 
 
 == Changelog ==
+
+= 1.0.30 =
+Fixed: Removed editor button from hotspot layer.
+Added: Demo sliders page.
 
 = 1.0.29 =
 Fixed: Multiple sliders in a page.
