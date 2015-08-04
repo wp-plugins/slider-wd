@@ -94,6 +94,7 @@ function wds_insert() {
     `carousel_fit_containerWidth` tinyint(1) NOT NULL,
     `carousel_width` int(4) NOT NULL,
     `parallax_effect` tinyint(1) NOT NULL,
+    `mouse_swipe_nav` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdsslider);

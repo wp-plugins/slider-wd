@@ -115,6 +115,7 @@ function spider_ajax_save(form_id, event) {
   post_data["built_in_watermark_size"] = jQuery("#built_in_watermark_size").val();
 
   post_data["spider_uploader"] = jQuery("input[name=spider_uploader]:checked").val();
+  post_data["mouse_swipe_nav"] = jQuery("input[name=mouse_swipe_nav]:checked").val();
 
   /* Css.*/
   post_data["css"] = jQuery("#css").val();

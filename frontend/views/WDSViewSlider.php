@@ -57,6 +57,7 @@ class WDSViewSlider {
 
     $enable_slideshow_shuffle = $slider_row->shuffle;
     $enable_prev_next_butt = $slider_row->prev_next_butt;
+    $mouse_swipe_nav = isset($slider_row->mouse_swipe_nav) ? $slider_row->mouse_swipe_nav : 0;
     $enable_play_paus_butt = $slider_row->play_paus_butt;
     if (!$enable_prev_next_butt && !$enable_play_paus_butt) {
       $enable_slideshow_autoplay = 1;
@@ -418,6 +419,14 @@ class WDSViewSlider {
         width: 100%;
         height: 100%;
         overflow: hidden;
+        cursor: <?php echo $mouse_swipe_nav ? '-moz-grab' : 'inherit'; ?>;
+        cursor: <?php echo $mouse_swipe_nav ? '-webkit-grab' : 'inherit'; ?>;
+        cursor: <?php echo $mouse_swipe_nav ? 'grab' : 'inherit'; ?>;
+      }
+      #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slide_container_<?php echo $wds; ?>:active {
+        cursor: <?php echo $mouse_swipe_nav ? '-moz-grabbing' : 'inherit'; ?>;
+        cursor: <?php echo $mouse_swipe_nav ? '-webkit-grabbing' : 'inherit'; ?>;
+        cursor: <?php echo $mouse_swipe_nav ? 'grabbing' : 'inherit'; ?>;
       }
       #wds_container1_<?php echo $wds; ?> #wds_container2_<?php echo $wds; ?> .wds_slide_bg_<?php echo $wds; ?> {
         margin: 0 auto;
@@ -1679,7 +1688,9 @@ class WDSViewSlider {
           <?php
         }
         ?>
-        if (<?php echo $enable_prev_next_butt; ?>) {
+        var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+
+        if (<?php echo $mouse_swipe_nav; ?> || isMobile) {
           if (typeof jQuery().swiperight !== 'undefined') {
             if (jQuery.isFunction(jQuery().swiperight)) {
               jQuery('#wds_container1_<?php echo $wds; ?>').swiperight(function () {
@@ -1698,7 +1709,6 @@ class WDSViewSlider {
           }
         }
 
-        var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
         var wds_click = isMobile ? 'touchend' : 'click';
 
         var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"; /* FF doesn't recognize mousewheel as of FF3.x */

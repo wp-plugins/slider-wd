@@ -741,7 +741,17 @@ class WDSViewSliders_wds {
                       <input type="radio" name="prev_next_butt" id="prev_next_butt_0" value="0" <?php if (!$row->prev_next_butt) echo 'checked="checked"'; ?> /><label for="prev_next_butt_0">No</label>
                       <div class="spider_description">Choose whether to display Previous and Next buttons or not.</div>
                     </td>
-                  </tr> 
+                  </tr>
+		  <tr>
+                    <td class="spider_label_options">
+                      <label>Mouse swipe navigation: </label>
+                    </td>
+                    <td>
+                      <input type="radio" name="mouse_swipe_nav" id="mouse_swipe_nav_1" value="1" <?php if ($row->mouse_swipe_nav) echo 'checked="checked"'; ?> /><label for="mouse_swipe_nav_1">Yes</label>
+                      <input type="radio" name="mouse_swipe_nav" id="mouse_swipe_nav_0" value="0" <?php if (!$row->mouse_swipe_nav) echo 'checked="checked"'; ?> /><label for="mouse_swipe_nav_0">No</label>
+                      <div class="spider_description">Choose whether to display Previous and Next buttons or not.</div>
+                    </td>
+                  </tr>
                   <tr>
                     <td class="spider_label_options">
                       <label>Show Navigation buttons: </label>

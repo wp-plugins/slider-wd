@@ -65,6 +65,10 @@ function wds_update($version) {
     // Parallax_effect.
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `parallax_effect` tinyint(1) NOT NULL DEFAULT 0");
   }
+  if (version_compare($version, '1.0.32') == -1) {
+    // Mouse swipe navigation.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `mouse_swipe_nav` tinyint(1) NOT NULL DEFAULT 0");
+  }
   return;
 }
 
