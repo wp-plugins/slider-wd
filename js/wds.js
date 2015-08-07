@@ -116,6 +116,7 @@ function spider_ajax_save(form_id, event) {
 
   post_data["spider_uploader"] = jQuery("input[name=spider_uploader]:checked").val();
   post_data["mouse_swipe_nav"] = jQuery("input[name=mouse_swipe_nav]:checked").val();
+  post_data["bull_hover"] = jQuery("input[name=bull_hover]:checked").val();
 
   /* Css.*/
   post_data["css"] = jQuery("#css").val();

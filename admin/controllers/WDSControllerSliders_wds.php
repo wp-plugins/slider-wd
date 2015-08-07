@@ -189,6 +189,7 @@ class WDSControllerSliders_wds {
     $carousel_width = 1000;
     $parallax_effect = 0;
     $mouse_swipe_nav = ((isset($_POST['mouse_swipe_nav'])) ? (int) esc_html(stripslashes($_POST['mouse_swipe_nav'])) : 0);
+    $bull_hover = ((isset($_POST['bull_hover'])) ? (int) esc_html(stripslashes($_POST['bull_hover'])) : 1);
 
     $data = array(
       'name' => $name,
@@ -282,6 +283,7 @@ class WDSControllerSliders_wds {
       'carousel_width' => $carousel_width,
       'parallax_effect' => $parallax_effect,
       'mouse_swipe_nav' => $mouse_swipe_nav,
+      'bull_hover' => $bull_hover,
     );
 
     if (!$slider_id) {

@@ -1203,6 +1203,16 @@ class WDSViewSliders_wds {
                     </td>
                   </tr>
                   <tr>
+                    <td class="spider_label_options">
+                      <label>Show bullets: </label>
+                    </td>
+                    <td>
+                      <input type="radio" name="bull_hover" id="bull_hover_0" value="0" <?php if ($row->bull_hover == 0) echo 'checked="checked"'; ?> /><label for="bull_hover_0">On hover</label>
+                      <input type="radio" name="bull_hover" id="bull_hover_1" value="1" <?php if ($row->bull_hover == 1) echo 'checked="checked"'; ?> /><label for="bull_hover_1">Always</label>
+                      <div class="spider_description">Select between the option of always displaying the bullets or only when hovered.</div>
+                    </td>
+                  </tr>
+                  <tr>
                     <td class="spider_label"><label>Position: </label></td>
                     <td>
                       <select name="bull_position" id="bull_position">

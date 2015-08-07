@@ -200,6 +200,7 @@ class WDSModelSliders_wds {
       $row->carousel_width = 1000;
       $row->parallax_effect = 0;
       $row->mouse_swipe_nav = 0;
+      $row->bull_hover = 1;
     }
     return $row;
   }
