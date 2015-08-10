@@ -158,6 +158,7 @@ function wds_insert() {
     `hotp_border_color` varchar(8) NOT NULL,
     `hotp_border_radius` varchar(32) NOT NULL,
     `hotp_text_position` varchar(6) NOT NULL,
+    `google_fonts` int(1) NOT NULL,
     PRIMARY KEY (`id`)
   ) DEFAULT CHARSET=utf8;";
   $wpdb->query($wdslayer);

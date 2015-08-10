@@ -73,6 +73,10 @@ function wds_update($version) {
     // Show bullets on hover.
     $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdsslider ADD `bull_hover` int(1) NOT NULL DEFAULT 1");
   }
+  if (version_compare($version, '1.0.34') == -1) {
+    // Google fonts.
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . "wdslayer ADD `google_fonts` int(1) NOT NULL DEFAULT 0");
+  }
   return;
 }
 

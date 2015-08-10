@@ -830,7 +830,7 @@ class WDSViewSlider {
                                              top: <?php echo $top_percent; ?>%;
                                              z-index: <?php echo $layer->depth; ?>;
                                              color: #<?php echo $layer->color; ?>;
-                                             font-family: <?php echo $layer->ffamily; ?>;
+                                             font-family: <?php echo str_replace('+', ' ', $layer->ffamily); ?>;
                                              font-weight: <?php echo $layer->fweight; ?>;
                                              background-color: <?php echo WDW_S_Library::spider_hex2rgba($layer->fbgcolor, (100 - $layer->transparent) / 100); ?>;
                                              border: <?php echo $layer->border_width; ?>px <?php echo $layer->border_style; ?> #<?php echo $layer->border_color; ?>;
